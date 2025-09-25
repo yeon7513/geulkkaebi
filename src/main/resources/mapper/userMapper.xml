@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="users">
+	<select id="selectList" resultType="usersDto">
+		SELECT * FROM users ORDER BY
+		id
+	</select>
+
+	<select id="selectOne" resultType="usersDto">
+		SELECT * FROM users WHERE id =
+		#{id}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO users VALUES (
+		#{id}, #{pw}, #{name},
+		#{nickname},
+		#{phone}, #{email}, #{grade}, #{score},
+		SYSDATE, NULL, 'N',
+		'N', 'N', 'N')
+	</insert>
+
+	<update id="update">
+		UPDATE users SET
+		pw = #{pw}, nickname = #{nickname},
+		phone = #{phone},
+		email = #{email}, modified_at = SYSDATE
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM users WHERE id = #{id}
+	</delete>
+
+</mapper>

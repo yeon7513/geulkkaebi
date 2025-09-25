@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+.nav {
+  background-color: #ccc;
+}
+
+.nav > .gnb {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+
+.item {
+  padding: 8px 24px;
+  width: fit-content;
+  min-width: 120px;
+  text-align: center;
+  outline: 1px dotted red;
+}

@@ -1,0 +1,25 @@
+.home {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+  outline: 1px dotted red;
+}
+
+.iconContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 100px;
+  background-color: #eee;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+}
