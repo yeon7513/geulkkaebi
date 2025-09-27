@@ -1,23 +1,34 @@
 package kr.ac.kopo.geulkkaebi.user.dto;
 
 import org.apache.ibatis.type.Alias;
+import kr.ac.kopo.geulkkaebi.grobal.constants.Whether;
 
 @Alias("usersDto")
 public class Users {
-  private String id;
-  private String pw;
-  private String name;
-  private String nickname;
-  private String phone;
-  private String email;
-  private int grade;
-  private int score;
-  private String created_at;
-  private String modified_at;
-  private char report_yn;
-  private char suspend_yn;
-  private char admin_yn;
-  private char delete_yn;
+  private Long userNo; // 회원 식별 번호
+  private String id; // 회원 아이디
+  private String pw; // 회원 비밀번
+  private String name; // 회원 이름
+  private String nickname; // 회원 닉네임
+  private String phone; // 회원 연락처
+  private String email; // 회원의 이메일
+  private String profile_img; // 회원의 프로필 사진
+  private int grade; // 회원 등급
+  private int score; // 회원이 푼 퀴즈들의 점수
+  private String created_at; // 가입한 날짜
+  private String modified_at; // 개인정보를 수정한 날짜
+  private char report_yn = Whether.NO; // 신고 여부
+  private char suspend_yn = Whether.NO; // 정지 여부
+  private char admin_yn = Whether.NO; // 관리자 여부
+  private char delete_yn = Whether.NO; // 삭제 여부
+
+  public Long getUserNo() {
+    return userNo;
+  }
+
+  public void setUserNo(Long userNo) {
+    this.userNo = userNo;
+  }
 
   public String getId() {
     return id;
@@ -65,6 +76,14 @@ public class Users {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+
+  public String getProfile_img() {
+    return profile_img;
+  }
+
+  public void setProfile_img(String profile_img) {
+    this.profile_img = profile_img;
   }
 
   public int getGrade() {
@@ -130,5 +149,7 @@ public class Users {
   public void setDelete_yn(char delete_yn) {
     this.delete_yn = delete_yn;
   }
+
+
 
 }
