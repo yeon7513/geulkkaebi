@@ -1,18 +1,108 @@
-@charset "utf-8";
-
 .header {
-  padding: 24px 0;
+  padding: 20px 0;
   width: 100%;
-  background-color: #eee;
-}
+  box-shadow: var(--box-shadow);
 
-.header > .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 24px;
-}
+  .container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
 
-.logo {
-  text-align: center;
+    .utils {
+      position: absolute;
+      top: 0;
+      right: 0;
+      display: flex;
+      gap: 8px;
+      font-size: 16px;
+
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+    }
+
+    .logo {
+      margin: 0 auto;
+      a {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        width: fit-content;
+      }
+    }
+
+    .item {
+      a {
+        position: relative;
+        display: block;
+        padding: 8px 0;
+        font-family: var(--title-font), sans-serif;
+        font-weight: 300;
+        font-size: 24px;
+        transition: 0.3s;
+
+        &:hover {
+          letter-spacing: 4px;
+        }
+      }
+
+      // 소개
+      &:nth-child(1) {
+        a {
+          &:hover,
+          &:focus {
+            color: #84a12b;
+          }
+        }
+      }
+
+      // 신작, 추천도서
+      &:nth-child(2) {
+        a {
+          &:hover,
+          &:focus {
+            color: #0cbdc0;
+          }
+        }
+      }
+
+      // 이야기 놀이터
+      &:nth-child(3) {
+        a {
+          &:hover,
+          &:focus {
+            color: #e5d529;
+          }
+        }
+      }
+
+      // 깨비 퀴즈
+      &:nth-child(4) {
+        a {
+          &:hover,
+          &:focus {
+            color: #fd9f28;
+          }
+        }
+      }
+
+      // 궁금해요
+      &:nth-child(5) {
+        a {
+          &:hover,
+          &:focus {
+            color: #b171c1;
+          }
+        }
+      }
+    }
+  }
 }

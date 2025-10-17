@@ -1,11 +1,20 @@
 @charset "utf-8";
 
-/* colors */
+@import './fonts.scss';
+
+/* variable */
 :root {
-  --main-color: #;
-  --common-color: #;
-  --accent-color: #;
-  --hover-color: #;
+  // colors
+  --main-color-500: #;
+  --common-color-500: #;
+  --accent-color-500: #;
+  --hover-color-500: #;
+  --grayscale-500: #;
+  // fonts
+  --title-font: 'Pinkfong Baby Shark', san-serif;
+  --text-font: 'Freesentation', san-serif;
+  // shadow
+  --box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
 }
 
 /* reset */
@@ -13,7 +22,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+  font-family: var(--text-font), sans-serif;
+  font-weight: 400;
 }
 
 a {

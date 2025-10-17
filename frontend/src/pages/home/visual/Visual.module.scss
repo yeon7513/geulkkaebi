@@ -2,5 +2,60 @@
 
 .visual {
   height: 600px;
-  background-color: #ddd;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+
+  .introSlide {
+    background: #fff url('../../../assets/img/main_slide/intro.png') no-repeat
+      center/cover;
+  }
+
+  .bookSlide {
+    position: relative;
+    background: #fff url('../../../assets/img/main_slide/book.png') no-repeat
+      center/cover;
+
+    button {
+      bottom: 24%;
+    }
+  }
+
+  .boardSlide {
+    position: relative;
+    background: #fff url('../../../assets/img/main_slide/board.png') no-repeat
+      center/cover;
+
+    button {
+      bottom: 24%;
+    }
+  }
+
+  .quizSlide {
+    position: relative;
+    background: #fff url('../../../assets/img/main_slide/quiz.png') no-repeat
+      center/cover;
+
+    button {
+      bottom: 24%;
+      transform: translate(50%);
+    }
+  }
+
+  .campaignSlide {
+    background: #fff url('../../../assets/img/main_slide/campaign.png')
+      no-repeat center/cover;
+  }
+
+  button {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  .hide {
+    display: none;
+  }
 }

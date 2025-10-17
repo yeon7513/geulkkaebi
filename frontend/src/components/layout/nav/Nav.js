@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useComponentContext } from '../../context/ComponentProvider';
+import { useComponentContext } from '../../../context/ComponentProvider';
 import styles from './Nav.module.scss';
 
-function NavLink({ className, path, comp, children }) {
+export function NavLink({ className, path, comp, children }) {
   const { setCurrComp } = useComponentContext();
 
   const handleToMove = (comp) => {
@@ -18,7 +18,7 @@ function NavLink({ className, path, comp, children }) {
   );
 }
 
-function Nav({ menus }) {
+export function Nav({ menus, className }) {
   return (
     <>
       <nav className={styles.nav}>
@@ -27,8 +27,8 @@ function Nav({ menus }) {
             <NavLink
               key={idx}
               path={menu.path}
-              depth={menu.depth}
-              className={styles.item}
+              className={className}
+              comp={menu.comp}
             >
               {menu.label}
             </NavLink>
@@ -38,5 +38,3 @@ function Nav({ menus }) {
     </>
   );
 }
-
-export default Nav;

@@ -1,0 +1,81 @@
+@charset "utf-8";
+
+.pushable {
+  position: relative;
+  background: transparent;
+  transition: filter 250ms;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+
+  .shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    filter: blur(2px);
+    will-change: transform;
+    transform: translateY(2px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+
+  .edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    background: linear-gradient(
+      to right,
+      #473d8a 0%,
+      #594cae 8%,
+      #473d8a 92%,
+      #352d67 100%
+    );
+  }
+
+  .front {
+    display: block;
+    position: relative;
+    border-radius: 8px;
+    background: #6a5bcd;
+    padding: 16px 32px;
+    color: #fff;
+    letter-spacing: 1.5px;
+    font-size: 1rem;
+    transform: translateY(-4px);
+    transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+
+  &:hover {
+    filter: brightness(110%);
+
+    .front {
+      transform: translateY(-6px);
+      transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+    }
+
+    .shadow {
+      transform: translateY(4px);
+      transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+    }
+  }
+
+  &:active {
+    .front {
+      transform: translateY(-2px);
+      transition: transform 34ms;
+    }
+    .shadow {
+      transform: translateY(1px);
+      transition: transform 34ms;
+    }
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+}

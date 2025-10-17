@@ -1,5 +1,5 @@
 function Introduce(props) {
-  return <div></div>;
+  return <div>Introduce</div>;
 }
 
 export default Introduce;
