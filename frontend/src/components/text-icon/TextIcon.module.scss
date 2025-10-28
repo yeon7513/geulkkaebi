@@ -1,0 +1,37 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.textIcon {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 14px;
+  color: #fff;
+
+  flex: none;
+
+  &.green {
+    background-color: $green-500;
+  }
+
+  &.yellow {
+    background: $yellow-500;
+  }
+
+  &.purple {
+    background-color: $purple-400;
+  }
+
+  &.orange {
+    background-color: $orange-500;
+  }
+
+  &.mint {
+    background-color: $mint-600;
+  }
+
+  &.gray {
+    background-color: $grayscale-400;
+  }
+}

@@ -1,0 +1,8 @@
+@mixin textLine($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-clamp: $line;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+}

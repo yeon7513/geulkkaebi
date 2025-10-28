@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+// 그레이스케일
+$grayscale-100: #f7f7f7;
+$grayscale-200: #e6e6e6;
+$grayscale-300: #cccccc;
+$grayscale-400: #b3b3b3;
+$grayscale-500: #999999;
+$grayscale-600: #666666;
+$grayscale-700: #4d4d4d;
+$grayscale-800: #333333;
+$grayscale-900: #1a1a1a;
+
+// 초록
+$green-100: #edf4d7;
+$green-200: #dbeaae;
+$green-300: #c9df86;
+$green-400: #b7d45e;
+$green-500: #9fc334;
+$green-600: #84a12b;
+$green-700: #637920;
+$green-800: #425115;
+$green-900: #21280b;
+
+// 노랑
+$yellow-100: #f9f6d2;
+$yellow-200: #f4eda4;
+$yellow-300: #eee477;
+$yellow-400: #e9dc49;
+$yellow-500: #e5d529;
+$yellow-600: #b6a916;
+$yellow-700: #887e11;
+$yellow-800: #5b540b;
+$yellow-900: #2d2a06;
+
+// 민트
+$mint-100: #cffbfc;
+$mint-200: #9ff7f9;
+$mint-300: #6ff4f6;
+$mint-400: #3ff0f3;
+$mint-500: #61f3f5;
+$mint-600: #0cbdc0;
+$mint-700: #098e90;
+$mint-800: #065e60;
+$mint-900: #032f30;
+
+// 주황
+$orange-100: #ffe9cc;
+$orange-200: #fed39a;
+$orange-300: #febd67;
+$orange-400: #fda635;
+$orange-500: #fda128;
+$orange-600: #ca7302;
+$orange-700: #985701;
+$orange-800: #653a01;
+$orange-900: #331d00;
+
+// 보라
+$purple-100: #ecdbf0;
+$purple-200: #d8b8e0;
+$purple-300: #c594d1;
+$purple-400: #b171c1;
+$purple-500: #733881;
+$purple-600: #7e3e8e;
+$purple-700: #5f2e6b;
+$purple-800: #3f1f47;
+$purple-900: #200f24;
+
+// 폰트
+$title-font: 'Pinkfong Baby Shark', san-serif;
+$text-font: 'Freesentation', san-serif;
+
+// 그림자
+$box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);

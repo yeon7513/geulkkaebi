@@ -1,28 +1,14 @@
 @charset "utf-8";
 
-@import './fonts.scss';
-
-/* variable */
-:root {
-  // colors
-  --main-color-500: #;
-  --common-color-500: #;
-  --accent-color-500: #;
-  --hover-color-500: #;
-  --grayscale-500: #;
-  // fonts
-  --title-font: 'Pinkfong Baby Shark', san-serif;
-  --text-font: 'Freesentation', san-serif;
-  // shadow
-  --box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);
-}
+@use './variables.scss' as *;
+@import './font-face.scss';
 
 /* reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--text-font), sans-serif;
+  font-family: $text-font, sans-serif;
   font-weight: 400;
 }
 
@@ -36,13 +22,55 @@ li {
 }
 
 body {
-  color: #333;
+  background: $grayscale-100;
+  color: $grayscale-800;
 }
 
 button {
   appearance: none;
+  display: block;
   outline: none;
   border: none;
   background: transparent;
   cursor: pointer;
+}
+
+input {
+  display: block;
+  border: none;
+  outline: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $title-font;
+}
+
+p {
+  line-height: 1.4;
+}
+
+/* media - desktop */
+@media screen and (min-width: 1024px) {
+  :root {
+    font-size: 18px;
+  }
+}
+
+/* media - tablet */
+@media screen and (max-width: 1023px) {
+  :root {
+    font-size: 16px;
+  }
+}
+
+/* media - mobile */
+@media screen and (max-width: 767px) {
+  :root {
+    font-size: 14px;
+  }
 }

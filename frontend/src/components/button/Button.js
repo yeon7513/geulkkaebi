@@ -1,36 +1,51 @@
 import cn from 'classnames';
 import styles from './Button.module.scss';
 
-function Button({ className, type, onClick, children }) {
-  const btnStyle = (style) => {
-    switch (style) {
-      case 'primary':
-        return styles.primary;
-      case 'secondary':
-        return styles.secondary;
-      case 'success':
-        return styles.success;
-      case 'info':
-        return styles.info;
-      case 'warning':
-        return styles.warning;
-      case 'danger':
-        return styles.danger;
-      case 'round':
-        return styles.round;
-      default:
-        return styles.primary;
-    }
+function Button({
+  className,
+  type = 'button',
+  colors = 'green',
+  variant = 'fill',
+  isRound = false,
+  onClick,
+  children,
+}) {
+  const btnColors = {
+    green: styles.green,
+    gray: styles.gray,
+    mint: styles.mint,
+    purple: styles.purple,
+    yellow: styles.yellow,
+    orange: styles.orange,
+  };
+
+  const btnStyles = {
+    pushable: styles.pushable,
+    fill: styles.fill,
+    outline: styles.outline,
   };
 
   return (
     <button
-      className={cn(styles.pushable, className, btnStyle(type))}
+      className={cn(
+        styles.btn,
+        isRound && styles.round,
+        btnStyles[variant],
+        className,
+        btnColors[colors]
+      )}
+      type={type}
       onClick={onClick}
     >
-      <span className={styles.shadow}></span>
-      <span className={styles.edge}></span>
-      <span className={styles.front}>{children}</span>
+      {variant === 'pushable' ? (
+        <>
+          <span className={styles.shadow}></span>
+          <span className={styles.edge}></span>
+          <span className={styles.front}>{children}</span>
+        </>
+      ) : (
+        <>{children}</>
+      )}
     </button>
   );
 }

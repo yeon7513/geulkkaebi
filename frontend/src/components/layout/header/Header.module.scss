@@ -1,7 +1,17 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
 .header {
   padding: 20px 0;
   width: 100%;
-  box-shadow: var(--box-shadow);
+  box-shadow: $box-shadow;
+  background: #fff;
+
+  &.position {
+    position: absolute;
+    z-index: 2;
+  }
 
   .container {
     position: relative;
@@ -31,12 +41,6 @@
 
     .logo {
       margin: 0 auto;
-      a {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-        width: fit-content;
-      }
     }
 
     .item {
@@ -44,7 +48,7 @@
         position: relative;
         display: block;
         padding: 8px 0;
-        font-family: var(--title-font), sans-serif;
+        font-family: $title-font, sans-serif;
         font-weight: 300;
         font-size: 24px;
         transition: 0.3s;
@@ -59,7 +63,7 @@
         a {
           &:hover,
           &:focus {
-            color: #84a12b;
+            color: $green-600;
           }
         }
       }
@@ -69,7 +73,7 @@
         a {
           &:hover,
           &:focus {
-            color: #0cbdc0;
+            color: $mint-600;
           }
         }
       }
@@ -79,7 +83,7 @@
         a {
           &:hover,
           &:focus {
-            color: #e5d529;
+            color: $yellow-600;
           }
         }
       }
@@ -89,7 +93,7 @@
         a {
           &:hover,
           &:focus {
-            color: #fd9f28;
+            color: $orange-600;
           }
         }
       }
@@ -99,7 +103,7 @@
         a {
           &:hover,
           &:focus {
-            color: #b171c1;
+            color: $purple-600;
           }
         }
       }

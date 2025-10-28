@@ -1,0 +1,31 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.joinForm {
+  table {
+    .align {
+      display: flex;
+      justify-content: stretch;
+      align-items: center;
+      gap: 8px;
+
+      button {
+        outline: 1px dotted red;
+      }
+    }
+
+    .fullSize {
+      flex: 1;
+      outline: 1px dotted red;
+    }
+  }
+
+  .btnGroup {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1.5rem;
+  }
+}

@@ -1,14 +1,19 @@
-import { Outlet } from 'react-router-dom';
-import { Nav } from '../../components/layout/nav/Nav';
-import { book } from '../../lib/menus';
+import { useState } from 'react';
+import { bestBookList, newBookList } from '../../lib/bookTest';
+import BookList from './book-list/BookList';
 
 function Book() {
-  console.log(book);
+  const [books, setBooks] = useState(newBookList);
+
+  const handleChangeBooks = (bookList) => {
+    setBooks(bookList);
+  };
+
   return (
     <div>
-      <Nav menus={book} />
-      <h3>Book</h3>
-      <Outlet />
+      <button onClick={() => handleChangeBooks(newBookList)}>신작 도서</button>
+      <button onClick={() => handleChangeBooks(bestBookList)}>추천 도서</button>
+      <BookList list={books} />
     </div>
   );
 }

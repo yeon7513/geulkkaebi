@@ -1,0 +1,38 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.loginForm {
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+  .inputContent {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .id,
+    .pw {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 16px;
+
+      label {
+        svg {
+          font-size: 24px;
+          // fill: $green-600;
+          fill: $grayscale-400;
+        }
+      }
+    }
+  }
+
+  .submit {
+    width: 100%;
+    button {
+      width: 100%;
+    }
+  }
+}

@@ -12,13 +12,14 @@ import Home from './pages/home/Home';
 import Introduce from './pages/introduce/Introduce';
 import Manager from './pages/manager/Manager';
 import NotFound404 from './pages/not-found/NotFound404';
-import Contact from './pages/notice/contact/Contact';
-import Notice from './pages/notice/Notice';
 import Proverb from './pages/quiz/proverb/Proverb';
 import Word from './pages/quiz/word/Word';
 import Join from './pages/sign/join/Join';
 import Login from './pages/sign/login/Login';
 import Sign from './pages/sign/Sign';
+import Contact from './pages/support/contact/Contact';
+import Faq from './pages/support/faq/Faq';
+import Notice from './pages/support/notice/Notice';
 import './scss/global.scss';
 
 function Main() {
@@ -54,7 +55,7 @@ function Main() {
             <Route path="/support" element={<PageLayout submenu={support} />}>
               <Route index element={<Navigate to="notice" replace />} />
               <Route path="notice" element={<Notice />} />
-              <Route path="faq" element={<Notice />} />
+              <Route path="faq" element={<Faq />} />
               <Route path="contact" element={<Contact />} />
             </Route>
             {/* 관리자페이지 */}

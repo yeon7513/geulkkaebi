@@ -2,77 +2,81 @@ export const gnb = [
   {
     label: '글깨비 소개',
     path: '/introduce',
-    comp: 'Introduce',
   },
   {
     label: '신작·추천 도서',
     path: '/book',
-    comp: 'Book',
   },
   {
     label: '이야기 놀이터',
     path: '/board',
-    comp: 'Board',
   },
   {
     label: '깨비 퀴즈',
     path: '/quiz',
-    comp: 'Quiz',
   },
   {
     label: '궁금해요',
-    path: '/contact',
-    comp: 'Contact',
+    path: '/support',
   },
 ];
 
-export const utils = [
+export const utils_noLogin = [
   {
-    label: 'login',
+    label: '로그인',
     path: '/login',
   },
   {
-    label: 'join',
+    label: '회원가입',
     path: '/join',
   },
+];
+
+export const utils_logined = [
   {
-    label: 'mypage',
+    label: '마이페이지',
     path: '/mypage',
   },
   {
-    label: 'manager',
+    label: '로그아웃',
+    path: '/',
+  },
+];
+
+export const utils_manager = [
+  {
+    label: '관리',
     path: '/manager',
+  },
+  {
+    label: '로그아웃',
+    path: '/',
   },
 ];
 
 export const board = [
   {
-    label: 'debate',
+    label: '토론마당',
     path: '/board/debate',
-    comp: 'Debate',
   },
   {
-    label: 'story',
+    label: '스토리+',
     path: '/board/story',
-    comp: 'Story',
   },
   {
-    label: 'article',
+    label: '도서 기자단',
     path: '/board/article',
-    comp: 'Article',
   },
 ];
 
 export const quiz = [
   {
-    label: 'word',
+    label: '단어 탐험대',
     path: '/quiz/word',
-    comp: 'Word',
   },
   {
-    label: 'proverb',
+    label: '속담 마법사',
     path: '/quiz/proverb',
-    comp: 'Proverb',
   },
 ];
 
@@ -80,12 +84,10 @@ export const book = [
   {
     label: '신작도서',
     path: '/book/newest',
-    comp: 'Newest',
   },
   {
     label: '추천도서',
     path: '/book/best',
-    comp: 'Best',
   },
 ];
 
@@ -93,16 +95,20 @@ export const support = [
   {
     label: '공지사항',
     path: '/support/notice',
-    comp: 'Notice',
   },
   {
     label: '자주 묻는 질문',
     path: '/support/faq',
-    comp: 'Faq',
   },
   {
     label: '고객센터',
     path: '/support/contact',
-    comp: 'Contact',
   },
+];
+
+export const footer = [
+  { label: '공지사항', path: '/support/notice' },
+  { label: '자주 묻는 질문', path: '/support/faq' },
+  { label: '이용약관', path: '/support/faq' },
+  { label: '개인정보처리방침', path: '/support/faq' },
 ];

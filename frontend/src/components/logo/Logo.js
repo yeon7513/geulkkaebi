@@ -1,4 +1,6 @@
+import cn from 'classnames';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import logoImg from '../../assets/img/logo_v3.png';
 import styles from './Logo.module.scss';
 
@@ -11,7 +13,7 @@ const decorateLogo = [
   '웃음이 피어나는 ',
 ];
 
-function Logo({ isShow = true }) {
+function Logo({ className, isShow = true }) {
   const [decoLogo, setDecoLogo] = useState('');
 
   useEffect(() => {
@@ -21,11 +23,15 @@ function Logo({ isShow = true }) {
   }, []);
 
   return (
-    <>
-      <span className={isShow ? styles.decoText : styles.hide}>{decoLogo}</span>
-      <span className={styles.logoText}>글깨비</span>
-      <img className={styles.logoImg} src={logoImg} alt="글깨비" />
-    </>
+    <h1 className={cn(styles.logo, className)}>
+      <Link to="/">
+        <span className={isShow ? styles.decoText : styles.hide}>
+          {decoLogo}
+        </span>
+        <span className={styles.logoText}>글깨비</span>
+        <img className={styles.logoImg} src={logoImg} alt="글깨비" />
+      </Link>
+    </h1>
   );
 }
 

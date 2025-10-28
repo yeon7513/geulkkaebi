@@ -1,0 +1,46 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.inputGroup {
+  position: relative;
+
+  .input {
+    padding: 12px;
+    width: 100%;
+    background: transparent;
+    border-bottom: 1px solid $grayscale-200;
+    border-radius: 4px 4px 0 0;
+    font-size: 18px;
+    transition: 0.3s;
+    color: $grayscale-700;
+
+    &:hover {
+      background: rgba($color: $green-100, $alpha: 0.5);
+    }
+
+    &:focus ~ .inputBorder,
+    &:not(:placeholder-shown) ~ .inputBorder {
+      width: 100%;
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      background: rgba($color: $green-100, $alpha: 0.5);
+    }
+
+    &::placeholder {
+      color: $grayscale-400;
+    }
+  }
+
+  .inputBorder {
+    position: absolute;
+    background: $green-500;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+  }
+}

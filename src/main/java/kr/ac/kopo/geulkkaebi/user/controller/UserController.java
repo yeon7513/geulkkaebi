@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import kr.ac.kopo.geulkkaebi.user.dto.Users;
@@ -33,7 +34,7 @@ public class UserController {
 
   // 회원 등록
   @PostMapping("/add")
-  public ResponseEntity<String> addUser(Users user) {
+  public ResponseEntity<String> addUser(@RequestBody Users user) {
     // ResponseEntity<String>
     // insert의 성공 여부를 확인 할 때,
     // int로만 반환하면 실패 했을 경우의 원인은 확인할 수 없다.

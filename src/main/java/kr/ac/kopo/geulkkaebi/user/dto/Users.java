@@ -12,15 +12,15 @@ public class Users {
   private String nickname; // 회원 닉네임
   private String phone; // 회원 연락처
   private String email; // 회원의 이메일
-  private String profile_img; // 회원의 프로필 사진
+  private String profileImg; // 회원의 프로필 사진
   private int grade; // 회원 등급
   private int score; // 회원이 푼 퀴즈들의 점수
-  private String created_at; // 가입한 날짜
-  private String modified_at; // 개인정보를 수정한 날짜
-  private char report_yn = Whether.NO; // 신고 여부
-  private char suspend_yn = Whether.NO; // 정지 여부
-  private char admin_yn = Whether.NO; // 관리자 여부
-  private char delete_yn = Whether.NO; // 삭제 여부
+  private String createdAt; // 가입한 날짜
+  private String modifiedAt; // 개인정보를 수정한 날짜
+  private String reportYn = Whether.NO; // 신고 여부
+  private String suspendYn = Whether.NO; // 정지 여부
+  private String adminYn = Whether.NO; // 관리자 여부
+  private String deleteYn = Whether.NO; // 삭제 여부
 
   public Long getUserNo() {
     return userNo;
@@ -78,12 +78,12 @@ public class Users {
     this.email = email;
   }
 
-  public String getProfile_img() {
-    return profile_img;
+  public String getProfileImg() {
+    return profileImg;
   }
 
-  public void setProfile_img(String profile_img) {
-    this.profile_img = profile_img;
+  public void setProfileImg(String profileImg) {
+    this.profileImg = profileImg;
   }
 
   public int getGrade() {
@@ -102,54 +102,52 @@ public class Users {
     this.score = score;
   }
 
-  public String getCreated_at() {
-    return created_at;
+  public String getCreatedAt() {
+    return createdAt;
   }
 
-  public void setCreated_at(String created_at) {
-    this.created_at = created_at;
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
   }
 
-  public String getModified_at() {
-    return modified_at;
+  public String getModifiedAt() {
+    return modifiedAt;
   }
 
-  public void setModified_at(String modified_at) {
-    this.modified_at = modified_at;
+  public void setModifiedAt(String modifiedAt) {
+    this.modifiedAt = modifiedAt;
   }
 
-  public char getReport_yn() {
-    return report_yn;
+  public String getReportYn() {
+    return reportYn;
   }
 
-  public void setReport_yn(char report_yn) {
-    this.report_yn = report_yn;
+  public void setReportYn(String reportYn) {
+    this.reportYn = reportYn;
   }
 
-  public char getSuspend_yn() {
-    return suspend_yn;
+  public String getSuspendYn() {
+    return suspendYn;
   }
 
-  public void setSuspend_yn(char suspend_yn) {
-    this.suspend_yn = suspend_yn;
+  public void setSuspendYn(String suspendYn) {
+    this.suspendYn = suspendYn;
   }
 
-  public char getAdmin_yn() {
-    return admin_yn;
+  public String getAdminYn() {
+    return adminYn;
   }
 
-  public void setAdmin_yn(char admin_yn) {
-    this.admin_yn = admin_yn;
+  public void setAdminYn(String adminYn) {
+    this.adminYn = adminYn;
   }
 
-  public char getDelete_yn() {
-    return delete_yn;
+  public String getDeleteYn() {
+    return deleteYn;
   }
 
-  public void setDelete_yn(char delete_yn) {
-    this.delete_yn = delete_yn;
+  public void setDeleteYn(String deleteYn) {
+    this.deleteYn = deleteYn;
   }
-
-
 
 }

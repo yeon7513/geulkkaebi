@@ -1,21 +1,32 @@
 @charset "utf-8";
 
-.logoImg {
-  height: 40px;
-}
+@use '/src/scss/variables.scss' as *;
 
-.decoText {
-  font-family: var(--title-font);
-  font-weight: 300;
-  color: #b7d45e;
-}
+.logo {
+  a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
 
-.hide {
-  display: none;
-}
+    .logoImg {
+      height: 40px;
+    }
 
-.logoText {
-  font-family: var(--title-font);
-  font-size: 2.5rem;
-  color: #84a12b;
+    .decoText {
+      font-family: $title-font;
+      font-weight: 300;
+      color: $green-400;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    .logoText {
+      font-family: $title-font;
+      font-size: 2.5rem;
+      color: $green-600;
+    }
+  }
 }
