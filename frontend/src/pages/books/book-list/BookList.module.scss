@@ -1,6 +1,70 @@
 @charset 'utf-8';
 
-.list {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+@use '/src/scss/variables.scss' as *;
+
+@import '../../../scss/mixin.scss';
+
+.bookSilde {
+  width: 65%;
+  height: 600px;
+
+  .bookItem {
+    display: flex;
+    gap: 24px;
+    padding: 32px;
+    overflow: hidden;
+    border-radius: 24px;
+    background-color: #fff;
+    box-shadow: $box-shadow;
+
+    .contents {
+      .title {
+        h4 {
+          font-size: 30px;
+          line-height: 1.2;
+          word-break: break-all;
+        }
+
+        .publisher {
+          display: flex;
+          align-items: center;
+          margin-top: 16px;
+
+          > span {
+            padding: 0 6px;
+
+            &:first-child {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              padding-left: 0;
+
+              &::after {
+                content: '';
+                display: block;
+                width: 1px;
+                height: 14px;
+                background-color: #999;
+              }
+            }
+          }
+        }
+
+        .info {
+          margin: 24px 0;
+
+          li {
+            display: flex;
+            margin-bottom: 8px;
+
+            > span:first-child {
+              display: block;
+              width: 100px;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+  }
 }

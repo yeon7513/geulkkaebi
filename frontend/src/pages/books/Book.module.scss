@@ -1,1 +1,33 @@
 @charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.book {
+  .container {
+    display: flex;
+
+    .toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 200px;
+
+      > button {
+        width: 100%;
+        font-size: 20px;
+        color: $grayscale-300;
+
+        &.active {
+          color: #fff;
+          background-color: $mint-600;
+          border: 1px solid $mint-600;
+        }
+
+        // &:hover {
+        //   opacity: 0.5;
+        //   color: $mint-600;
+        // }
+      }
+    }
+  }
+}

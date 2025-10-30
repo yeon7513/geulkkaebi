@@ -1,19 +1,66 @@
 import { useState } from 'react';
+import Button from '../../components/button/Button';
+import Container from '../../components/layout/container/Container';
 import { bestBookList, newBookList } from '../../lib/bookTest';
 import BookList from './book-list/BookList';
+import styles from './Book.module.scss';
 
 function Book() {
   const [books, setBooks] = useState(newBookList);
+  const [active, setActive] = useState('new');
 
   const handleChangeBooks = (bookList) => {
     setBooks(bookList);
   };
 
   return (
-    <div>
-      <button onClick={() => handleChangeBooks(newBookList)}>신작 도서</button>
-      <button onClick={() => handleChangeBooks(bestBookList)}>추천 도서</button>
-      <BookList list={books} />
+    <div className={styles.book}>
+      <h3>
+        {active === 'new'
+          ? '새롭게 만나는 책 친구들'
+          : '모두가 좋아하는 책 모음'}
+      </h3>
+      <Container className={styles.container}>
+        <div className={styles.toggle}>
+          <Button
+            className={active === 'new' ? styles.active : ''}
+            variant="outline"
+            colors={active === 'new' ? 'mint' : 'gray'}
+            onClick={() => {
+              handleChangeBooks(newBookList);
+              setActive('new');
+            }}
+          >
+            신작 도서
+          </Button>
+          <Button
+            className={active === 'best' ? styles.active : ''}
+            variant="outline"
+            colors={active === 'best' ? 'mint' : 'gray'}
+            onClick={() => {
+              handleChangeBooks(bestBookList);
+              setActive('best');
+            }}
+          >
+            추천 도서
+          </Button>
+        </div>
+        {/* <Button
+          variant="outline"
+          onClick={() => handleChangeBooks
+          
+          (newBookList)}
+        >
+          신작 도서
+        </Button>
+        <Button
+          variant="outline"
+          onClick={() => handleChangeBooks(bestBookList)}
+        >
+          추천 도서
+        </Button> */}
+        <BookList list={books} />
+      </Container>
     </div>
   );
 }

@@ -8,9 +8,48 @@
   box-shadow: $box-shadow;
   background: #fff;
 
-  &.position {
-    position: absolute;
+  &.fixed {
+    position: fixed;
     z-index: 2;
+  }
+
+  &.shrink {
+    .container {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      .logo {
+        margin: 0;
+        order: 0;
+
+        a {
+          > span:nth-of-type(2) {
+            font-size: 32px;
+          }
+          img {
+            height: 32px;
+          }
+        }
+      }
+
+      > nav {
+        > ul {
+          gap: 56px;
+        }
+      }
+      .item {
+        order: 1;
+        > a {
+          font-size: 20px;
+        }
+      }
+
+      .utils {
+        position: static;
+        order: 2;
+      }
+    }
   }
 
   .container {

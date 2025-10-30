@@ -1,7 +1,6 @@
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useEffect, useRef, useState } from 'react';
-import Goto from '../../components/goto/Goto';
 import Board from '../board/Board';
 import Book from '../books/Book';
 import Support from '../support/Support';
@@ -62,10 +61,6 @@ function Home() {
       {/* 메인 슬라이드 */}
       <section className={styles.visual}>
         <Visual />
-        <Container className={styles.goto}>
-          {/* 바로가기 */}
-          <Goto />
-        </Container>
       </section>
       {/* 신작 및 추천 도서 */}
       <section className={styles.books}>

@@ -27,7 +27,9 @@ function Login() {
         </div>
       </div>
       <div className={styles.submit}>
-        <Button type="submit">로그인</Button>
+        <Button variant="pushable" type="submit">
+          로그인
+        </Button>
       </div>
     </form>
   );

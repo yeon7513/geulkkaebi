@@ -1,3 +1,7 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
 .home {
   display: flex;
   flex-direction: column;
@@ -5,6 +9,7 @@
   section {
     display: flex;
     flex-direction: column;
+    // padding-top: ;
     height: 100vh;
 
     h3 {
@@ -19,8 +24,16 @@
       }
     }
 
+    &.books {
+      justify-content: center;
+      align-items: center;
+
+      // background-color: rgb(12, 189, 192, 0.05);
+    }
+
     &.board {
       justify-content: center;
+      background-color: $yellow-100;
     }
 
     &.notice {

@@ -14,7 +14,9 @@ function Goto({ className, isColumn = false, isScroll = false }) {
       )}
     >
       {goto.map((item, idx) => (
-        <Button key={idx}>{isScroll ? <>icons</> : <>{item.label}</>}</Button>
+        <Button colors={item.color} key={idx}>
+          {isScroll ? <>icons</> : <>{item.label}</>}
+        </Button>
       ))}
     </div>
   );

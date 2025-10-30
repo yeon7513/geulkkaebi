@@ -7,7 +7,7 @@ import styles from './Supoport.module.scss';
 function Support() {
   return (
     <div className={styles.support}>
-      <h3>공지사항 및 이벤트</h3>
+      <h3>새로운 소식과 함께하는 이벤트</h3>
       <Container className={styles.container}>
         {supportTest.map((post) => (
           <Card key={post.id} className={styles.post}>
@@ -25,7 +25,7 @@ function Support() {
                 </div>
                 <div className={styles.detail}>
                   <h4>{post.title}</h4>
-                  <p>{post.substance}</p>
+                  <p>{post.text}</p>
                 </div>
               </div>
             </a>

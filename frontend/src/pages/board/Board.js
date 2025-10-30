@@ -42,7 +42,7 @@ function Board() {
 
   return (
     <div className={styles.board}>
-      <h3>오늘의 인기글</h3>
+      <h3>오늘 친구들이 많이 본 이야기</h3>
       <div className={styles.post}>
         <AnimatePresence mode="wait">
           <motion.div
