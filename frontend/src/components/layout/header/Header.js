@@ -20,6 +20,7 @@ function Header() {
     }
 
     setIsShrink(false);
+
     const handleScroll = () => {
       setIsShrink(window.scrollY > 50);
     };

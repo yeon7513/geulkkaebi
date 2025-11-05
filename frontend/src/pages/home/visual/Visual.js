@@ -7,9 +7,12 @@ import 'swiper/css/pagination';
 
 import styles from './Visual.module.scss';
 
+import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 
 function Visual() {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.visual}>
       <Swiper
@@ -32,7 +35,11 @@ function Visual() {
           <span className={styles.hide}>
             글깨비가 추천하는 오늘의 책: 신작과 추천 도서, 지금 확인하세요!
           </span>
-          <Button variant="pushable" colors="mint" onClick={null}>
+          <Button
+            variant="pushable"
+            colors="mint"
+            onClick={() => navigate('/book')}
+          >
             신작·추천 도서 보러가기
           </Button>
         </SwiperSlide>
@@ -41,15 +48,23 @@ function Visual() {
             글깨비 친구들과 함께 놀자! 읽고, 쓰고, 나누는 즐거움. 나만의
             이야기를 써보세요!
           </span>
-          <Button variant="pushable" colors="yellow" onClick={null}>
-            글쓰러 가기
+          <Button
+            variant="pushable"
+            colors="yellow"
+            onClick={() => navigate('/board')}
+          >
+            더 많은 이야기 보러가기
           </Button>
         </SwiperSlide>
         <SwiperSlide className={styles.quizSlide}>
           <span className={styles.hide}>
             오늘의 하이라이트. 신나는~ 퀴즈게임
           </span>
-          <Button variant="pushable" colors="orange" onClick={null}>
+          <Button
+            variant="pushable"
+            colors="orange"
+            onClick={() => navigate('/quiz')}
+          >
             퀴즈 풀기
           </Button>
         </SwiperSlide>

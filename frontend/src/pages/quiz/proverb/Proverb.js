@@ -1,5 +1,5 @@
 function Proverb(props) {
-  return <div></div>;
+  return <div>Proverb</div>;
 }
 
 export default Proverb;

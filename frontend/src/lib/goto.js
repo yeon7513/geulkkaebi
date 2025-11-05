@@ -1,25 +1,25 @@
 export const goto = [
   {
     icon: '',
-    label: '글쓰기',
-    path: '',
+    label: '신작도서',
+    path: '/book/newest',
     color: 'yellow',
   },
   {
     icon: '',
-    label: '퀴즈 풀기',
-    path: '',
+    label: '추천도서',
+    path: '/book/best',
     color: 'orange',
   },
   {
     icon: '',
-    label: '추천 도서',
-    path: '',
+    label: '이벤트',
+    path: '/support/notice',
     color: 'mint',
   },
   {
     icon: '',
-    label: '이벤트',
+    label: 'TOP',
     path: '',
     color: 'purple',
   },

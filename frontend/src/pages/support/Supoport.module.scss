@@ -10,7 +10,7 @@
   .container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
+    gap: 24px;
 
     .post {
       transition: 0.3s;
@@ -60,7 +60,7 @@
     }
 
     p {
-      @include textLine(1);
+      @include textLine(3);
       line-height: 1.4;
       color: $grayscale-500;
     }

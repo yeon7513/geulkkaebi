@@ -3,22 +3,23 @@
 @use '/src/scss/variables.scss' as *;
 
 .joinForm {
-  table {
-    .align {
-      display: flex;
-      justify-content: stretch;
-      align-items: center;
-      gap: 8px;
+  ul {
+    li {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      margin-bottom: 8px;
+      outline: 1px dotted #ccc;
 
-      button {
+      label {
+        width: 100px;
         outline: 1px dotted red;
+        text-align: center;
       }
     }
+  }
 
-    .fullSize {
-      flex: 1;
-      outline: 1px dotted red;
-    }
+  .profileImg {
+    width: 200px;
   }
 
   .btnGroup {

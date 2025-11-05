@@ -101,11 +101,11 @@
 
   &.mint {
     .edge {
-      background: $mint-700;
+      background: $mint-600;
     }
 
     .front {
-      background: $mint-600;
+      background: $mint-500;
     }
   }
 
@@ -115,7 +115,7 @@
     }
 
     .front {
-      background: $purple-400;
+      background: $purple-500;
     }
   }
 
@@ -156,10 +156,10 @@
   }
 
   &.green {
-    background-color: $green-400;
+    background-color: $green-500;
 
     &:hover {
-      background-color: $green-500;
+      background-color: $green-600;
       box-shadow: 0px 4px 8px $green-200;
     }
   }
@@ -173,33 +173,33 @@
   }
 
   &.mint {
-    background-color: $mint-600;
+    background-color: $mint-500;
     &:hover {
-      background-color: $mint-700;
+      background-color: $mint-600;
       box-shadow: 0px 4px 8px $mint-200;
     }
   }
 
   &.purple {
-    background-color: $purple-400;
+    background-color: $purple-500;
     &:hover {
-      background-color: $purple-500;
+      background-color: $purple-600;
       box-shadow: 0px 4px 8px $purple-200;
     }
   }
 
   &.yellow {
-    background-color: $yellow-400;
+    background-color: $yellow-500;
     &:hover {
-      background-color: $yellow-500;
+      background-color: $yellow-600;
       box-shadow: 0px 4px 8px $yellow-300;
     }
   }
 
   &.orange {
-    background-color: $orange-400;
+    background-color: $orange-500;
     &:hover {
-      background-color: $orange-500;
+      background-color: $orange-600;
       box-shadow: 0px 4px 8px $orange-200;
     }
   }
@@ -251,20 +251,20 @@
   }
 
   &.mint {
-    border: solid 1px $mint-600;
-    color: $mint-700;
+    border: solid 1px $mint-500;
+    color: $mint-600;
 
     &::after {
-      background-color: $mint-600;
+      background-color: $mint-500;
     }
   }
 
   &.purple {
-    border: solid 1px $purple-400;
-    color: $purple-500;
+    border: solid 1px $purple-500;
+    color: $purple-600;
 
     &::after {
-      background-color: $purple-400;
+      background-color: $purple-500;
     }
   }
 
@@ -278,11 +278,11 @@
   }
 
   &.orange {
-    border: solid 1px $orange-400;
-    color: $orange-500;
+    border: solid 1px $orange-500;
+    color: $orange-600;
 
     &::after {
-      background-color: $orange-400;
+      background-color: $orange-500;
     }
   }
 }

@@ -3,31 +3,33 @@
 @use '/src/scss/variables.scss' as *;
 
 .book {
-  .container {
+  h3 {
     display: flex;
+    justify-content: center;
+    align-items: end;
+    gap: 24px;
+  }
 
-    .toggle {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      width: 200px;
+  .toggle {
+    display: flex;
+    gap: 8px;
 
-      > button {
-        width: 100%;
-        font-size: 20px;
-        color: $grayscale-300;
+    > button {
+      width: 100%;
+      padding: 8px 24px;
+      font-size: 18px;
+      color: $grayscale-300;
 
-        &.active {
-          color: #fff;
-          background-color: $mint-600;
-          border: 1px solid $mint-600;
-        }
-
-        // &:hover {
-        //   opacity: 0.5;
-        //   color: $mint-600;
-        // }
+      &.active {
+        color: #fff;
+        background-color: $mint-500;
+        border: 1px solid $mint-500;
       }
+
+      // &:hover {
+      //   opacity: 0.5;
+      //   color: $mint-600;
+      // }
     }
   }
 }

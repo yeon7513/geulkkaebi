@@ -19,46 +19,34 @@ function Book() {
         {active === 'new'
           ? '새롭게 만나는 책 친구들'
           : '모두가 좋아하는 책 모음'}
-      </h3>
-      <Container className={styles.container}>
         <div className={styles.toggle}>
           <Button
             className={active === 'new' ? styles.active : ''}
             variant="outline"
+            isRound={true}
             colors={active === 'new' ? 'mint' : 'gray'}
             onClick={() => {
               handleChangeBooks(newBookList);
               setActive('new');
             }}
           >
-            신작 도서
+            신작
           </Button>
           <Button
             className={active === 'best' ? styles.active : ''}
             variant="outline"
+            isRound={true}
             colors={active === 'best' ? 'mint' : 'gray'}
             onClick={() => {
               handleChangeBooks(bestBookList);
               setActive('best');
             }}
           >
-            추천 도서
+            추천
           </Button>
         </div>
-        {/* <Button
-          variant="outline"
-          onClick={() => handleChangeBooks
-          
-          (newBookList)}
-        >
-          신작 도서
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() => handleChangeBooks(bestBookList)}
-        >
-          추천 도서
-        </Button> */}
+      </h3>
+      <Container className={styles.container}>
         <BookList list={books} />
       </Container>
     </div>

@@ -1,6 +1,7 @@
 import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useEffect, useRef, useState } from 'react';
+import Goto from '../../components/goto/Goto';
 import Board from '../board/Board';
 import Book from '../books/Book';
 import Support from '../support/Support';
@@ -11,9 +12,11 @@ import Visual from './visual/Visual';
 gsap.registerPlugin(ScrollToPlugin);
 
 function Home() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isShow, setIsShow] = useState(false);
+
   const homeRef = useRef(null);
   const sectionRefs = useRef([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
   const isScrolling = useRef(false);
 
   useEffect(() => {
@@ -25,6 +28,7 @@ function Home() {
       e.preventDefault();
 
       if (isScrolling.current) return;
+
       isScrolling.current = true;
 
       if (e.deltaY > 0 && currentIndex < sectionRefs.current.length - 1) {
@@ -46,6 +50,7 @@ function Home() {
   }, [currentIndex]);
 
   useEffect(() => {
+    // 섹션 이동 애니메이션
     const targetSection = sectionRefs.current[currentIndex];
     if (targetSection) {
       gsap.to(window, {
@@ -54,10 +59,18 @@ function Home() {
         ease: 'power2.inOut',
       });
     }
+
+    // 바로가기 제어
+    setIsShow(currentIndex > 0);
   }, [currentIndex]);
 
   return (
     <div className={styles.home} ref={homeRef}>
+      <Goto
+        isScroll={!isShow}
+        isFooter={currentIndex === 4 ? true : false}
+        onClickToTop={() => setCurrentIndex(0)}
+      />
       {/* 메인 슬라이드 */}
       <section className={styles.visual}>
         <Visual />
