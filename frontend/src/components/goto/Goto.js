@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { useNavigate } from 'react-router-dom';
 import { goto } from '../../lib/goto';
 import Button from '../button/Button';
+import Tooltip from '../tooltip/Tooltip';
 import styles from './Goto.module.scss';
 
 function Goto({ className, isScroll = false, isFooter = false, onClickToTop }) {
@@ -25,9 +26,11 @@ function Goto({ className, isScroll = false, isFooter = false, onClickToTop }) {
       )}
     >
       {goto.map((item, idx) => (
-        <Button colors={item.color} key={idx} onClick={() => handleClick(item)}>
-          {item.label}
-        </Button>
+        <Tooltip key={idx} text={item.label} position="left">
+          <Button colors={item.color} onClick={() => handleClick(item)}>
+            {item.label}
+          </Button>
+        </Tooltip>
       ))}
     </div>
   );

@@ -44,3 +44,15 @@
     transition: 0.3s;
   }
 }
+
+.input {
+  &[type='file'] {
+    outline: 1px dotted red;
+  }
+
+  &[type='date'] {
+    padding: 12px;
+    font-size: 18px;
+    border-bottom: 1px solid $grayscale-200;
+  }
+}

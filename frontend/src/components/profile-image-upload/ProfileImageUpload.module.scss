@@ -1,0 +1,38 @@
+@charset 'utf-8';
+
+.profileUpload {
+  position: relative;
+  display: inline-block;
+
+  input[type='file'] {
+    display: none;
+  }
+
+  img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+
+  &:hover .overlay {
+    opacity: 1;
+  }
+}

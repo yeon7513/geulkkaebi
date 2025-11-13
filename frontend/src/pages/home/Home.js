@@ -2,9 +2,9 @@ import gsap from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useEffect, useRef, useState } from 'react';
 import Goto from '../../components/goto/Goto';
-import Board from '../board/Board';
-import Book from '../books/Book';
-import Support from '../support/Support';
+import Board from '../board/popularPosts/PopularPosts';
+import BookIntro from '../books/book-intro/BookIntro';
+import SupportIntro from '../support/support-intro/SupportIntro';
 import Container from './../../components/layout/container/Container';
 import styles from './Home.module.scss';
 import Visual from './visual/Visual';
@@ -77,7 +77,7 @@ function Home() {
       </section>
       {/* 신작 및 추천 도서 */}
       <section className={styles.books}>
-        <Book />
+        <BookIntro />
       </section>
       {/* 오늘의 인기글 */}
       <section className={styles.board}>
@@ -88,7 +88,7 @@ function Home() {
       {/* 공지사항 및 이벤트 */}
       <section className={styles.notice}>
         <Container>
-          <Support />
+          <SupportIntro />
         </Container>
       </section>
     </div>

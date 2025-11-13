@@ -21,7 +21,9 @@ li {
   list-style: none;
 }
 
+html,
 body {
+  height: 100%;
   background: $grayscale-100;
   color: $grayscale-800;
 }

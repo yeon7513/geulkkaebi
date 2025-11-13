@@ -1,0 +1,11 @@
+@charset 'utf-8';
+
+.wrap {
+  .pageTitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 0;
+  }
+}

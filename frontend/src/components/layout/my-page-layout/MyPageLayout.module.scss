@@ -1,0 +1,15 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.wrap {
+  display: flex;
+
+  .sideNav {
+    flex: 1;
+  }
+
+  .container {
+    flex: 3;
+  }
+}

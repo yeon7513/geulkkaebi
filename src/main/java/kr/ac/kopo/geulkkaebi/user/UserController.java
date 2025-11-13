@@ -1,0 +1,123 @@
+package kr.ac.kopo.geulkkaebi.user;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import jakarta.servlet.http.HttpSession;
+
+@RestController
+@RequestMapping("/users")
+public class UserController {
+
+  @Autowired
+  private UserService userService;
+
+  // 모든 회원 조회
+  @GetMapping("/list")
+  public List<User> displayUsersList() {
+    return userService.selectList();
+  }
+
+  // 한 명의 회원 조회
+  @GetMapping("/{id}")
+  public User displayUser(@PathVariable String id) {
+
+    return userService.selectOne(id);
+  }
+
+  // 회원 등록
+  @PostMapping("/add")
+  public ResponseEntity<String> addUser(@RequestPart("user") User user,
+      @RequestPart(value = "file", required = false) MultipartFile file) {
+    // ResponseEntity<String>
+    // insert의 성공 여부를 확인 할 때,
+    // int로만 반환하면 실패 했을 경우의 원인은 확인할 수 없다.
+    // (NOT NULL인데 NULL이 들어가는 경우 등)
+    // 프론트쪽에 어떤 오류인지 명확하게 전달하기 위해
+    // ResponseEntity를 사용한다.
+
+    // @@RequestPart로 데이터를 받는 이유
+    // -> 프로필 이미지 파일을 받아야해서 각각 처리한다.
+
+    try {
+      // 데이터를 Service를 통해 insert 요청
+      int result = userService.insert(user, file);
+
+      // 성공/실패 확인
+      if (result > 0) {
+        // insert 성공
+        return ResponseEntity.ok("success");
+      } else {
+        // insert 실패
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("insert failed");
+      }
+
+    } catch (Exception e) {
+      // 제약 조건 위반 시 에러 반환
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("DB Error: " + e.getMessage());
+    }
+  }
+
+  // 회원 정보 수정
+  @PatchMapping("/update/{userNo}")
+  public ResponseEntity<Object> updateUser(@PathVariable Long userNo,
+      @RequestPart("user") User user,
+      @RequestPart(value = "file", required = false) MultipartFile file, HttpSession session) {
+
+    try {
+
+      System.out.println(userNo);
+      System.out.println(user.getId());
+
+      user.setUserNo(userNo);
+
+      int result = userService.update(user, file);
+
+      // 성공/실패 확인
+      if (result > 0) {
+        // insert 성공
+        User updatedUser = userService.selectOne(user.getId());
+
+        session.setAttribute("loginUser", updatedUser);
+
+        return ResponseEntity.ok(updatedUser);
+      } else {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("update failed");
+      }
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("DB Error: " + e.getMessage());
+    }
+  }
+
+  @DeleteMapping("/delete/{userNo}")
+  public ResponseEntity<String> deleteUser(@PathVariable Long userNo, HttpSession session) {
+    try {
+      int result = userService.delete(userNo);
+
+      if (result > 0) {
+        session.invalidate();
+
+        return ResponseEntity.ok("success");
+      } else {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("delete failed");
+      }
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body("DB Error: " + e.getMessage());
+    }
+
+  }
+
+}

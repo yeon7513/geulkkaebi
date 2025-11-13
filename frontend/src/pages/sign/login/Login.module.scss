@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   gap: 24px;
+  padding: 3rem 3rem 2.5rem;
 
   .inputContent {
     display: flex;
@@ -33,6 +34,20 @@
     width: 100%;
     button {
       width: 100%;
+    }
+
+    .find {
+      margin-top: 24px;
+      text-align: center;
+
+      a {
+        font-size: 16px;
+        color: $grayscale-400;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
     }
   }
 }

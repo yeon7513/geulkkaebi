@@ -5,39 +5,45 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="users">
+
 	<select id="selectList" resultType="usersDto">
-		SELECT * FROM users ORDER BY
-		userno
+		SELECT * FROM users 
+			ORDER BY userno
 	</select>
 
-	<select id="selectOne" resultType="usersDto">
-		SELECT * FROM users WHERE id =
-		#{id, jdbcType=VARCHAR}
+	<select id="selectOne" parameterType="string" resultType="usersDto">
+		SELECT * FROM users 
+			WHERE id = #{id, jdbcType=VARCHAR}
 	</select>
 
 	<insert id="insert">
-		INSERT INTO users VALUES (
-			userno_seq.nextval, #{id, jdbcType=VARCHAR}, 
-			#{pw, jdbcType=VARCHAR}, #{name, jdbcType=VARCHAR},
-			#{nickname, jdbcType=VARCHAR},
+		INSERT INTO users 
+		VALUES (
+			userno_seq.nextval, 
+			#{id, jdbcType=VARCHAR}, #{pw, jdbcType=VARCHAR}, 
+			#{name, jdbcType=VARCHAR}, #{nickname, jdbcType=VARCHAR},
 			#{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
-			#{profileImg, jdbcType=VARCHAR}, null, null,
-			SYSDATE, NULL, 'N', 'N', 'N', 'N')
+			#{profileImg, jdbcType=VARCHAR}, 
+			0, 0,
+			SYSDATE, SYSDATE, 
+			'N', 'N', 'N', 'N')
 	</insert>
 
 	<update id="update">
-		UPDATE users SET
-			pw = #{pw, jdbcType=VARCHAR}, 
-			nickname = #{nickname, jdbcType=VARCHAR},
-			phone = #{phone, jdbcType=VARCHAR},
-			profile_img = #{profileImg, jdbcType=VARCHAR}
-			email = #{email, jdbcType=VARCHAR}, 
-			modified_at = SYSDATE
-		WHERE id = #{id, jdbcType=VARCHAR}
+		UPDATE users 
+			SET
+				pw = #{pw, jdbcType=VARCHAR},
+				nickname = #{nickname, jdbcType=VARCHAR},
+				phone = #{phone, jdbcType=VARCHAR},
+				profile_img = #{profileImg, jdbcType=VARCHAR},
+				email = #{email, jdbcType=VARCHAR},
+				modified_date = SYSDATE
+			WHERE userno = #{userNo, jdbcType=NUMERIC}
 	</update>
-	
+
 	<delete id="delete">
-		DELETE FROM users WHERE id = #{id, jdbcType=VARCHAR}
+		DELETE FROM users
+			WHERE userno = #{userNo, jdbcType=NUMERIC}
 	</delete>
 
 </mapper>
