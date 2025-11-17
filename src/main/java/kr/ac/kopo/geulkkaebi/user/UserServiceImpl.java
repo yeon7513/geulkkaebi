@@ -22,8 +22,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User selectOne(String id) {
-    return userDao.selectOne(id);
+  public User selectOne(String userId) {
+    return userDao.selectOne(userId);
   }
 
   @Override
@@ -66,8 +66,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public int delete(Long userNo) {
-    return userDao.delete(userNo);
+  public int delete(String userId) {
+    return userDao.delete(userId);
   }
 
 

@@ -5,8 +5,7 @@ import kr.ac.kopo.geulkkaebi.grobal.constants.Whether;
 
 @Alias("usersDto")
 public class User {
-  private Long userNo; // 회원 식별 번호
-  private String id; // 회원 아이디
+  private String userId; // 회원 아이디(PK)
   private String pw; // 회원 비밀번
   private String name; // 회원 이름
   private String nickname; // 회원 닉네임
@@ -22,20 +21,13 @@ public class User {
   private String adminYn = Whether.NO; // 관리자 여부
   private String deleteYn = Whether.NO; // 삭제 여부
 
-  public Long getUserNo() {
-    return userNo;
+
+  public String getUserId() {
+    return userId;
   }
 
-  public void setUserNo(Long userNo) {
-    this.userNo = userNo;
-  }
-
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
   public String getPw() {

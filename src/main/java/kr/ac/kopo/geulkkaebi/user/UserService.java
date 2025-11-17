@@ -7,12 +7,12 @@ public interface UserService {
 
   List<User> selectList();
 
-  User selectOne(String id);
+  User selectOne(String userId);
 
   int insert(User user, MultipartFile file);
 
   int update(User user, MultipartFile flie);
 
-  int delete(Long userNo);
+  int delete(String userId);
 
 }

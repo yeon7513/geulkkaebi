@@ -17,8 +17,8 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public User selectOne(String id) {
-    return sql.selectOne("users.selectOne", id);
+  public User selectOne(String userId) {
+    return sql.selectOne("users.selectOne", userId);
   }
 
   @Override
@@ -32,8 +32,8 @@ public class UserDaoImpl implements UserDao {
   }
 
   @Override
-  public int delete(Long userNo) {
-    return sql.delete("users.delete", userNo);
+  public int delete(String userId) {
+    return sql.delete("users.delete", userId);
   }
 
 }

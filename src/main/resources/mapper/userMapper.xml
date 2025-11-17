@@ -8,19 +8,18 @@
 
 	<select id="selectList" resultType="usersDto">
 		SELECT * FROM users 
-			ORDER BY userno
+			ORDER BY created_at
 	</select>
 
 	<select id="selectOne" parameterType="string" resultType="usersDto">
 		SELECT * FROM users 
-			WHERE id = #{id, jdbcType=VARCHAR}
+			WHERE userid = #{userId, jdbcType=VARCHAR}
 	</select>
 
 	<insert id="insert">
 		INSERT INTO users 
 		VALUES (
-			userno_seq.nextval, 
-			#{id, jdbcType=VARCHAR}, #{pw, jdbcType=VARCHAR}, 
+			#{userId, jdbcType=VARCHAR}, #{pw, jdbcType=VARCHAR}, 
 			#{name, jdbcType=VARCHAR}, #{nickname, jdbcType=VARCHAR},
 			#{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
 			#{profileImg, jdbcType=VARCHAR}, 
@@ -38,12 +37,12 @@
 				profile_img = #{profileImg, jdbcType=VARCHAR},
 				email = #{email, jdbcType=VARCHAR},
 				modified_date = SYSDATE
-			WHERE userno = #{userNo, jdbcType=NUMERIC}
+			WHERE userid = #{userId, jdbcType=VARCHAR}
 	</update>
 
 	<delete id="delete">
 		DELETE FROM users
-			WHERE userno = #{userNo, jdbcType=NUMERIC}
+			WHERE userid = #{userId, jdbcType=VARCHAR}
 	</delete>
 
 </mapper>

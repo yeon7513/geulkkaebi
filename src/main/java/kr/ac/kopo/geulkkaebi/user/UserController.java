@@ -29,10 +29,10 @@ public class UserController {
   }
 
   // 한 명의 회원 조회
-  @GetMapping("/{id}")
-  public User displayUser(@PathVariable String id) {
+  @GetMapping("/{userId}")
+  public User displayUser(@PathVariable String userId) {
 
-    return userService.selectOne(id);
+    return userService.selectOne(userId);
   }
 
   // 회원 등록
@@ -70,24 +70,24 @@ public class UserController {
   }
 
   // 회원 정보 수정
-  @PatchMapping("/update/{userNo}")
-  public ResponseEntity<Object> updateUser(@PathVariable Long userNo,
+  @PatchMapping("/update/{userId}")
+  public ResponseEntity<Object> updateUser(@PathVariable String userId,
       @RequestPart("user") User user,
       @RequestPart(value = "file", required = false) MultipartFile file, HttpSession session) {
 
     try {
 
-      System.out.println(userNo);
-      System.out.println(user.getId());
+      System.out.println(userId);
+      System.out.println(user.getUserId());
 
-      user.setUserNo(userNo);
+      user.setUserId(userId);
 
       int result = userService.update(user, file);
 
       // 성공/실패 확인
       if (result > 0) {
         // insert 성공
-        User updatedUser = userService.selectOne(user.getId());
+        User updatedUser = userService.selectOne(user.getUserId());
 
         session.setAttribute("loginUser", updatedUser);
 
@@ -101,10 +101,10 @@ public class UserController {
     }
   }
 
-  @DeleteMapping("/delete/{userNo}")
-  public ResponseEntity<String> deleteUser(@PathVariable Long userNo, HttpSession session) {
+  @DeleteMapping("/delete/{userId}")
+  public ResponseEntity<String> deleteUser(@PathVariable String userId, HttpSession session) {
     try {
-      int result = userService.delete(userNo);
+      int result = userService.delete(userId);
 
       if (result > 0) {
         session.invalidate();
