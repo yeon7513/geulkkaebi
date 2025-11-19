@@ -1,5 +1,5 @@
 function Post(props) {
-  return <div></div>;
+  return <div>Post</div>;
 }
 
 export default Post;

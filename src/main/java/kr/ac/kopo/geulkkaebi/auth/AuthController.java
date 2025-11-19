@@ -22,7 +22,10 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<?> login(@RequestBody User user, HttpSession session) {
 
-    User loginUser = authService.login(user.getId(), user.getPw());
+    System.out.println(user.getUserId());
+    System.out.println(user.getUserPw());
+
+    User loginUser = authService.login(user.getUserId(), user.getUserPw());
 
     if (loginUser != null) {
       System.out.println(session.getId());

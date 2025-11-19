@@ -11,11 +11,11 @@ public class AuthService {
   @Autowired
   UserService userService;
 
-  public User login(String id, String pw) {
-    User user = userService.selectOne(id);
+  public User login(String userId, String userPw) {
+    User user = userService.selectOne(userId);
 
     // 로그인 성공 시 user 반환
-    if (user != null && user.getPw().equals(pw)) {
+    if (user != null && user.getUserPw().equals(userPw)) {
 
       return user;
     }

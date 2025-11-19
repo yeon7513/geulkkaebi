@@ -4,22 +4,21 @@ import Button from './../../../components/button/Button';
 import styles from './Login.module.scss';
 
 import { FaKey, FaUser } from 'react-icons/fa6';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { loginedData } from '../../../store/user/userSlice';
 
 function Login() {
-  const { list } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const id = e.target.id.value;
-    const pw = e.target.pw.value;
+    const userId = e.target.userId.value;
+    const userPw = e.target.userPw.value;
 
     try {
-      const result = dispatch(loginedData({ id, pw }));
+      const result = dispatch(loginedData({ userId, userPw }));
 
       if (result) {
         navigate('/');
@@ -33,16 +32,21 @@ function Login() {
     <form className={styles.loginForm} onSubmit={handleSubmit}>
       <div className={styles.inputContent}>
         <div className={styles.id}>
-          <label htmlFor="userid" className={styles.icon}>
+          <label htmlFor="userId" className={styles.icon}>
             <FaUser />
           </label>
-          <Input id="userid" name="id" placeholder="아이디" />
+          <Input id="userId" name="userId" placeholder="아이디" />
         </div>
         <div className={styles.pw}>
-          <label htmlFor="userpw" className={styles.icon}>
+          <label htmlFor="userPw" className={styles.icon}>
             <FaKey />
           </label>
-          <Input id="userpw" name="pw" type="password" placeholder="비밀번호" />
+          <Input
+            id="userPw"
+            name="userPw"
+            type="password"
+            placeholder="비밀번호"
+          />
         </div>
       </div>
       <div className={styles.submit}>

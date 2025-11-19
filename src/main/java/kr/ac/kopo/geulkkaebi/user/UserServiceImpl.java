@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
       } else {
         // 파일을 업로드 하지 않았을 경우, 기본 이미지 랜덤 생성
         int randomNum = (int) (Math.random() * 3) + 1;
-        filePath = "/images/default/random_profile_" + randomNum + ".png";
+        filePath = "/uploads/default/random_profile_" + randomNum + ".png";
       }
 
       // 파일 객체를 경로로 변환해 저장

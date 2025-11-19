@@ -8,7 +8,7 @@
 
 	<select id="selectList" resultType="usersDto">
 		SELECT * FROM users 
-			ORDER BY created_at
+			ORDER BY created_at desc
 	</select>
 
 	<select id="selectOne" parameterType="string" resultType="usersDto">
@@ -19,24 +19,28 @@
 	<insert id="insert">
 		INSERT INTO users 
 		VALUES (
-			#{userId, jdbcType=VARCHAR}, #{pw, jdbcType=VARCHAR}, 
-			#{name, jdbcType=VARCHAR}, #{nickname, jdbcType=VARCHAR},
-			#{phone, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR},
+			#{userId, jdbcType=VARCHAR}, 
+			#{userPw, jdbcType=VARCHAR},
+			#{name, jdbcType=VARCHAR}, 
+			#{birth, jdbcType=VARCHAR},
+			#{gender, jdbcType=VARCHAR}, 
+			#{phone, jdbcType=VARCHAR},
+			#{email, jdbcType=VARCHAR}, 
+			#{nickname, jdbcType=VARCHAR},
 			#{profileImg, jdbcType=VARCHAR}, 
 			0, 0,
-			SYSDATE, SYSDATE, 
-			'N', 'N', 'N', 'N')
+			'N', 'N', 'N', 'N', SYSDATE, NULL)
 	</insert>
 
 	<update id="update">
 		UPDATE users 
 			SET
-				pw = #{pw, jdbcType=VARCHAR},
+				userpw = #{userPw, jdbcType=VARCHAR},
 				nickname = #{nickname, jdbcType=VARCHAR},
 				phone = #{phone, jdbcType=VARCHAR},
 				profile_img = #{profileImg, jdbcType=VARCHAR},
 				email = #{email, jdbcType=VARCHAR},
-				modified_date = SYSDATE
+				modified_at = SYSDATE
 			WHERE userid = #{userId, jdbcType=VARCHAR}
 	</update>
 

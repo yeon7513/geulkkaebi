@@ -3,25 +3,6 @@ import axios from 'axios';
 import { IMG_URL } from '../../lib/url';
 import { commonState, STATUS } from '../common/commoms';
 
-// const initialState = {
-//   userNo: '',
-//   id: '',
-//   name: '',
-//   nickname: '',
-//   phone: '',
-//   email: '',
-//   profileImg: '',
-//   grade: 0,
-//   score: 0,
-//   createdAt: '',
-//   modifiedDate: '',
-//   reportYn: '',
-//   suspendYn: '',
-//   adminYn: '',
-//   deleteYn: '',
-//   ...commonState,
-// };
-
 const initialState = {
   list: [],
   ...commonState,
@@ -116,11 +97,11 @@ export const fetchAllUserData = createAsyncThunk('user/fetchAll', async () => {
 // 로그인
 export const loginedData = createAsyncThunk(
   'user/login',
-  async ({ id, pw }) => {
+  async ({ userId, userPw }) => {
     try {
       const res = await axios.post(
         '/auth/login',
-        { id, pw },
+        { userId, userPw },
         { withCredentials: true }
       );
       const data = res.data;
@@ -161,9 +142,9 @@ export const logout = createAsyncThunk('user/logout', async () => {
 // 정보 업데이트
 export const userInfoUpdate = createAsyncThunk(
   'user/update',
-  async ({ userNo, updateData }) => {
+  async ({ userId, updateData }) => {
     try {
-      const res = await axios.patch(`/users/update/${userNo}`, updateData, {
+      const res = await axios.patch(`/users/update/${userId}`, updateData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

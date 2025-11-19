@@ -1,26 +1,26 @@
 package kr.ac.kopo.geulkkaebi.user;
 
 import org.apache.ibatis.type.Alias;
-import kr.ac.kopo.geulkkaebi.grobal.constants.Whether;
 
 @Alias("usersDto")
 public class User {
-  private String userId; // 회원 아이디(PK)
-  private String pw; // 회원 비밀번
+  private String userId; // 회원 아이디 (PK)
+  private String userPw; // 비밀번호
   private String name; // 회원 이름
-  private String nickname; // 회원 닉네임
-  private String phone; // 회원 연락처
-  private String email; // 회원의 이메일
-  private String profileImg; // 회원의 프로필 사진
+  private String birth;
+  private char gender;
+  private String nickname; // 닉네임
+  private String phone; // 연락처
+  private String email; // 이메일
+  private String profileImg; // 프로필 사진 경로
   private int grade; // 회원 등급
-  private int score; // 회원이 푼 퀴즈들의 점수
-  private String createdAt; // 가입한 날짜
-  private String modifiedDate; // 개인정보를 수정한 날짜
-  private String reportYn = Whether.NO; // 신고 여부
-  private String suspendYn = Whether.NO; // 정지 여부
-  private String adminYn = Whether.NO; // 관리자 여부
-  private String deleteYn = Whether.NO; // 삭제 여부
-
+  private int score; // 퀴즈 점수
+  private char reportYn; // 신고 여부
+  private char suspendYn; // 정지(제재) 여부
+  private char adminYn; // 관리자 여부
+  private char deleteYn; // 탈퇴 여부
+  private String createdAt; // 회원 가입일
+  private String modifiedAt; // 정보 수정일
 
   public String getUserId() {
     return userId;
@@ -30,12 +30,12 @@ public class User {
     this.userId = userId;
   }
 
-  public String getPw() {
-    return pw;
+  public String getUserPw() {
+    return userPw;
   }
 
-  public void setPw(String pw) {
-    this.pw = pw;
+  public void setUserPw(String userPw) {
+    this.userPw = userPw;
   }
 
   public String getName() {
@@ -44,6 +44,22 @@ public class User {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getBirth() {
+    return birth;
+  }
+
+  public void setBirth(String birth) {
+    this.birth = birth;
+  }
+
+  public char getGender() {
+    return gender;
+  }
+
+  public void setGender(char gender) {
+    this.gender = gender;
   }
 
   public String getNickname() {
@@ -94,6 +110,38 @@ public class User {
     this.score = score;
   }
 
+  public char getReportYn() {
+    return reportYn;
+  }
+
+  public void setReportYn(char reportYn) {
+    this.reportYn = reportYn;
+  }
+
+  public char getSuspendYn() {
+    return suspendYn;
+  }
+
+  public void setSuspendYn(char suspendYn) {
+    this.suspendYn = suspendYn;
+  }
+
+  public char getAdminYn() {
+    return adminYn;
+  }
+
+  public void setAdminYn(char adminYn) {
+    this.adminYn = adminYn;
+  }
+
+  public char getDeleteYn() {
+    return deleteYn;
+  }
+
+  public void setDeleteYn(char deleteYn) {
+    this.deleteYn = deleteYn;
+  }
+
   public String getCreatedAt() {
     return createdAt;
   }
@@ -102,44 +150,13 @@ public class User {
     this.createdAt = createdAt;
   }
 
-  public String getModifiedDate() {
-    return modifiedDate;
+  public String getModifiedAt() {
+    return modifiedAt;
   }
 
-  public void setModifiedDate(String modifiedDate) {
-    this.modifiedDate = modifiedDate;
+  public void setModifiedAt(String modifiedAt) {
+    this.modifiedAt = modifiedAt;
   }
 
-  public String getReportYn() {
-    return reportYn;
-  }
-
-  public void setReportYn(String reportYn) {
-    this.reportYn = reportYn;
-  }
-
-  public String getSuspendYn() {
-    return suspendYn;
-  }
-
-  public void setSuspendYn(String suspendYn) {
-    this.suspendYn = suspendYn;
-  }
-
-  public String getAdminYn() {
-    return adminYn;
-  }
-
-  public void setAdminYn(String adminYn) {
-    this.adminYn = adminYn;
-  }
-
-  public String getDeleteYn() {
-    return deleteYn;
-  }
-
-  public void setDeleteYn(String deleteYn) {
-    this.deleteYn = deleteYn;
-  }
 
 }

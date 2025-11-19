@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout';
+import CommonEditor from './components/post/common-editor/CommonEditor';
 import { ComponentProvider } from './context/ComponentProvider';
 import Article from './pages/board/article/Article';
 import Board from './pages/board/Board';
@@ -75,7 +76,6 @@ function Main() {
             {/* 회원 - 마이페이지 */}
             <Route path="/mypage" element={<Member />}>
               <Route index element={<MemberInformation />} />
-              <Route path="information" element={<MemberInformation />} />
               <Route path="update" element={<UpdateInfo />} />
               <Route path="cancel" element={<CancelMembership />} />
             </Route>
@@ -94,6 +94,9 @@ function Main() {
             <Route path="join" element={<Join />} />
             <Route path="find" element={<FindIdPw />} />
           </Route>
+          {/* 공통 에디터 - 글쓰기 / 수정 페이지 */}
+          <Route path="/write/:type" element={<CommonEditor />} />
+          <Route path="/edit/:type/:postNo" element={<CommonEditor />} />
           {/* 404페이지 */}
           <Route path="*" element={<NotFound404 />} />
         </Routes>

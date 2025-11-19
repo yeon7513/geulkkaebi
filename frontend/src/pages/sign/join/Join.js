@@ -1,10 +1,10 @@
-import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
 import Input from '../../../components/input/Input';
 import styles from './Join.module.scss';
 
+import axios from 'axios';
 import {
   TbAsterisk,
   TbCake,
@@ -37,9 +37,11 @@ function Join() {
     const data = e.target;
 
     const userData = {
-      id: data.id.value,
-      pw: data.pw.value,
+      userId: data.userId.value,
+      userPw: data.userPw.value,
       name: data.name.value,
+      birth: data.birth.value,
+      gender: data.gender.value,
       nickname: data.nickname.value,
       phone: data.phone.value,
       email: data.email.value,
@@ -55,8 +57,6 @@ function Join() {
     if (selectedFile) {
       formData.append('file', selectedFile);
     }
-
-    console.log(formData);
 
     axios
       .post('/users/add', formData, {
@@ -85,15 +85,15 @@ function Join() {
       <div className={styles.joinContent}>
         <ul className={styles.requiredField}>
           <li>
-            <label htmlFor="userid">
+            <label htmlFor="userId">
               <TbPencil />
               <span className={styles.requiredIcon}>
                 <TbAsterisk />
               </span>
             </label>
             <Input
-              id="userid"
-              name="id"
+              id="userId"
+              name="userId"
               placeholder="아이디 (4자리 이상)"
               className={styles.fullSize}
             />
@@ -102,28 +102,28 @@ function Join() {
             </Button>
           </li>
           <li>
-            <label htmlFor="userpw">
+            <label htmlFor="userPw">
               <TbLock />
               <span className={styles.requiredIcon}>
                 <TbAsterisk />
               </span>
             </label>
             <Input
-              id="userpw"
-              name="pw"
+              id="userPw"
+              name="userPw"
               type="password"
               placeholder="비밀번호 (문자, 숫자 조합 8~12자리)"
             />
           </li>
           <li>
-            <label htmlFor="userpwcheck">
+            <label htmlFor="userPwCheck">
               <TbLockCheck />
               <span className={styles.requiredIcon}>
                 <TbAsterisk />
               </span>
             </label>
             <Input
-              id="userpwcheck"
+              id="userPwCheck"
               type="password"
               placeholder="비밀번호 확인"
             />
@@ -144,11 +144,13 @@ function Join() {
                 <TbAsterisk />
               </span>
             </label>
-            <Input
-              id="birth"
-              name="birth"
-              placeholder="생년월일 (ex: 20010509)"
-            />
+            <Input id="birth" name="birth" type="date" />
+          </li>
+          <li>
+            <label htmlFor="male">남성</label>
+            <input type="radio" id="male" name="gender" value="M" />
+            <label htmlFor="female">여성</label>
+            <input type="radio" id="female" name="gender" value="W" />
           </li>
           <li>
             <label htmlFor="phone">

@@ -14,8 +14,8 @@ function UpdateInfo() {
   const [preview, setPreview] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [values, setValues] = useState({
-    id: list?.id || '',
-    pw: list?.pw || '',
+    userId: list?.userId || '',
+    userPw: list?.userPw || '',
     name: list?.name || '',
     nickname: list?.nickname || '',
     phone: list?.phone || '',
@@ -44,14 +44,12 @@ function UpdateInfo() {
     const data = e.target;
 
     const updateData = {
-      id: values.id,
-      pw: data.pw.value,
+      userId: values.userId,
+      userPw: data.userPw.value,
       nickname: data.nickname.value,
       phone: data.phone.value,
       email: data.email.value,
     };
-
-    console.log(list.userNo);
 
     const formData = new FormData();
 
@@ -65,7 +63,7 @@ function UpdateInfo() {
         formData.append('file', selectedFile);
       }
 
-      dispatch(userInfoUpdate({ userNo: list.userNo, updateData: formData }));
+      dispatch(userInfoUpdate({ userId: list.userId, updateData: formData }));
       navigate('/mypage');
     } catch (error) {
       console.log(error);
@@ -75,8 +73,8 @@ function UpdateInfo() {
   useEffect(() => {
     if (list) {
       setValues({
-        id: list.id,
-        pw: list.pw,
+        userId: list.userId,
+        userPw: list.userPw,
         name: list.name,
         nickname: list.nickname,
         phone: list.phone,
@@ -104,14 +102,14 @@ function UpdateInfo() {
         </div>
         <div>
           <label>아이디</label>
-          <input type="text" defaultValue={values.id || ''} readOnly />
+          <input type="text" defaultValue={values.userId || ''} readOnly />
         </div>
         <div>
           <label>비밀번호</label>
           <input
             type="text"
             name="pw"
-            value={values.pw || ''}
+            value={values.userPw || ''}
             onChange={handleChange}
           />
         </div>

@@ -19,7 +19,7 @@ function MemberInformation() {
           width={200}
           alt=""
         />
-        <p>아이디: {list.id}</p>
+        <p>아이디: {list.userId}</p>
         <p>닉네임: {list.nickname}</p>
       </div>
     </div>

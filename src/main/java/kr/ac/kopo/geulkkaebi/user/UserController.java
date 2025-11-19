@@ -76,10 +76,6 @@ public class UserController {
       @RequestPart(value = "file", required = false) MultipartFile file, HttpSession session) {
 
     try {
-
-      System.out.println(userId);
-      System.out.println(user.getUserId());
-
       user.setUserId(userId);
 
       int result = userService.update(user, file);
