@@ -1,0 +1,81 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.wrapper input[type='checkbox'] {
+  display: none;
+  visibility: hidden;
+}
+
+.wrapper .label {
+  margin: auto;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+.wrapper .label span {
+  display: inline-block;
+  vertical-align: middle;
+  transform: translate3d(0, 0, 0);
+}
+.wrapper .label span:first-child {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 3px;
+  transform: scale(1);
+  vertical-align: middle;
+  border: 1px solid $grayscale-400;
+  transition: all 0.2s ease;
+}
+.wrapper .label span:first-child svg {
+  position: absolute;
+  top: 3px;
+  left: 2px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 16px;
+  stroke-dashoffset: 16px;
+  transition: all 0.3s ease;
+  transition-delay: 0.1s;
+  transform: translate3d(0, 0, 0);
+}
+.wrapper .label span:first-child:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: $green-400;
+  display: block;
+  transform: scale(0);
+  opacity: 1;
+  border-radius: 50%;
+}
+.wrapper .label span:last-child {
+  padding-left: 8px;
+}
+.wrapper .label:hover span:first-child {
+  border-color: $green-400;
+}
+
+.wrapper .chkBox:checked + .label span:first-child {
+  background: $green-400;
+  border-color: $green-400;
+  animation: wave-46 0.4s ease;
+}
+.wrapper .chkBox:checked + .label span:first-child svg {
+  stroke-dashoffset: 0;
+}
+.wrapper .chkBox:checked + .label span:first-child:before {
+  transform: scale(3.5);
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+@keyframes wave-46 {
+  50% {
+    transform: scale(0.9);
+  }
+}

@@ -1,6 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import CommonEditor from './components/post/common-editor/CommonEditor';
+import PostListItem from './components/post/post-list/post-list-item/PostListItem';
 import { ComponentProvider } from './context/ComponentProvider';
 import Article from './pages/board/article/Article';
 import Board from './pages/board/Board';
@@ -65,6 +66,7 @@ function Main() {
               <Route path="debate" element={<Debate />} />
               <Route path="story" element={<Story />} />
               <Route path="article" element={<Article />} />
+              <Route path=":boardType/:postNo" element={<PostListItem />} />
             </Route>
             {/* 고객센터 */}
             <Route path="/support" element={<Support />}>
@@ -72,6 +74,7 @@ function Main() {
               <Route path="notice" element={<Notice />} />
               <Route path="faq" element={<Faq />} />
               <Route path="contact" element={<Contact />} />
+              <Route path=":boardType/:postNo" element={<PostListItem />} />
             </Route>
             {/* 회원 - 마이페이지 */}
             <Route path="/mypage" element={<Member />}>

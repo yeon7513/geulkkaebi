@@ -15,10 +15,10 @@ public class User {
   private String profileImg; // 프로필 사진 경로
   private int grade; // 회원 등급
   private int score; // 퀴즈 점수
-  private char reportYn; // 신고 여부
-  private char suspendYn; // 정지(제재) 여부
-  private char adminYn; // 관리자 여부
-  private char deleteYn; // 탈퇴 여부
+  private int reportYn; // 신고 여부
+  private int suspendYn; // 정지(제재) 여부
+  private int adminYn; // 관리자 여부
+  private int deleteYn; // 탈퇴 여부
   private String createdAt; // 회원 가입일
   private String modifiedAt; // 정보 수정일
 
@@ -110,35 +110,35 @@ public class User {
     this.score = score;
   }
 
-  public char getReportYn() {
+  public int getReportYn() {
     return reportYn;
   }
 
-  public void setReportYn(char reportYn) {
+  public void setReportYn(int reportYn) {
     this.reportYn = reportYn;
   }
 
-  public char getSuspendYn() {
+  public int getSuspendYn() {
     return suspendYn;
   }
 
-  public void setSuspendYn(char suspendYn) {
+  public void setSuspendYn(int suspendYn) {
     this.suspendYn = suspendYn;
   }
 
-  public char getAdminYn() {
+  public int getAdminYn() {
     return adminYn;
   }
 
-  public void setAdminYn(char adminYn) {
+  public void setAdminYn(int adminYn) {
     this.adminYn = adminYn;
   }
 
-  public char getDeleteYn() {
+  public int getDeleteYn() {
     return deleteYn;
   }
 
-  public void setDeleteYn(char deleteYn) {
+  public void setDeleteYn(int deleteYn) {
     this.deleteYn = deleteYn;
   }
 

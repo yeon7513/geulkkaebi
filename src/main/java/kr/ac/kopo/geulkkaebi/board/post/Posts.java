@@ -10,10 +10,40 @@ public class Posts {
   private String title;
   private String text;
   private int hitcount;
-  private char noticeYn;
+  private int noticeYn;
   private String createdAt;
   private String modifiedAt;
-  private char reportYn;
+  private int reportYn;
+
+  // JOIN용 컬럼 필드
+  private String nickname;
+  private int countLikes;
+  private int countComments;
+
+
+  public int getCountLikes() {
+    return countLikes;
+  }
+
+  public void setCountLikes(int countLikes) {
+    this.countLikes = countLikes;
+  }
+
+  public int getCountComments() {
+    return countComments;
+  }
+
+  public void setCountComments(int countComments) {
+    this.countComments = countComments;
+  }
+
+  public String getNickname() {
+    return nickname;
+  }
+
+  public void setNickname(String nickname) {
+    this.nickname = nickname;
+  }
 
   public Long getPostNo() {
     return postNo;
@@ -63,11 +93,11 @@ public class Posts {
     this.hitcount = hitcount;
   }
 
-  public char getNoticeYn() {
+  public int getNoticeYn() {
     return noticeYn;
   }
 
-  public void setNoticeYn(char noticeYn) {
+  public void setNoticeYn(int noticeYn) {
     this.noticeYn = noticeYn;
   }
 
@@ -87,11 +117,11 @@ public class Posts {
     this.modifiedAt = modifiedAt;
   }
 
-  public char getReportYn() {
+  public int getReportYn() {
     return reportYn;
   }
 
-  public void setReportYn(char reportYn) {
+  public void setReportYn(int reportYn) {
     this.reportYn = reportYn;
   }
 

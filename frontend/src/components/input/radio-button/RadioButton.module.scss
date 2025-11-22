@@ -1,0 +1,56 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.radioButton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  > input[type='radio'] {
+    display: none;
+
+    &:checked + .radioCircle::before {
+      transform: translate(-50%, -50%) scale(1);
+      background-color: $green-400;
+    }
+  }
+
+  &:hover {
+    .radioCircle {
+      border-color: $green-400;
+    }
+
+    input[type='radio']:checked + .radioCircle::before {
+      background-color: $green-400;
+    }
+  }
+}
+
+.radioCircle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid $grayscale-400;
+  position: relative;
+  margin-right: 4px;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: $green-400;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: all 0.2s ease-in-out;
+  }
+
+  .radioLabel {
+    color: $grayscale-600;
+    font-weight: 500;
+  }
+}

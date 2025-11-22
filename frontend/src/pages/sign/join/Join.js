@@ -1,22 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
-import Input from '../../../components/input/Input';
 import styles from './Join.module.scss';
 
 import axios from 'axios';
-import {
-  TbAsterisk,
-  TbCake,
-  TbLego,
-  TbLock,
-  TbLockCheck,
-  TbMail,
-  TbPencil,
-  TbPhone,
-  TbUser,
-} from 'react-icons/tb';
-import ProfileImageUpload from '../../../components/profile-image-upload/ProfileImageUpload';
+import CheckBox from '../../../components/input/check-box/CheckBox';
+import AccountSection from './section/AccountSection';
+import OptionalSection from './section/OptionalSection';
+import PersonalSection from './section/PersonalSection';
 
 function Join() {
   const [preview, setPreview] = useState(null);
@@ -36,11 +27,18 @@ function Join() {
 
     const data = e.target;
 
+    // 생년월일 포맷팅
+    const year = data.year.value;
+    const month = data.month.value.padStart(2, '0');
+    const day = data.day.value.padStart(2, '0');
+
+    const birth = `${year}-${month}-${day}`;
+
     const userData = {
       userId: data.userId.value,
       userPw: data.userPw.value,
-      name: data.name.value,
-      birth: data.birth.value,
+      name: data.username.value,
+      birth: birth,
       gender: data.gender.value,
       nickname: data.nickname.value,
       phone: data.phone.value,
@@ -79,130 +77,16 @@ function Join() {
 
   return (
     <form className={styles.joinForm} onSubmit={handleSubmit}>
-      <p className={styles.requiredInfo}>
-        <TbAsterisk /> 표시 항목은 필수 입력입니다.
-      </p>
-      <div className={styles.joinContent}>
-        <ul className={styles.requiredField}>
-          <li>
-            <label htmlFor="userId">
-              <TbPencil />
-              <span className={styles.requiredIcon}>
-                <TbAsterisk />
-              </span>
-            </label>
-            <Input
-              id="userId"
-              name="userId"
-              placeholder="아이디 (4자리 이상)"
-              className={styles.fullSize}
-            />
-            <Button type="button" variant="outline">
-              중복 확인
-            </Button>
-          </li>
-          <li>
-            <label htmlFor="userPw">
-              <TbLock />
-              <span className={styles.requiredIcon}>
-                <TbAsterisk />
-              </span>
-            </label>
-            <Input
-              id="userPw"
-              name="userPw"
-              type="password"
-              placeholder="비밀번호 (문자, 숫자 조합 8~12자리)"
-            />
-          </li>
-          <li>
-            <label htmlFor="userPwCheck">
-              <TbLockCheck />
-              <span className={styles.requiredIcon}>
-                <TbAsterisk />
-              </span>
-            </label>
-            <Input
-              id="userPwCheck"
-              type="password"
-              placeholder="비밀번호 확인"
-            />
-          </li>
-          <li>
-            <label htmlFor="username">
-              <TbUser />
-              <span className={styles.requiredIcon}>
-                <TbAsterisk />
-              </span>
-            </label>
-            <Input id="username" name="name" placeholder="이름" />
-          </li>
-          <li>
-            <label htmlFor="birth">
-              <TbCake />
-              <span className={styles.requiredIcon}>
-                <TbAsterisk />
-              </span>
-            </label>
-            <Input id="birth" name="birth" type="date" />
-          </li>
-          <li>
-            <label htmlFor="male">남성</label>
-            <input type="radio" id="male" name="gender" value="M" />
-            <label htmlFor="female">여성</label>
-            <input type="radio" id="female" name="gender" value="W" />
-          </li>
-          <li>
-            <label htmlFor="phone">
-              <TbPhone />
-              <span className={styles.requiredIcon}>
-                <TbAsterisk />
-              </span>
-            </label>
-            <Input
-              id="phone"
-              name="phone"
-              placeholder="연락처 (ex: 010-0000-0000)"
-            />
-          </li>
-          <li>
-            <label htmlFor="email">
-              <TbMail />
-              <span className={styles.requiredIcon}>
-                <TbAsterisk />
-              </span>
-            </label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder="이메일 (ex: gkkb@email.com)"
-            />
-          </li>
-        </ul>
-        <ul className={styles.optionalField}>
-          <li>
-            <ProfileImageUpload
-              preview={preview}
-              onFileChange={handleImageChange}
-            />
-            <div>
-              <label htmlFor="nickname">
-                <TbLego />
-              </label>
-              <Input
-                id="nickname"
-                name="nickname"
-                placeholder="닉네임 입력"
-                className={styles.fullSize}
-              />
-              <Button type="button" variant="outline">
-                중복 확인
-              </Button>
-            </div>
-          </li>
-        </ul>
+      <div className={styles.joinContainer}>
+        <AccountSection />
+        <PersonalSection />
+        <OptionalSection preview={preview} handleChange={handleImageChange} />
       </div>
+      <CheckBox
+        id="joinCheck"
+        className={styles.oath}
+        label="글깨비 친구로서 규칙을 지키며 즐겁게 이용할 것을 선서합니다!"
+      />
       <div className={styles.btnGroup}>
         <Button variant="pushable" colors="green" type="submit">
           가입하기

@@ -1,10 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
-import Input from '../../../components/input/Input';
 import Button from './../../../components/button/Button';
 import styles from './Login.module.scss';
 
 import { FaKey, FaUser } from 'react-icons/fa6';
 import { useDispatch } from 'react-redux';
+import TextInput from '../../../components/input/text-input/TextInput';
 import { loginedData } from '../../../store/user/userSlice';
 
 function Login() {
@@ -35,13 +35,13 @@ function Login() {
           <label htmlFor="userId" className={styles.icon}>
             <FaUser />
           </label>
-          <Input id="userId" name="userId" placeholder="아이디" />
+          <TextInput id="userId" name="userId" placeholder="아이디" />
         </div>
         <div className={styles.pw}>
           <label htmlFor="userPw" className={styles.icon}>
             <FaKey />
           </label>
-          <Input
+          <TextInput
             id="userPw"
             name="userPw"
             type="password"

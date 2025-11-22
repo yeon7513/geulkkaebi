@@ -4,6 +4,13 @@ import java.util.List;
 
 public interface PostService {
 
-  List<Posts> selectList(String boardType, String writer, boolean isReport);
+  List<Posts> selectList(Long postNo, String boardType, String writer, boolean isReport);
+
+  void increaseHitcount(Long postNo);
+
+  void addLikeToPost(Long postNo, String userId);
+
+  List<Posts> selectPopularPosts();
+
 
 }

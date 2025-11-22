@@ -1,3 +1,50 @@
 @charset 'utf-8';
 
 @use '/src/scss/variables.scss' as *;
+
+@import '/src/scss/mixin.scss';
+
+.postList {
+  display: grid;
+  grid-template-columns: 5% // 글 번호
+    10% // 카테고리 (텍스트 아이콘)
+    1fr // 글 제목(타이틀+댓글수+좋아요수)
+    10% // 작성자
+    13% // 날짜
+    10%; // 조회수
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  width: 100%;
+
+  background: #fff;
+
+  > span,
+  div {
+    outline: 1px dotted red;
+  }
+
+  .title {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    .icon {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+
+      &.comment {
+        color: blue;
+      }
+      &.like {
+        color: red;
+      }
+    }
+  }
+
+  .center {
+    text-align: center;
+  }
+}

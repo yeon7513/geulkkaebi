@@ -4,6 +4,12 @@
 
 @import '../../../scss/mixin.scss';
 
+.pageTitle {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 24px;
+}
+
 .post {
   display: flex;
   gap: 36px;

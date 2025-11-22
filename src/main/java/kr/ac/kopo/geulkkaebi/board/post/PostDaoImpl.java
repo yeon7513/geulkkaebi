@@ -17,4 +17,19 @@ public class PostDaoImpl implements PostDao {
     return sql.selectList("posts.selectList", params);
   }
 
+  @Override
+  public List<Posts> selectPopularPosts() {
+    return sql.selectList("posts.selectPopularPosts");
+  }
+
+  @Override
+  public void increaseHitcount(Long postNo) {
+    sql.insert("posts.increaseHitcount", postNo);
+  }
+
+  @Override
+  public void addLikeToPost(Map<String, Object> params) {
+    sql.insert("posts.addLikeToPost", params);
+  }
+
 }

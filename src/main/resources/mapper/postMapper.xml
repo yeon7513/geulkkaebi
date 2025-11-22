@@ -5,17 +5,71 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="posts">
+	<!-- 조건에 따라 모든 게시글 조회 (관리자용, 사용자용) -->
 	<select id="selectList" resultType="postsDto">
-		SELECT * FROM POSTS 
-		WHERE board_type=#{boardType, jdbcType=VARCHAR}
-		
-		<if test="writer != null || writer != '">
-			AND writer = #{writer, jdbcType=VARCHAR}
-		</if>
-		
-		<if test="isReport != null || isReport">
-			AND report_yn = 'Y'
-		</if>
+		SELECT p.*, u.nickname, 
+			(SELECT count(postno) 
+       			FROM comments c 
+       			WHERE c.postno = p.postno
+    		) AS count_comments,
+			(SELECT count(userid) 
+       			FROM post_likes l 
+       			WHERE l.postno = p.postno
+    		) AS count_likes
+		FROM POSTS p
+		LEFT JOIN USERS u
+		ON (p.writer = u.userid)
+		<where>
+			<if test="boardType != null and boardType != ''">
+				board_type = #{boardType, jdbcType=VARCHAR}
+			</if>
+			<if test="postNo != null">
+				AND p.postno = #{postNo, jdbcType=NUMERIC}
+			</if>
+			<if test="writer != null and writer !=''">
+				AND writer = #{writer, jdbcType=VARCHAR}
+			</if>
+			<if test="isReport != null and isReport">
+				AND report_yn = 1
+			</if>
+		</where>
+		ORDER BY notice_yn DESC, p.created_at DESC
 	</select>
+	
+	<!-- 인기글 조회 -->
+	<select id="selectPopularPosts" resultType="postsDto">
+		SELECT *
+ 		  FROM (
+    		SELECT 
+    				p.postno, p.board_type, p.title, 
+    				substr(p.text, 1, 200) AS text, 
+    				u.nickname, p.hitcount, l.count_likes, 
+    				p.created_at
+      			FROM posts p
+      			JOIN (
+        			SELECT postno, count(userid) AS count_likes
+          				FROM post_likes
+          				GROUP BY postno
+      			) l ON(p.postno = l.postno)
+    			JOIN users u
+      				ON(p.writer = u.userid)
+    			ORDER BY (p.hitcount + l.count_likes) DESC
+  			)
+  			WHERE ROWNUM &lt;= 5
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<insert id="increaseHitcount" parameterType="map">
+		CALL increment_hitcount(#{postNo, mode=IN, jdbcType=NUMERIC})
+	</insert>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="addLikeToPost">
+		CALL add_likes(
+			#{table_name, mode=IN, jdbcType=VARCHAR},
+			#{identifier_number, mode=IN, jdbcType=NUMERIC},
+			#{user_id, mode=IN, jdbcType=VARCHAR}
+		)
+	</insert>
 
 </mapper>

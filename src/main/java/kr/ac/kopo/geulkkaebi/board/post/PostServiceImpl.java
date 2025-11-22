@@ -13,14 +13,37 @@ public class PostServiceImpl implements PostService {
   PostDao postDao;
 
   @Override
-  public List<Posts> selectList(String boardType, String writer, boolean isReport) {
+  public List<Posts> selectList(Long postNo, String boardType, String writer, boolean isReport) {
     Map<String, Object> params = new HashMap<>();
 
+    params.put("postNo", postNo);
     params.put("boardType", boardType);
     params.put("writer", writer);
     params.put("isReport", isReport);
 
     return postDao.selectList(params);
   }
+
+  @Override
+  public List<Posts> selectPopularPosts() {
+    return postDao.selectPopularPosts();
+  }
+
+  @Override
+  public void increaseHitcount(Long postNo) {
+    postDao.increaseHitcount(postNo);
+  }
+
+  @Override
+  public void addLikeToPost(Long postNo, String userId) {
+    Map<String, Object> params = new HashMap<>();
+    params.put("table_name", "post_likes");
+    params.put("identifier_number", postNo);
+    params.put("user_id", userId);
+
+    postDao.addLikeToPost(params);
+  }
+
+
 
 }

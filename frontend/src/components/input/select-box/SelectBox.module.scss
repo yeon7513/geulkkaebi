@@ -1,0 +1,74 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.selectGroup {
+  position: relative;
+  width: 100%;
+
+  .select {
+    padding: 12px 30px 12px 12px;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid $grayscale-200;
+    border-radius: 4px 4px 0 0;
+    font-size: 18px;
+    transition: 0.3s;
+    color: $grayscale-700;
+    text-align: center;
+
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    &:hover {
+      background: rgba($green-100, 0.5);
+    }
+
+    &:focus ~ .selectBorder {
+      width: 100%;
+    }
+
+    &:focus {
+      background: rgba($green-100, 0.5);
+    }
+  }
+
+  // 커스텀 화살표
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    width: 5px;
+    height: 5px;
+    pointer-events: none;
+    transform: translateY(-50%) rotate(45deg);
+    border-right: 2px solid $green-900;
+    border-bottom: 2px solid $green-700;
+  }
+
+  &.filled {
+    .selectBorder {
+      width: 100%;
+    }
+  }
+
+  &.filled {
+    .select {
+      background: rgba($green-100, 0.5);
+    }
+  }
+
+  .selectBorder {
+    position: absolute;
+    background: $green-500;
+    width: 0%;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    transition: 0.3s;
+  }
+}

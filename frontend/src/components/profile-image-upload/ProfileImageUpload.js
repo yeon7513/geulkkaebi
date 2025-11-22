@@ -3,7 +3,12 @@ import { useRef } from 'react';
 import placeholder from '../../assets/img/no_images.png';
 import styles from './ProfileImageUpload.module.scss';
 
-function ProfileImageUpload({ preview, onFileChange, className }) {
+function ProfileImageUpload({
+  preview,
+  onFileChange,
+  className,
+  imgSize = 200,
+}) {
   const fileInputRef = useRef();
 
   const handleClickImage = () => {
@@ -24,6 +29,8 @@ function ProfileImageUpload({ preview, onFileChange, className }) {
         src={preview || placeholder}
         alt="profile-image"
         onClick={handleClickImage}
+        width={imgSize}
+        height={imgSize}
       />
       <input
         type="file"

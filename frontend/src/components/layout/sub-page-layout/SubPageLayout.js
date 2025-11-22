@@ -8,7 +8,7 @@ function SubPageLayout({ compData }) {
 
   return (
     <section className={styles.wrap}>
-      <div className={styles.pageTitle}>
+      <div className={styles.pageNav}>
         {compData.map((menu, idx) => (
           <Button
             key={idx}
@@ -20,7 +20,7 @@ function SubPageLayout({ compData }) {
           </Button>
         ))}
       </div>
-      <Container>
+      <Container className={styles.container}>
         <Outlet />
       </Container>
     </section>

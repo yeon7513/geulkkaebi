@@ -1,35 +1,42 @@
 import cn from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../../../components/button/Button';
 import Card from '../../../components/card/Card';
-import { boardTest } from '../../../lib/boardTest';
 import styles from './PopularPosts.module.scss';
 
 import { FaCalendarAlt, FaEye, FaHeart } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
 import TextIcon from '../../../components/text-icon/TextIcon';
+import { fetchPopularPosts } from '../../../store/board/postSlice';
+import { formatCreatedAt } from '../../../utils/formatCreatedAt';
 
 function PopularPosts() {
+  const { post } = useSelector((state) => state.postSlice);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  // 미리보기용 글 번호 선택 state
+  const [selectedNo, setSelectedNo] = useState(post[0]?.postNo || null);
+
+  // redux에서 인기글 불러오기
+  useEffect(() => {
+    dispatch(fetchPopularPosts());
+  }, [dispatch]);
+
+  // post가 업데이트될 때 첫 글 자동 선택
+  useEffect(() => {
+    if (post.length > 0) {
+      setSelectedNo((prev) => prev ?? post[0].postNo);
+    }
+  }, [post]);
+
+  // 미리보기용 게시글 찾기
+  const selectedPost = post.find((p) => p.postNo === selectedNo);
+
+  // 제목 렌더링용으로 useLocation 호출
   const { pathname } = useLocation();
-
-  // 순위 계산
-  const rankedPosts = useMemo(() => {
-    return [...boardTest].sort(
-      (a, b) => b.hitcount + b.likes - (a.hitcount + a.likes)
-    );
-  }, [boardTest]);
-
-  const [selectedId, setSelectedId] = useState(rankedPosts[0].postId);
-
-  // 게시글 상세 선택
-  const selectedPost = rankedPosts.find((post) => post.postId === selectedId);
-
-  const boardStyles = {
-    debate: styles.debate,
-    article: styles.article,
-    story: styles.story,
-  };
 
   const boardNames = {
     debate: '토론마당',
@@ -43,13 +50,26 @@ function PopularPosts() {
     story: 'purple',
   };
 
+  if ((!selectedPost && post.length === 0) || !post) {
+    return <div>게시글을 불러오는 중이에요!</div>;
+  }
+
+  if (!selectedPost && post.length > 0) {
+    setSelectedNo(post[0].postNo);
+    return null; // 다음 렌더에서 selectedPost가 잡히도록 함
+  }
+
   return (
     <div className={styles.board}>
-      {pathname === '/' && <h3>오늘 친구들이 많이 본 이야기</h3>}
+      {pathname === '/' ? (
+        <h3>오늘 친구들이 많이 본 이야기</h3>
+      ) : (
+        <h3 className={styles.pageTitle}>지금 가장 관심받는 이야기에요.</h3>
+      )}
       <div className={styles.post}>
         <AnimatePresence mode="wait">
           <motion.div
-            key={selectedPost.postId}
+            key={selectedPost.postNo}
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 50 }}
@@ -57,10 +77,7 @@ function PopularPosts() {
             className={styles.detail}
           >
             <Card
-              className={cn(
-                styles.detailItem,
-                boardStyles[selectedPost.boardType]
-              )}
+              className={cn(styles.detailItem, styles[selectedPost.boardType])}
               isPointer={false}
             >
               <div className={styles.contents}>
@@ -74,11 +91,13 @@ function PopularPosts() {
                 <div className={styles.info}>
                   {/* 등록 정보 */}
                   <div className={styles.reg}>
-                    <span className={styles.writer}>{selectedPost.writer}</span>
+                    <span className={styles.writer}>
+                      {selectedPost.nickname}
+                    </span>
                     <div className={styles.count}>
                       <span className={styles.date}>
                         <FaCalendarAlt />
-                        {selectedPost.createdAt}
+                        {formatCreatedAt(selectedPost.createdAt)}
                       </span>
                       <span className={styles.hit}>
                         <FaEye />
@@ -86,19 +105,24 @@ function PopularPosts() {
                       </span>
                       <span className={styles.likes}>
                         <FaHeart />
-                        {selectedPost.likes}
+                        {selectedPost.countLikes}
                       </span>
                     </div>
                   </div>
                 </div>
                 {/* 본문 */}
-                <p className={styles.text}>{selectedPost.text}</p>
+                <p className={styles.text}>{selectedPost.text} ...</p>
                 {/* 더보기 버튼 */}
                 <div className={styles.moreBtn}>
                   <Button
                     isRound={true}
                     variant="pushable"
                     colors={boardColors[selectedPost.boardType]}
+                    onClick={() =>
+                      navigate(
+                        `/board/${selectedPost.boardType}/${selectedPost.postNo}`
+                      )
+                    }
                   >
                     함께 이야기 하기
                   </Button>
@@ -109,27 +133,27 @@ function PopularPosts() {
         </AnimatePresence>
 
         <div className={styles.ranks}>
-          {rankedPosts.map((post, index) => {
+          {post.map((item, index) => {
             let crown = '';
             if (index === 0) crown = '👑';
             else if (index === 1) crown = '🥈';
             else if (index === 2) crown = '🥉';
             return (
               <motion.div
-                key={post.postId}
+                key={item.postNo}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className={styles.listItem}
-                onClick={() => setSelectedId(post.postId)}
+                onClick={() => setSelectedNo(item.postNo)}
               >
                 <Card
                   className={cn(styles.listData, {
-                    [styles.selected]: post.postId === selectedId,
+                    [styles.selected]: item.postNo === selectedNo,
                   })}
                 >
                   <h4 className={styles.listTitle}>
                     <span className={styles.rankIcon}>{crown} </span>
-                    {post.title}
+                    {item.title}
                   </h4>
                 </Card>
               </motion.div>

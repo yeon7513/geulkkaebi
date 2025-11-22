@@ -2,6 +2,7 @@ import cn from 'classnames';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import logoImg from '../../assets/img/logo_v3.png';
+import { randomText } from '../../utils/randomText';
 import styles from './Logo.module.scss';
 
 const decorateLogo = [
@@ -17,9 +18,7 @@ function Logo({ className, isShow = true }) {
   const [decoLogo, setDecoLogo] = useState('');
 
   useEffect(() => {
-    const randomText =
-      decorateLogo[Math.floor(Math.random() * decorateLogo.length)];
-    setDecoLogo(randomText);
+    setDecoLogo(randomText(decorateLogo));
   }, []);
 
   return (
