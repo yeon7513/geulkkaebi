@@ -13,4 +13,6 @@ public interface PostDao {
 
   List<Posts> selectPopularPosts();
 
+  int insert(Posts posts);
+
 }

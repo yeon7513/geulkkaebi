@@ -8,7 +8,7 @@ public class User {
   private String userPw; // 비밀번호
   private String name; // 회원 이름
   private String birth;
-  private char gender;
+  private String gender;
   private String nickname; // 닉네임
   private String phone; // 연락처
   private String email; // 이메일
@@ -54,11 +54,11 @@ public class User {
     this.birth = birth;
   }
 
-  public char getGender() {
+  public String getGender() {
     return gender;
   }
 
-  public void setGender(char gender) {
+  public void setGender(String gender) {
     this.gender = gender;
   }
 

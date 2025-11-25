@@ -9,7 +9,6 @@
   padding: 0;
   box-sizing: border-box;
   font-family: $text-font, sans-serif;
-  font-weight: 400;
 }
 
 a {
@@ -17,7 +16,8 @@ a {
   color: inherit;
 }
 
-li {
+ul,
+ol {
   list-style: none;
 }
 
@@ -54,6 +54,21 @@ h6 {
 
 p {
   line-height: 1.4;
+}
+
+.tiptap.ProseMirror {
+  outline: none;
+
+  // 드래그 한 부분 커스텀
+  &::selection {
+    background: $mint-100;
+    color: inherit;
+  }
+
+  img {
+    max-width: 100%;
+    object-fit: contain;
+  }
 }
 
 /* media - desktop */

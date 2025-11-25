@@ -1,0 +1,26 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.wrap {
+  padding: 24px;
+  background-color: $grayscale-100;
+}
+
+.editorToolbar {
+  display: flex;
+
+  gap: 16px;
+  outline: 1px dotted red;
+}
+
+.colorTool {
+  position: relative;
+
+  .palette {
+    position: absolute;
+    top: 100%;
+    z-index: 5;
+    background-color: #fff;
+  }
+}

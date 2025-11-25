@@ -12,5 +12,7 @@ public interface PostService {
 
   List<Posts> selectPopularPosts();
 
+  int insert(Posts posts);
+
 
 }

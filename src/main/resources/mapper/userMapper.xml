@@ -22,14 +22,14 @@
 			#{userId, jdbcType=VARCHAR}, 
 			#{userPw, jdbcType=VARCHAR},
 			#{name, jdbcType=VARCHAR}, 
-			#{birth, jdbcType=VARCHAR},
+			TO_DATE(#{birth}, 'YYYY-MM-DD'),
 			#{gender, jdbcType=VARCHAR}, 
 			#{phone, jdbcType=VARCHAR},
 			#{email, jdbcType=VARCHAR}, 
 			#{nickname, jdbcType=VARCHAR},
 			#{profileImg, jdbcType=VARCHAR}, 
 			0, 0,
-			'N', 'N', 'N', 'N', SYSDATE, NULL)
+			0, 0, 0, 0, SYSDATE, NULL)
 	</insert>
 
 	<update id="update">

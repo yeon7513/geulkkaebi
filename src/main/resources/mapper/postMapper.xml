@@ -7,15 +7,15 @@
 <mapper namespace="posts">
 	<!-- 조건에 따라 모든 게시글 조회 (관리자용, 사용자용) -->
 	<select id="selectList" resultType="postsDto">
-		SELECT p.*, u.nickname, 
-			(SELECT count(postno) 
-       			FROM comments c 
-       			WHERE c.postno = p.postno
-    		) AS count_comments,
-			(SELECT count(userid) 
-       			FROM post_likes l 
-       			WHERE l.postno = p.postno
-    		) AS count_likes
+		SELECT p.*, u.nickname,
+		(SELECT count(postno)
+		FROM comments c
+		WHERE c.postno = p.postno
+		) AS count_comments,
+		(SELECT count(userid)
+		FROM post_likes l
+		WHERE l.postno = p.postno
+		) AS count_likes
 		FROM POSTS p
 		LEFT JOIN USERS u
 		ON (p.writer = u.userid)
@@ -35,40 +35,64 @@
 		</where>
 		ORDER BY notice_yn DESC, p.created_at DESC
 	</select>
-	
+
 	<!-- 인기글 조회 -->
 	<select id="selectPopularPosts" resultType="postsDto">
 		SELECT *
- 		  FROM (
-    		SELECT 
-    				p.postno, p.board_type, p.title, 
-    				substr(p.text, 1, 200) AS text, 
-    				u.nickname, p.hitcount, l.count_likes, 
-    				p.created_at
-      			FROM posts p
-      			JOIN (
-        			SELECT postno, count(userid) AS count_likes
-          				FROM post_likes
-          				GROUP BY postno
-      			) l ON(p.postno = l.postno)
-    			JOIN users u
-      				ON(p.writer = u.userid)
-    			ORDER BY (p.hitcount + l.count_likes) DESC
-  			)
-  			WHERE ROWNUM &lt;= 5
+		FROM (
+		SELECT
+		p.postno, p.board_type, p.title,
+		substr(p.text, 1, 200) AS text,
+		u.nickname, p.hitcount, l.count_likes,
+		p.created_at
+		FROM posts p
+		JOIN (
+		SELECT postno, count(userid) AS count_likes
+		FROM post_likes
+		GROUP BY postno
+		) l ON(p.postno = l.postno)
+		JOIN users u
+		ON(p.writer = u.userid)
+		ORDER BY (p.hitcount + l.count_likes) DESC
+		)
+		WHERE ROWNUM &lt;= 5
 	</select>
-	
+
+	<!-- 새로운 글 등록 -->
+	<insert id="insert" parameterType="postsDto"
+		useGeneratedKeys="true" keyProperty="postNo">
+		<!-- 데이터 타입 불일치로 인해 추가 -->
+		<selectKey keyProperty="postNo" resultType="long"
+			order="BEFORE">
+			SELECT post_seq.nextval FROM dual
+		</selectKey>
+
+		INSERT INTO posts
+		VALUES(
+		#{postNo},
+		#{boardType, jdbcType=VARCHAR},
+		#{writer, jdbcType=VARCHAR},
+		#{title, jdbcType=VARCHAR},
+		#{text, jdbcType=VARCHAR},
+		0,
+		#{noticeYn, jdbcType=NUMERIC},
+		SYSDATE,
+		NULL,
+		0)
+	</insert>
+
 	<!-- 조회수 증가 -->
 	<insert id="increaseHitcount" parameterType="map">
-		CALL increment_hitcount(#{postNo, mode=IN, jdbcType=NUMERIC})
+		CALL
+		increment_hitcount(#{postNo, mode=IN, jdbcType=NUMERIC})
 	</insert>
-	
+
 	<!-- 좋아요 추가 -->
 	<insert id="addLikeToPost">
 		CALL add_likes(
-			#{table_name, mode=IN, jdbcType=VARCHAR},
-			#{identifier_number, mode=IN, jdbcType=NUMERIC},
-			#{user_id, mode=IN, jdbcType=VARCHAR}
+		#{table_name, mode=IN, jdbcType=VARCHAR},
+		#{identifier_number, mode=IN, jdbcType=NUMERIC},
+		#{user_id, mode=IN, jdbcType=VARCHAR}
 		)
 	</insert>
 

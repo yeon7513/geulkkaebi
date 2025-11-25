@@ -34,6 +34,9 @@ function Post({ title, boardType, themeColor = 'green' }) {
           onClick={() => navigate(`/board/${item.boardType}/${item.postNo}`)}
         />
       ))}
+      <div>
+        <button onClick={() => navigate(`/write/${boardType}`)}>글쓰기</button>
+      </div>
     </div>
   );
 }

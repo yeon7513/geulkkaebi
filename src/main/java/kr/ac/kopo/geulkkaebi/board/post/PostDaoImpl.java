@@ -32,4 +32,9 @@ public class PostDaoImpl implements PostDao {
     sql.insert("posts.addLikeToPost", params);
   }
 
+  @Override
+  public int insert(Posts posts) {
+    return sql.insert("posts.insert", posts);
+  }
+
 }

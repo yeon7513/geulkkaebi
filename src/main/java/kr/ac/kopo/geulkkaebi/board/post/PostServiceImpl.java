@@ -44,6 +44,20 @@ public class PostServiceImpl implements PostService {
     postDao.addLikeToPost(params);
   }
 
+  @Override
+  public int insert(Posts posts) {
+    int result = postDao.insert(posts);
+
+    if (result > 0) {
+      Long longPostNo = posts.getPostNo();
+      Integer postNo = longPostNo != null ? longPostNo.intValue() : null;
+
+      return postNo;
+    } else {
+      return 0;
+    }
+  }
+
 
 
 }

@@ -1,3 +1,13 @@
 @charset 'utf-8';
 
 @use '/src/scss/variables.scss' as *;
+
+.postItem {
+  outline: 1px dotted red;
+}
+
+.header {
+  h3 {
+    font-family: $text-font;
+  }
+}

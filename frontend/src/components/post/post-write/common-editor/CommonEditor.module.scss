@@ -1,0 +1,52 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.editorForm {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+
+  background-color: #fff;
+
+  .container {
+    flex: 1;
+    padding: 24px 0;
+    height: calc(100% - 200px);
+    overflow-y: auto;
+
+    .title {
+      padding: 16px 0;
+      width: 100%;
+      font-size: 32px;
+      border-bottom: 1px solid $grayscale-200;
+      color: $grayscale-800;
+    }
+  }
+
+  .submit {
+    display: flex;
+    justify-content: end;
+    gap: 8px;
+    padding: 24px;
+    background-color: $grayscale-100;
+
+    > button {
+      font-size: 16px;
+    }
+  }
+}
+
+.editor {
+  margin-top: 48px;
+  ul {
+    padding-left: 40px;
+    list-style-type: disc;
+  }
+
+  ol {
+    padding-left: 40px;
+    list-style-type: decimal;
+  }
+}

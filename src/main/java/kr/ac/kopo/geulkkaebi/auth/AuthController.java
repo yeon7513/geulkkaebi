@@ -37,7 +37,6 @@ public class AuthController {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid Id or Password.");
     }
 
-
   }
 
   // 로그아웃

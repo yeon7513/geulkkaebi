@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,6 +22,9 @@ public class UserController {
 
   @Autowired
   private UserService userService;
+
+  @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
 
   // 모든 회원 조회
   @GetMapping("/list")
@@ -50,8 +54,12 @@ public class UserController {
     // -> 프로필 이미지 파일을 받아야해서 각각 처리한다.
 
     try {
+      // 비밀번호 암호화
+
       // 데이터를 Service를 통해 insert 요청
       int result = userService.insert(user, file);
+
+      System.out.println(result);
 
       // 성공/실패 확인
       if (result > 0) {

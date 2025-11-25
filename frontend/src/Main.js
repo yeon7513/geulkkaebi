@@ -1,7 +1,7 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout';
-import CommonEditor from './components/post/common-editor/CommonEditor';
 import PostListItem from './components/post/post-list/post-list-item/PostListItem';
+import PostWrite from './components/post/post-write/PostWrite';
 import { ComponentProvider } from './context/ComponentProvider';
 import Article from './pages/board/article/Article';
 import Board from './pages/board/Board';
@@ -98,8 +98,8 @@ function Main() {
             <Route path="find" element={<FindIdPw />} />
           </Route>
           {/* 공통 에디터 - 글쓰기 / 수정 페이지 */}
-          <Route path="/write/:type" element={<CommonEditor />} />
-          <Route path="/edit/:type/:postNo" element={<CommonEditor />} />
+          <Route path="/write/:boardType" element={<PostWrite />} />
+          <Route path="/edit/:boardType/:postNo" element={<PostWrite />} />
           {/* 404페이지 */}
           <Route path="*" element={<NotFound404 />} />
         </Routes>

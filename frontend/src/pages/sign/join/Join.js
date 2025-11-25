@@ -45,6 +45,8 @@ function Join() {
       email: data.email.value,
     };
 
+    console.log(userData);
+
     const formData = new FormData();
 
     formData.append(
@@ -71,6 +73,7 @@ function Join() {
         }
       })
       .catch((err) => {
+        console.log(err);
         console.log('서버 오류: ', err.message);
       });
   };

@@ -1,0 +1,44 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+// 툴바 아이콘
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  font-size: 18px;
+  outline: 1px dotted green;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+}
+
+// 컬러 팔레트
+.palette {
+  outline: 1px dotted red;
+
+  .wrap {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+    width: fit-content;
+    // background-color: #ccc;
+
+    .thumb {
+      width: fit-content;
+      border: 1px solid $grayscale-300;
+      border-radius: 4px;
+      outline: none;
+
+      &.whiteText {
+        > svg {
+          filter: drop-shadow(0 0 0.5px #000) drop-shadow(0 0 0.5px #000);
+        }
+      }
+    }
+  }
+}

@@ -3,12 +3,16 @@ package kr.ac.kopo.geulkkaebi.grobal.image;
 import java.net.MalformedURLException;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/images")
@@ -20,6 +24,21 @@ public class ImageController {
     this.imageService = imageService;
   }
 
+  // 이미지 업로드 (게시글용)
+  @PostMapping("/uploadImages")
+  public ResponseEntity<String> uploadImages(@RequestParam("file") MultipartFile file,
+      @RequestParam("folder") String folder) {
+    try {
+      String imageUrl = imageService.uploadImage(file, folder);
+
+      return ResponseEntity.ok(imageUrl);
+    } catch (Exception e) {
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed");
+    }
+  }
+
+
+  // 업로드 된 이미지 불러오기
   @GetMapping("/uploads/{folder}/{fileName:.+}")
   public ResponseEntity<Resource> getImage(@PathVariable String folder,
       @PathVariable String fileName) throws MalformedURLException {

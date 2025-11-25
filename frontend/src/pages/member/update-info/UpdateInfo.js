@@ -11,8 +11,11 @@ function UpdateInfo() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // 이미지 미리보기용 state
   const [preview, setPreview] = useState(null);
+  // 서버 전송용 이미지 파일 저장 state
   const [selectedFile, setSelectedFile] = useState(null);
+  // 기존 DB 데이터 저장용 state
   const [values, setValues] = useState({
     userId: list?.userId || '',
     userPw: list?.userPw || '',
@@ -20,6 +23,7 @@ function UpdateInfo() {
     nickname: list?.nickname || '',
     phone: list?.phone || '',
     email: list?.email || '',
+    profileImg: list?.profileImg || '',
   });
 
   const handleChange = (e) => {
@@ -51,6 +55,8 @@ function UpdateInfo() {
       email: data.email.value,
     };
 
+    console.log(updateData);
+
     const formData = new FormData();
 
     try {
@@ -79,6 +85,7 @@ function UpdateInfo() {
         nickname: list.nickname,
         phone: list.phone,
         email: list.email,
+        profileImg: list.profileImg,
       });
     }
   }, [list]);
@@ -96,8 +103,8 @@ function UpdateInfo() {
       <form onSubmit={handleSubmit}>
         <div>
           <ProfileImageUpload
-            preview={list.profileImg ? preview : selectedFile}
-            onChange={handleImageChange}
+            preview={preview || values.profileImg}
+            onFileChange={handleImageChange}
           />
         </div>
         <div>
@@ -108,7 +115,7 @@ function UpdateInfo() {
           <label>비밀번호</label>
           <input
             type="text"
-            name="pw"
+            name="userPw"
             value={values.userPw || ''}
             onChange={handleChange}
           />
