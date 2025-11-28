@@ -3,30 +3,32 @@
 @use '/src/scss/variables.scss' as *;
 
 .logo {
-  a {
+  height: fit-content;
+
+  > a {
     display: flex;
-    align-items: center;
+    flex-direction: column;
     gap: 4px;
-    width: fit-content;
+  }
 
-    .logoImg {
-      height: 40px;
-    }
+  .logoImg {
+    margin-left: 4px;
+    height: 40px;
+  }
 
-    .decoText {
-      font-family: $title-font;
-      font-weight: 300;
-      color: $green-400;
-    }
+  .decoText {
+    font-family: $title-font;
+    font-size: 20px;
+    color: $green-400;
+  }
 
-    .hide {
-      display: none;
-    }
+  .hide {
+    display: none;
+  }
 
-    .logoText {
-      font-family: $title-font;
-      font-size: 2.5rem;
-      color: $green-500;
-    }
+  .logoText {
+    font-family: $title-font;
+    font-size: 48px;
+    color: $green-500;
   }
 }

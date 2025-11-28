@@ -16,7 +16,6 @@ function Story() {
       <Post
         title={formatLineBreaks(randomText(storyIntroText))}
         boardType="story"
-        themeColor="purple"
       />
     </>
   );

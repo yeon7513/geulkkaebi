@@ -4,7 +4,7 @@ export const gnb = [
     path: '/introduce',
   },
   {
-    label: '신작·추천 도서',
+    label: '도서 찾기',
     path: '/book',
   },
   {
@@ -56,8 +56,8 @@ export const utils_manager = [
 
 export const board = [
   {
-    label: '오늘의 인기글',
-    path: '/board/popular',
+    label: '전체',
+    path: '/board/all',
     color: 'yellow',
   },
   {

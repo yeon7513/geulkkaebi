@@ -1,0 +1,47 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.searchBox {
+  display: flex;
+  align-items: center;
+
+  .searchBar {
+    padding: 16px;
+    height: 60px;
+    font-size: 24px;
+    text-align: center;
+    border: 1px solid $mint-400;
+    border-radius: 6px 0 0 6px;
+    color: #333;
+    transition: 0.3s;
+
+    &::placeholder {
+      color: $grayscale-300;
+    }
+
+    &:hover,
+    &:focus {
+      border: 1px solid $mint-300;
+    }
+  }
+
+  .searchBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 32px;
+    height: 60px;
+    font-size: 24px;
+    border-radius: 0 6px 6px 0;
+    border: 1px solid $mint-400;
+    background-color: $mint-400;
+    color: #fff;
+    transition: 0.3s;
+
+    &:hover {
+      border: 1px solid $mint-300;
+      background-color: $mint-300;
+    }
+  }
+}

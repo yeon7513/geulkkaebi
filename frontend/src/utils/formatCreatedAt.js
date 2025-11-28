@@ -28,3 +28,15 @@ export const formatCreatedAt = (createdAt) => {
     return `${year}-${month}-${day}`;
   }
 };
+
+export const formatDate = (date) => {
+  const str = String(date);
+
+  const year = parseInt(str.slice(0, 4), 10);
+  const month = parseInt(str.slice(4, 6), 10) - 1; // 0~11
+  const day = parseInt(str.slice(6, 8), 10);
+
+  return `${year}년 ${String(month + 1).padStart(2, '0')}월 ${String(
+    day
+  ).padStart(2, '0')}일`;
+};

@@ -15,4 +15,6 @@ public interface UserService {
 
   int delete(String userId);
 
+  void updateUserGrade(String writerId);
+
 }

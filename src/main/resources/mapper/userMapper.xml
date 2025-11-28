@@ -48,5 +48,10 @@
 		DELETE FROM users
 			WHERE userid = #{userId, jdbcType=VARCHAR}
 	</delete>
+	
+	<!-- 게시글 + 댓글 작성으로 인한 회원 등급 상승 -->
+	<update id="updateUserGrade">
+		CALL update_user_grade(#{writerId, mode=IN, jdbcType=VARCHAR})
+	</update>
 
 </mapper>

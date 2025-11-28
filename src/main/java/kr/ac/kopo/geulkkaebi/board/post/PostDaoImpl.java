@@ -12,9 +12,20 @@ public class PostDaoImpl implements PostDao {
   @Autowired
   SqlSession sql;
 
+  // 일반 게시글 전체 개수 조회
   @Override
-  public List<Posts> selectList(Map<String, Object> params) {
-    return sql.selectList("posts.selectList", params);
+  public int countNormalPosts(String boardType) {
+    return sql.selectOne("posts.countNormalPosts", boardType);
+  }
+
+  @Override
+  public List<Posts> selectNormalList(Map<String, Object> params) {
+    return sql.selectList("posts.selectNormalList", params);
+  }
+
+  @Override
+  public List<Posts> selectNoticeList(String boardType) {
+    return sql.selectList("posts.selectNoticeList", boardType);
   }
 
   @Override
@@ -36,5 +47,7 @@ public class PostDaoImpl implements PostDao {
   public int insert(Posts posts) {
     return sql.insert("posts.insert", posts);
   }
+
+
 
 }

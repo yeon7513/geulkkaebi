@@ -70,5 +70,12 @@ public class UserServiceImpl implements UserService {
     return userDao.delete(userId);
   }
 
+  // 게시글 + 댓글 작성으로 회원 등급 상승
+  @Override
+  public void updateUserGrade(String writerId) {
+    userDao.updateUserGrade(writerId);
+  }
+
+
 
 }

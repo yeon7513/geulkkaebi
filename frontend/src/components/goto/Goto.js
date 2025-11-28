@@ -5,7 +5,7 @@ import Button from '../button/Button';
 import Tooltip from '../tooltip/Tooltip';
 import styles from './Goto.module.scss';
 
-function Goto({ className, isScroll = false, isFooter = false, onClickToTop }) {
+function Goto({ className, isScroll = false, onClickToTop }) {
   const navigate = useNavigate();
 
   const handleClick = (item) => {
@@ -17,18 +17,11 @@ function Goto({ className, isScroll = false, isFooter = false, onClickToTop }) {
   };
 
   return (
-    <div
-      className={cn(
-        styles.goto,
-        isScroll && styles.show,
-        isFooter && styles.stop,
-        className
-      )}
-    >
+    <div className={cn(styles.goto, isScroll && styles.show, className)}>
       {goto.map((item, idx) => (
         <Tooltip key={idx} text={item.label} position="left">
           <Button colors={item.color} onClick={() => handleClick(item)}>
-            {item.label}
+            {item.icon}
           </Button>
         </Tooltip>
       ))}

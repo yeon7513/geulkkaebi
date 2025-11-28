@@ -5,7 +5,7 @@ import { useBoardFetch } from '../../../hooks/useBoardFetch';
 import CommonEditor from './common-editor/CommonEditor';
 
 function PostWrite() {
-  const { list } = useSelector((state) => state.userSlice);
+  const { loginedUser } = useSelector((state) => state.userSlice);
   const navigate = useNavigate();
   const { boardType, postNo } = useParams();
 
@@ -13,7 +13,7 @@ function PostWrite() {
   const isEdit = !!postNo;
   console.log(isEdit);
 
-  console.log(list.userId);
+  console.log(loginedUser.userId);
 
   // 수정할 글 불러오기
   const { post } = useBoardFetch(boardType, postNo);
@@ -31,7 +31,7 @@ function PostWrite() {
       title,
       text,
       noticeYn: isNotice ? 1 : 0,
-      writer: list.userId,
+      writer: loginedUser.userId,
     };
 
     console.log(postData);

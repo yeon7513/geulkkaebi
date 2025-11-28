@@ -4,9 +4,9 @@ import placeholder from '../../../assets/img/no_images.png';
 import { IMG_URL } from '../../../lib/url';
 
 function MemberInformation() {
-  const { list } = useSelector((state) => state.userSlice);
+  const { loginedUser } = useSelector((state) => state.userSlice);
 
-  console.log(list);
+  console.log(loginedUser);
 
   return (
     <div>
@@ -15,12 +15,16 @@ function MemberInformation() {
 
       <div>
         <img
-          src={list.profileImg ? IMG_URL + list.profileImg : placeholder}
+          src={
+            loginedUser.profileImg
+              ? IMG_URL + loginedUser.profileImg
+              : placeholder
+          }
           width={200}
           alt=""
         />
-        <p>아이디: {list.userId}</p>
-        <p>닉네임: {list.nickname}</p>
+        <p>아이디: {loginedUser.userId}</p>
+        <p>닉네임: {loginedUser.nickname}</p>
       </div>
     </div>
   );

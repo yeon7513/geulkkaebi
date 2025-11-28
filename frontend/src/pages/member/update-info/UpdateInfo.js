@@ -7,7 +7,7 @@ import { userInfoUpdate } from '../../../store/user/userSlice';
 import Button from './../../../components/button/Button';
 
 function UpdateInfo() {
-  const { list } = useSelector((state) => state.userSlice);
+  const { loginedUser } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,13 +17,13 @@ function UpdateInfo() {
   const [selectedFile, setSelectedFile] = useState(null);
   // 기존 DB 데이터 저장용 state
   const [values, setValues] = useState({
-    userId: list?.userId || '',
-    userPw: list?.userPw || '',
-    name: list?.name || '',
-    nickname: list?.nickname || '',
-    phone: list?.phone || '',
-    email: list?.email || '',
-    profileImg: list?.profileImg || '',
+    userId: loginedUser?.userId || '',
+    userPw: loginedUser?.userPw || '',
+    name: loginedUser?.name || '',
+    nickname: loginedUser?.nickname || '',
+    phone: loginedUser?.phone || '',
+    email: loginedUser?.email || '',
+    profileImg: loginedUser?.profileImg || '',
   });
 
   const handleChange = (e) => {
@@ -69,7 +69,9 @@ function UpdateInfo() {
         formData.append('file', selectedFile);
       }
 
-      dispatch(userInfoUpdate({ userId: list.userId, updateData: formData }));
+      dispatch(
+        userInfoUpdate({ userId: loginedUser.userId, updateData: formData })
+      );
       navigate('/mypage');
     } catch (error) {
       console.log(error);
@@ -77,24 +79,24 @@ function UpdateInfo() {
   };
 
   useEffect(() => {
-    if (list) {
+    if (loginedUser) {
       setValues({
-        userId: list.userId,
-        userPw: list.userPw,
-        name: list.name,
-        nickname: list.nickname,
-        phone: list.phone,
-        email: list.email,
-        profileImg: list.profileImg,
+        userId: loginedUser.userId,
+        userPw: loginedUser.userPw,
+        name: loginedUser.name,
+        nickname: loginedUser.nickname,
+        phone: loginedUser.phone,
+        email: loginedUser.email,
+        profileImg: loginedUser.profileImg,
       });
     }
-  }, [list]);
+  }, [loginedUser]);
 
   useEffect(() => {
-    if (list?.profileImg) {
-      setPreview(IMG_URL + list.profileImg);
+    if (loginedUser?.profileImg) {
+      setPreview(IMG_URL + loginedUser.profileImg);
     }
-  }, [list?.profileImg]);
+  }, [loginedUser?.profileImg]);
 
   return (
     <div>

@@ -5,35 +5,85 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="posts">
-	<!-- 조건에 따라 모든 게시글 조회 (관리자용, 사용자용) -->
-	<select id="selectList" resultType="postsDto">
-		SELECT p.*, u.nickname,
-		(SELECT count(postno)
-		FROM comments c
-		WHERE c.postno = p.postno
-		) AS count_comments,
-		(SELECT count(userid)
-		FROM post_likes l
-		WHERE l.postno = p.postno
-		) AS count_likes
-		FROM POSTS p
-		LEFT JOIN USERS u
-		ON (p.writer = u.userid)
-		<where>
-			<if test="boardType != null and boardType != ''">
-				board_type = #{boardType, jdbcType=VARCHAR}
+	<!-- 일반 게시글 전체 개수 조회 -->
+	<select id="countNormalPosts" resultType="int">
+		SELECT count(*)
+  		FROM POSTS p
+  		<where>
+  			<if test="boardType != null and boardType == 'all'">
+				AND board_type != 'notice'
 			</if>
+			<if
+				test="boardType != null and boardType != '' and boardType != 'all'">
+				AND board_type = #{boardType, jdbcType=VARCHAR}
+			</if>
+  		</where>
+		AND notice_yn = 0
+	</select>
+	
+	<!-- 조건에 따라 모든 게시글 조회 (관리자용, 사용자용) -->
+	<select id="selectNormalList" resultType="postsDto">
+		SELECT * FROM (
+		SELECT inner_query.*, ROWNUM AS rnum
+		FROM (
+		SELECT p.*,
+		u.nickname, u.profile_img, u.grade,
+		(SELECT COUNT(*) FROM comments c WHERE c.postno = p.postno)
+		AS
+		count_comments,
+		(SELECT COUNT(*) FROM post_likes l WHERE l.postno =
+		p.postno) AS count_likes
+		FROM POSTS p
+		LEFT JOIN USERS u ON (p.writer =
+		u.userid)
+		<where>
+			<!-- 모든 게시글 (공지사항 제외) -->
+			<if test="boardType != null and boardType == 'all'">
+				AND board_type != 'notice'
+			</if>
+			<!-- 카테고리별 조회 -->
+			<if
+				test="boardType != null and boardType != '' and boardType != 'all'">
+				AND board_type = #{boardType, jdbcType=VARCHAR}
+			</if>
+			<!-- 게시글 상세 조회 -->
 			<if test="postNo != null">
 				AND p.postno = #{postNo, jdbcType=NUMERIC}
 			</if>
+			<!-- 게시글 상세 조회 -->
 			<if test="writer != null and writer !=''">
 				AND writer = #{writer, jdbcType=VARCHAR}
 			</if>
+			<!-- 게시글 상세 조회 -->
 			<if test="isReport != null and isReport">
 				AND report_yn = 1
 			</if>
+			AND notice_yn = 0
 		</where>
 		ORDER BY notice_yn DESC, p.created_at DESC
+		) inner_query
+		WHERE ROWNUM
+		&lt;= #{limit}
+		)
+		WHERE rnum &gt; #{offset}
+	</select>
+
+	<!-- 공지사항으로 설정된 게시글만 조회 -->
+	<select id="selectNoticeList" resultType="postsDto">
+		SELECT p.*, u.nickname, u.profile_img
+		FROM POSTS p
+		LEFT JOIN USERS u ON p.writer = u.userid
+		<where>
+			<if
+				test="boardType != null and boardType != '' and boardType != 'all'">
+				AND board_type = #{boardType}
+			</if>
+			<if test="boardType != null and boardType == 'all'">
+				AND board_type != 'notice'
+			</if>
+			AND notice_yn = 1
+		</where>
+		ORDER BY p.created_at DESC
 	</select>
 
 	<!-- 인기글 조회 -->
@@ -42,20 +92,24 @@
 		FROM (
 		SELECT
 		p.postno, p.board_type, p.title,
-		substr(p.text, 1, 200) AS text,
-		u.nickname, p.hitcount, l.count_likes,
+		p.text,
+		u.nickname, u.profile_img, u.grade, p.hitcount,
+		l.count_likes,
 		p.created_at
 		FROM posts p
 		JOIN (
-		SELECT postno, count(userid) AS count_likes
+		SELECT postno,
+		count(userid) AS count_likes
 		FROM post_likes
 		GROUP BY postno
-		) l ON(p.postno = l.postno)
+		) l
+		ON(p.postno = l.postno)
 		JOIN users u
 		ON(p.writer = u.userid)
-		ORDER BY (p.hitcount + l.count_likes) DESC
+		ORDER BY
+		(p.hitcount + l.count_likes) DESC
 		)
-		WHERE ROWNUM &lt;= 5
+		WHERE ROWNUM &lt;= 6
 	</select>
 
 	<!-- 새로운 글 등록 -->
@@ -73,7 +127,8 @@
 		#{boardType, jdbcType=VARCHAR},
 		#{writer, jdbcType=VARCHAR},
 		#{title, jdbcType=VARCHAR},
-		#{text, jdbcType=VARCHAR},
+		#{text,
+		jdbcType=VARCHAR},
 		0,
 		#{noticeYn, jdbcType=NUMERIC},
 		SYSDATE,
@@ -90,7 +145,8 @@
 	<!-- 좋아요 추가 -->
 	<insert id="addLikeToPost">
 		CALL add_likes(
-		#{table_name, mode=IN, jdbcType=VARCHAR},
+		#{table_name, mode=IN,
+		jdbcType=VARCHAR},
 		#{identifier_number, mode=IN, jdbcType=NUMERIC},
 		#{user_id, mode=IN, jdbcType=VARCHAR}
 		)

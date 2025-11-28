@@ -8,30 +8,40 @@
   height: 100%;
 
   .container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    display: flex;
+    gap: 48px;
 
-    .post {
-      transition: 0.3s;
+    .board {
+      flex: 1;
 
-      &:hover {
-        transform: translateY(-4px);
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 16px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid $grayscale-300;
+
+        .more {
+          padding: 8px 16px;
+          font-size: 14px;
+        }
       }
 
-      a {
-        display: block;
-        transition: 0.3s;
+      > ul {
+        li {
+          > a {
+            display: block;
+            padding: 8px 0;
 
-        &:hover {
-          opacity: 0.9;
-        }
+            &:hover {
+              color: $grayscale-600;
 
-        img {
-          display: block;
-          width: 100%;
-          height: 200px;
-          object-fit: cover;
+              p {
+                text-decoration: underline;
+              }
+            }
+          }
         }
       }
     }
@@ -39,30 +49,16 @@
 }
 
 .contents {
-  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .date {
-      font-size: 14px;
-      color: $grayscale-500;
-    }
+  p {
+    font-weight: 500;
   }
 
-  .detail {
-    h4 {
-      font-size: 24px;
-      margin-bottom: 2px;
-      @include textLine(1);
-    }
-
-    p {
-      @include textLine(3);
-      line-height: 1.4;
-      color: $grayscale-500;
-    }
+  .date {
+    font-size: 16px;
+    color: $grayscale-500;
   }
 }

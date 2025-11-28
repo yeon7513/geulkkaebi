@@ -9,13 +9,21 @@
 
 .editorToolbar {
   display: flex;
-
   gap: 16px;
-  outline: 1px dotted red;
+  margin: 0 auto;
+  width: 65vw;
 }
 
 .colorTool {
   position: relative;
+
+  > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4px;
+    font-size: 20px;
+  }
 
   .palette {
     position: absolute;

@@ -11,46 +11,4 @@ public class QuizProverb {
   private String commentary;
   private int difficulty;
 
-  public int getQuizNo() {
-    return quizNo;
-  }
-
-  public void setQuizNo(int quizNo) {
-    this.quizNo = quizNo;
-  }
-
-  public String getQuestion() {
-    return question;
-  }
-
-  public void setQuestion(String question) {
-    this.question = question;
-  }
-
-  public String getAnswer() {
-    return answer;
-  }
-
-  public void setAnswer(String answer) {
-    this.answer = answer;
-  }
-
-  public String getCommentary() {
-    return commentary;
-  }
-
-  public void setCommentary(String commentary) {
-    this.commentary = commentary;
-  }
-
-  public int getDifficulty() {
-    return difficulty;
-  }
-
-  public void setDifficulty(int difficulty) {
-    this.difficulty = difficulty;
-  }
-
-
-
 }

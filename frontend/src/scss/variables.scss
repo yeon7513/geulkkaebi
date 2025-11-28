@@ -1,5 +1,14 @@
 @charset "utf-8";
 
+// 좋아요
+$like-color: #e43636;
+
+// 조회수
+$hitcount-color: #437057;
+
+// 댓글
+$comment-color: #91c8e4;
+
 // 그레이스케일
 $grayscale-100: #f7f7f7;
 $grayscale-200: #e6e6e6;
@@ -67,9 +76,9 @@ $purple-800: #7c4f87;
 $purple-900: #6a4474;
 
 // 폰트
-$title-font: 'Pinkfong Baby Shark', san-serif;
-// $text-font: 'Freesentation', san-serif;
-$text-font: 'Paperlogy', san-serif;
+// $title-font: 'Pinkfong Baby Shark', san-serif;
+$title-font: 'SchoolSafeMonggleMonggle', san-serif;
+$text-font: 'NEXONLv2Gothic', san-serif;
 
 // 그림자
 $box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.1);

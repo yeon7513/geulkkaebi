@@ -5,7 +5,9 @@ import java.util.Map;
 
 public interface PostDao {
 
-  List<Posts> selectList(Map<String, Object> params);
+  List<Posts> selectNormalList(Map<String, Object> params);
+
+  List<Posts> selectNoticeList(String boardType);
 
   void increaseHitcount(Long postNo);
 
@@ -14,5 +16,9 @@ public interface PostDao {
   List<Posts> selectPopularPosts();
 
   int insert(Posts posts);
+
+  int countNormalPosts(String boardType);
+
+
 
 }

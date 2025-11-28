@@ -22,6 +22,7 @@ public class User {
   private String createdAt; // 회원 가입일
   private String modifiedAt; // 정보 수정일
 
+  // getter & setter
   public String getUserId() {
     return userId;
   }
@@ -157,6 +158,5 @@ public class User {
   public void setModifiedAt(String modifiedAt) {
     this.modifiedAt = modifiedAt;
   }
-
 
 }

@@ -9,5 +9,33 @@
 .header {
   h3 {
     font-family: $text-font;
+    font-size: 24px;
+    font-weight: 600;
+  }
+}
+
+.writer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .profile {
+    width: 50px;
+    border: 1px solid #000;
+    border-radius: 50%;
+  }
+}
+
+.text {
+  background-color: #ddd;
+
+  ul {
+    padding-left: 40px;
+    list-style-type: disc;
+  }
+
+  ol {
+    padding-left: 40px;
+    list-style-type: decimal;
   }
 }

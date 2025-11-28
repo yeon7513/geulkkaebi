@@ -3,17 +3,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllPostData } from '../store/board/postSlice';
 
 export const useBoardFetch = (
-  boardType = null,
+  boardType = 'all',
   postNo = null,
   writer = null,
-  isReport = false
+  isReport = false,
+  page,
+  size
 ) => {
-  const { post, status } = useSelector((state) => state.postSlice);
+  const { post, totalPages, totalPosts, status } = useSelector(
+    (state) => state.postSlice
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchAllPostData({ postNo, boardType, writer, isReport }));
-  }, [dispatch, postNo, boardType, writer, isReport]);
+    dispatch(
+      fetchAllPostData({ postNo, boardType, writer, isReport, page, size })
+    );
+  }, [dispatch, postNo, boardType, writer, isReport, page, size]);
 
-  return { post, status };
+  return { post, totalPages, totalPosts, status };
 };

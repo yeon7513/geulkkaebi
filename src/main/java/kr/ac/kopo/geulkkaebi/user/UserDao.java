@@ -14,4 +14,6 @@ public interface UserDao {
 
   int delete(String userId);
 
+  void updateUserGrade(String writerId);
+
 }

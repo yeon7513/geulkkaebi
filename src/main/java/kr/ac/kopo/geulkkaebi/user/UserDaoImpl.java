@@ -36,4 +36,10 @@ public class UserDaoImpl implements UserDao {
     return sql.delete("users.delete", userId);
   }
 
+  @Override
+  public void updateUserGrade(String writerId) {
+    sql.update("users.updateUserGrade", writerId);
+
+  }
+
 }

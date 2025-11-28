@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { IoMdColorPalette } from 'react-icons/io';
 import styles from './EditorToolbar.module.scss';
 import ColorPalette from './tool-items/ColorPalette';
 import PostImageUpload from './tool-items/PostImageUpload';
@@ -44,7 +45,7 @@ function EditorToolbar({ editor }) {
         {/* 색상 팔레트 */}
         <div className={styles.colorTool}>
           <button type="button" onClick={handleTogglePalette}>
-            colors change
+            <IoMdColorPalette />
           </button>
           {isPaletteShow && (
             <div ref={paletteRef} className={styles.palette}>

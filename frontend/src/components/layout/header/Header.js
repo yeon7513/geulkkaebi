@@ -17,7 +17,7 @@ function Header() {
 
   const [isShrink, setIsShrink] = useState(pathname !== '/');
 
-  const { list } = useSelector((state) => state.userSlice);
+  const { loginedUser } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -46,38 +46,34 @@ function Header() {
   }, [dispatch]);
 
   return (
-    <header
-      className={cn(
-        styles.header,
-        isShrink ? styles.shrink : '',
-        pathname === '/' ? styles.fixed : ''
-      )}
-    >
+    <header className={cn(styles.header)}>
       <Container className={styles.container}>
-        <ul className={styles.utils}>
-          {list.length === 0 ? (
-            <>
-              <NavLink path="sign/login" comp="Login">
-                <BiSolidLogInCircle /> 로그인
-              </NavLink>
-              <NavLink path="sign/join" comp="Join">
-                <BiSolidUserPlus /> 회원가입
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <li>{list.nickname}님, 안녕하세요!</li>
-              <button onClick={handleLogout}>로그아웃</button>
-              {list.adminYn === 'Y' ? (
-                <NavLink path="/manager">관리자 페이지</NavLink>
-              ) : (
-                <NavLink path="mypage">마이페이지</NavLink>
-              )}
-            </>
-          )}
-        </ul>
-        <Logo isShow={!isShrink} className={styles.logo} />
-        <Nav menus={gnb} className={styles.item} />
+        <Logo className={styles.logo} />
+        <div className={styles.menu}>
+          <ul className={styles.utils}>
+            {!loginedUser ? (
+              <>
+                <NavLink path="sign/login" comp="Login">
+                  <BiSolidLogInCircle /> 로그인
+                </NavLink>
+                <NavLink path="sign/join" comp="Join">
+                  <BiSolidUserPlus /> 회원가입
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <li>{loginedUser.nickname}님, 안녕하세요!</li>
+                <button onClick={handleLogout}>로그아웃</button>
+                {loginedUser.adminYn === 1 ? (
+                  <NavLink path="/manager">관리자 페이지</NavLink>
+                ) : (
+                  <NavLink path="mypage">마이페이지</NavLink>
+                )}
+              </>
+            )}
+          </ul>
+          <Nav menus={gnb} className={styles.item} />
+        </div>
       </Container>
     </header>
   );

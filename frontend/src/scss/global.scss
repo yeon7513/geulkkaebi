@@ -9,6 +9,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: $text-font, sans-serif;
+  font-weight: normal;
 }
 
 a {
@@ -50,6 +51,7 @@ h4,
 h5,
 h6 {
   font-family: $title-font;
+  font-weight: 500;
 }
 
 p {

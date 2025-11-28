@@ -16,35 +16,42 @@
   gap: 8px;
   padding: 8px;
   width: 100%;
-
   background: #fff;
-
-  > span,
-  div {
-    outline: 1px dotted red;
-  }
-
-  .title {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-
-    .icon {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      font-size: 14px;
-
-      &.comment {
-        color: blue;
-      }
-      &.like {
-        color: red;
-      }
-    }
-  }
 
   .center {
     text-align: center;
+  }
+}
+
+.notice {
+  td {
+    background: $grayscale-200;
+  }
+}
+
+.title {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  text-align: left;
+
+  a {
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+
+    &.comment {
+      color: blue;
+    }
+    &.like {
+      color: red;
+    }
   }
 }

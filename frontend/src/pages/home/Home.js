@@ -3,7 +3,7 @@ import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useEffect, useRef, useState } from 'react';
 import Goto from '../../components/goto/Goto';
 import Board from '../board/popularPosts/PopularPosts';
-import BookIntro from '../books/book-intro/BookIntro';
+import Book from '../books/Book';
 import SupportIntro from '../support/support-intro/SupportIntro';
 import Container from './../../components/layout/container/Container';
 import styles from './Home.module.scss';
@@ -12,72 +12,40 @@ import Visual from './visual/Visual';
 gsap.registerPlugin(ScrollToPlugin);
 
 function Home() {
-  const [currentIndex, setCurrentIndex] = useState(0);
   const [isShow, setIsShow] = useState(false);
+  const visualRef = useRef(null);
 
-  const homeRef = useRef(null);
-  const sectionRefs = useRef([]);
-  const isScrolling = useRef(false);
+  const scrollToTop = () => {
+    gsap.to(window, { duration: 1, scrollTo: 0, ease: 'power2.inOut' });
+  };
 
+  // 스크롤 위치 감지
   useEffect(() => {
-    const sections = homeRef.current.querySelectorAll('section');
-    const footer = document.querySelector('footer');
-    sectionRefs.current = [...sections, footer];
+    const handleScroll = () => {
+      if (!visualRef.current) return;
 
-    const handleWheel = (e) => {
-      e.preventDefault();
-
-      if (isScrolling.current) return;
-
-      isScrolling.current = true;
-
-      if (e.deltaY > 0 && currentIndex < sectionRefs.current.length - 1) {
-        setCurrentIndex((prev) => prev + 1);
-      } else if (e.deltaY < 0 && currentIndex > 0) {
-        setCurrentIndex((prev) => prev - 1);
-      }
-
-      setTimeout(() => {
-        isScrolling.current = false;
-      }, 1000);
+      const visualBottom = visualRef.current.getBoundingClientRect().bottom;
+      setIsShow(visualBottom < 0); // visual이 화면 위로 벗어나면 true
     };
 
-    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // 초기 상태 체크
 
     return () => {
-      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [currentIndex]);
-
-  useEffect(() => {
-    // 섹션 이동 애니메이션
-    const targetSection = sectionRefs.current[currentIndex];
-    if (targetSection) {
-      gsap.to(window, {
-        duration: 1,
-        scrollTo: { y: targetSection, offsetY: 0 },
-        ease: 'power2.inOut',
-      });
-    }
-
-    // 바로가기 제어
-    setIsShow(currentIndex > 0);
-  }, [currentIndex]);
+  }, []);
 
   return (
-    <div className={styles.home} ref={homeRef}>
-      <Goto
-        isScroll={!isShow}
-        isFooter={currentIndex === 4 ? true : false}
-        onClickToTop={() => setCurrentIndex(0)}
-      />
+    <div className={styles.home}>
+      <Goto isScroll={isShow} onClickToTop={scrollToTop} />
       {/* 메인 슬라이드 */}
-      <section className={styles.visual}>
+      <section className={styles.visual} ref={visualRef}>
         <Visual />
       </section>
-      {/* 신작 및 추천 도서 */}
+      {/* 도서 검색 */}
       <section className={styles.books}>
-        <BookIntro />
+        <Book />
       </section>
       {/* 오늘의 인기글 */}
       <section className={styles.board}>
@@ -87,9 +55,7 @@ function Home() {
       </section>
       {/* 공지사항 및 이벤트 */}
       <section className={styles.notice}>
-        <Container>
-          <SupportIntro />
-        </Container>
+        <SupportIntro />
       </section>
     </div>
   );

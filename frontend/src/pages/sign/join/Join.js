@@ -65,11 +65,11 @@ function Join() {
         },
       })
       .then((res) => {
-        if (res.data === 'success') {
+        if (res.data) {
           navigate('/');
           console.log('회원 가입 성공');
         } else {
-          console.log('회원 가입 실패: ', res.data);
+          console.log('회원 가입 실패: ', res);
         }
       })
       .catch((err) => {

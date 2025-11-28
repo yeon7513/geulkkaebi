@@ -1,6 +1,7 @@
 package kr.ac.kopo.geulkkaebi.board.post;
 
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,17 +24,24 @@ public class PostController {
 
   // 전체 or 게시글 번호별 or 카테고리별 or 아이디별 or 신고된 글 조회
   @GetMapping("/list")
-  public List<Posts> displayPostList(@RequestParam(name = "postno", required = false) Long postNo,
+  public Map<String, Object> displayPostList(
+      @RequestParam(name = "postno", required = false) Long postNo,
       @RequestParam(required = false) String boardType,
       @RequestParam(required = false) String writer,
-      @RequestParam(required = false, defaultValue = "false") boolean isReport) {
+      @RequestParam(required = false, defaultValue = "false") boolean isReport,
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(required = false, defaultValue = "10") int size) {
 
-    return postService.selectList(postNo, boardType, writer, isReport);
+    return postService.selectList(postNo, boardType, writer, isReport, page, size);
   }
 
   // 오늘의 인기글 조회
   @GetMapping("/popular")
   public List<Posts> displayPopularPosts() {
+    // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    // String encodedPw = encoder.encode("admin01");
+    // System.out.println("암호화: " + encodedPw);
+
     return postService.selectPopularPosts();
   }
 

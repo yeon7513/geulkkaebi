@@ -1,3 +1,103 @@
 @charset 'utf-8';
 
 @use '/src/scss/variables.scss' as *;
+
+@import '/src/scss/mixin.scss';
+
+.book {
+  position: relative;
+  padding: 120px;
+
+  .toTop {
+    button {
+      background-color: $mint-400;
+
+      &:hover {
+        background-color: $mint-600;
+        box-shadow: 0px 4px 8px $mint-200;
+      }
+    }
+  }
+
+  h3 {
+    font-size: 32px;
+    text-align: center;
+  }
+
+  .search {
+    justify-content: center;
+    margin: 24px 0 48px;
+
+    input {
+      width: 50vw;
+    }
+  }
+}
+
+.bookList {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.noSearch {
+  p {
+    text-align: center;
+  }
+}
+
+.bookItem {
+  background-color: #fff;
+  box-shadow: $box-shadow;
+  cursor: pointer;
+  transition: 0.3s;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  img {
+    width: 100%;
+    height: 380px;
+    border-bottom: 1px solid $grayscale-200;
+  }
+
+  .contents {
+    padding: 16px;
+
+    h4 {
+      margin-bottom: 8px;
+      @include textLine(1);
+      font-family: $text-font;
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    ul {
+      li {
+        margin-bottom: 4px;
+        font-size: 14px;
+
+        > span {
+          display: inline-block;
+          margin-right: 8px;
+          width: 40px;
+          font-weight: 500;
+        }
+      }
+    }
+
+    p {
+      margin-top: 8px;
+      padding-top: 4px;
+      border-top: 1px solid $grayscale-200;
+      @include textLine(3);
+    }
+  }
+}
+
+.moreBtn {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}

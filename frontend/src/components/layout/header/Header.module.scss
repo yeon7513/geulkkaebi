@@ -8,145 +8,103 @@
   box-shadow: $box-shadow;
   background: #fff;
 
-  &.fixed {
-    position: fixed;
-    z-index: 2;
+  .container {
+    display: flex;
+    justify-content: space-between;
   }
+}
 
-  &.shrink {
-    .container {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 
-      .logo {
-        margin: 0;
-        order: 0;
-
-        a {
-          > span:nth-of-type(2) {
-            font-size: 32px;
-          }
-          img {
-            height: 32px;
-          }
-        }
-      }
-
-      > nav {
-        flex: 1;
-        > ul {
-          justify-content: space-between;
-        }
-      }
-      .item {
-        order: 1;
-        > a {
-          font-size: 20px;
-        }
-      }
-
-      .utils {
-        position: static;
-        order: 2;
-      }
+  > nav {
+    > ul {
+      gap: 48px;
     }
   }
 
-  .container {
-    position: relative;
+  .utils {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: end;
+    align-items: center;
     gap: 8px;
 
-    .utils {
-      position: absolute;
-      top: 0;
-      right: 0;
-      display: flex;
-      gap: 8px;
-      font-size: 16px;
-
+    > li {
       a {
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 4px;
+        gap: 2px;
+        font-size: 16px;
+        color: $grayscale-600;
+
         &:hover {
           opacity: 0.8;
         }
       }
     }
+  }
+}
 
-    .logo {
-      margin: 0 auto;
+.item {
+  a {
+    position: relative;
+    display: block;
+    padding: 8px 0;
+    font-weight: 500;
+    font-size: 20px;
+    transition: 0.3s;
+    color: $grayscale-700;
+  }
+
+  // 소개
+  &:nth-child(1) {
+    a {
+      &:hover,
+      &:focus {
+        color: $green-500;
+      }
     }
+  }
 
-    .item {
-      a {
-        position: relative;
-        display: block;
-        padding: 8px 0;
-        font-family: $title-font, sans-serif;
-        font-weight: 300;
-        font-size: 24px;
-        transition: 0.3s;
-
-        &:hover {
-          letter-spacing: 4px;
-        }
+  // 신작, 추천도서
+  &:nth-child(2) {
+    a {
+      &:hover,
+      &:focus {
+        color: $mint-500;
       }
+    }
+  }
 
-      // 소개
-      &:nth-child(1) {
-        a {
-          &:hover,
-          &:focus {
-            color: $green-500;
-          }
-        }
+  // 이야기 놀이터
+  &:nth-child(3) {
+    a {
+      &:hover,
+      &:focus {
+        color: $yellow-500;
       }
+    }
+  }
 
-      // 신작, 추천도서
-      &:nth-child(2) {
-        a {
-          &:hover,
-          &:focus {
-            color: $mint-500;
-          }
-        }
+  // 깨비 퀴즈
+  &:nth-child(4) {
+    a {
+      &:hover,
+      &:focus {
+        color: $orange-500;
       }
+    }
+  }
 
-      // 이야기 놀이터
-      &:nth-child(3) {
-        a {
-          &:hover,
-          &:focus {
-            color: $yellow-500;
-          }
-        }
-      }
-
-      // 깨비 퀴즈
-      &:nth-child(4) {
-        a {
-          &:hover,
-          &:focus {
-            color: $orange-500;
-          }
-        }
-      }
-
-      // 궁금해요
-      &:nth-child(5) {
-        a {
-          &:hover,
-          &:focus {
-            color: $purple-500;
-          }
-        }
+  // 궁금해요
+  &:nth-child(5) {
+    a {
+      &:hover,
+      &:focus {
+        color: $purple-500;
       }
     }
   }

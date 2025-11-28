@@ -3,14 +3,13 @@ import Layout from './components/layout/Layout';
 import PostListItem from './components/post/post-list/post-list-item/PostListItem';
 import PostWrite from './components/post/post-write/PostWrite';
 import { ComponentProvider } from './context/ComponentProvider';
+import AllPost from './pages/board/all-post/AllPost';
 import Article from './pages/board/article/Article';
 import Board from './pages/board/Board';
 import Debate from './pages/board/debate/Debate';
-import PopularPosts from './pages/board/popularPosts/PopularPosts';
 import Story from './pages/board/story/Story';
 import Book from './pages/books/Book';
-import BookBest from './pages/books/book-best/BookBest';
-import BookNewest from './pages/books/book-newest/BookNewest';
+import BookDetail from './pages/books/book-detail/BookDetail';
 import Home from './pages/home/Home';
 import Introduce from './pages/introduce/Introduce';
 import BoardManagement from './pages/manager/board-management/BoardManagement';
@@ -47,12 +46,9 @@ function Main() {
             <Route index element={<Home />} />
             {/* 소개 */}
             <Route path="introduce" element={<Introduce />} />
-            {/* 신작도서 및 추천도서 */}
-            <Route path="/book" element={<Book />}>
-              <Route index element={<Navigate to="newest" replace />} />
-              <Route path="newest" element={<BookNewest />} />
-              <Route path="best" element={<BookBest />} />
-            </Route>
+            {/* 도서 검색 */}
+            <Route path="/book" element={<Book />} />
+            <Route path="/book/detail/:isbn" element={<BookDetail />} />
             {/* 퀴즈 */}
             <Route path="/quiz" element={<Quiz />}>
               <Route index element={<QuizIntro />} />
@@ -61,8 +57,8 @@ function Main() {
             </Route>
             {/* 게시판 */}
             <Route path="/board" element={<Board />}>
-              <Route index element={<Navigate to="popular" replace />} />
-              <Route path="popular" element={<PopularPosts />} />
+              <Route index element={<Navigate to="all" replace />} />
+              <Route path="all" element={<AllPost />} />
               <Route path="debate" element={<Debate />} />
               <Route path="story" element={<Story />} />
               <Route path="article" element={<Article />} />

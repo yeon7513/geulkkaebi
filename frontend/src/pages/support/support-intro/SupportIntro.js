@@ -1,36 +1,55 @@
-import Card from '../../../components/card/Card';
+import { Link } from 'react-router-dom';
 import Container from '../../../components/layout/container/Container';
-import TextIcon from '../../../components/text-icon/TextIcon';
 import { supportTest } from '../../../lib/supportTest';
 import styles from './SupportIntro.module.scss';
+
+import cn from 'classnames';
+import Button from './../../../components/button/Button';
 
 function SupportIntro() {
   return (
     <div className={styles.support}>
-      <h3>새로운 소식과 함께하는 이벤트</h3>
       <Container className={styles.container}>
-        {supportTest.map((post) => (
-          <Card key={post.id} className={styles.post}>
-            {/* path 수정할 것!! */}
-            <a href={`/support/${post.boardType}/${post.id}`}>
-              <img src={post.image} alt="" />
-              <div className={styles.contents}>
-                <div className={styles.header}>
-                  {post.boardType === 'notice' ? (
-                    <TextIcon colors="green">공지사항</TextIcon>
-                  ) : (
-                    <TextIcon colors="yellow">이벤트</TextIcon>
-                  )}
-                  <span className={styles.date}>{post.createdAt}</span>
-                </div>
-                <div className={styles.detail}>
-                  <h4>{post.title}</h4>
-                  <p>{post.text}</p>
-                </div>
-              </div>
-            </a>
-          </Card>
-        ))}
+        <div className={cn(styles.board, styles.notice)}>
+          <div className={styles.title}>
+            <h3>새로운 소식</h3>
+            <Button className={styles.more} variant="outline" isRound={true}>
+              더보기
+            </Button>
+          </div>
+          <ul>
+            {supportTest.map((post) => (
+              <li key={post.id}>
+                <Link to={`/support/${post.boardType}/${post.id}`}>
+                  <div className={styles.contents}>
+                    <p>{post.title}</p>
+                    <span className={styles.date}>{post.createdAt}</span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className={cn(styles.board, styles.event)}>
+          <div className={styles.title}>
+            <h3>함께하는 이벤트</h3>
+            <Button className={styles.more} variant="outline" isRound={true}>
+              더보기
+            </Button>
+          </div>
+          <ul>
+            {supportTest.map((post) => (
+              <li key={post.id}>
+                <Link to={`/support/${post.boardType}/${post.id}`}>
+                  <div className={styles.contents}>
+                    <p>{post.title}</p>
+                    <span className={styles.date}>{post.createdAt}</span>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </Container>
     </div>
   );

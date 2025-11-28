@@ -4,16 +4,16 @@ import { PulseLoader } from 'react-spinners';
 import { fetchAllUserData } from '../../../store/user/userSlice';
 
 function MemberManagement() {
-  const { list } = useSelector((state) => state.userSlice);
+  const { userList } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(fetchAllUserData());
   }, [dispatch]);
 
-  console.log(list);
+  console.log(userList);
 
-  if (list?.length === 0) {
+  if (userList?.length === 0) {
     return (
       <div>
         <PulseLoader />
@@ -24,7 +24,7 @@ function MemberManagement() {
   return (
     <div>
       <h2>MemberManagement</h2>
-      {list?.map((data, idx) => (
+      {userList?.map((data, idx) => (
         <div key={idx}>
           {Object.entries(data).map(([key, value]) => (
             <div key={key}>

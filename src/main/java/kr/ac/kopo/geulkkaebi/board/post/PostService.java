@@ -1,10 +1,12 @@
 package kr.ac.kopo.geulkkaebi.board.post;
 
 import java.util.List;
+import java.util.Map;
 
 public interface PostService {
 
-  List<Posts> selectList(Long postNo, String boardType, String writer, boolean isReport);
+  Map<String, Object> selectList(Long postNo, String boardType, String writer, boolean isReport,
+      int page, int size);
 
   void increaseHitcount(Long postNo);
 

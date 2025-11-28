@@ -17,9 +17,26 @@ public class Posts {
 
   // JOIN용 컬럼 필드
   private String nickname;
+  private String profileImg;
+  private int grade;
   private int countLikes;
   private int countComments;
 
+  public int getGrade() {
+    return grade;
+  }
+
+  public void setGrade(int grade) {
+    this.grade = grade;
+  }
+
+  public String getProfileImg() {
+    return profileImg;
+  }
+
+  public void setProfileImg(String profileImg) {
+    this.profileImg = profileImg;
+  }
 
   public int getCountLikes() {
     return countLikes;

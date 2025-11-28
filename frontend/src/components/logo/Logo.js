@@ -27,8 +27,10 @@ function Logo({ className, isShow = true }) {
         <span className={isShow ? styles.decoText : styles.hide}>
           {decoLogo}
         </span>
-        <span className={styles.logoText}>글깨비</span>
-        <img className={styles.logoImg} src={logoImg} alt="글깨비" />
+        <div>
+          <span className={styles.logoText}>글깨비</span>
+          <img className={styles.logoImg} src={logoImg} alt="글깨비" />
+        </div>
       </Link>
     </h1>
   );

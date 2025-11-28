@@ -12,7 +12,9 @@
 
   .container {
     flex: 1;
+    margin: 0 auto;
     padding: 24px 0;
+    width: 65vw;
     height: calc(100% - 200px);
     overflow-y: auto;
 

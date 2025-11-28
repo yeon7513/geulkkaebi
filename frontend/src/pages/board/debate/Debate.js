@@ -16,7 +16,6 @@ function Debate() {
       <Post
         title={formatLineBreaks(randomText(debateIntroText))}
         boardType="debate"
-        themeColor="green"
       />
     </>
   );

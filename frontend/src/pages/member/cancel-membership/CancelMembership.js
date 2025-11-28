@@ -7,17 +7,16 @@ import { userDelete } from '../../../store/user/userSlice';
 function CancelMembership() {
   const [isChecked, setIsChecked] = useState(false);
 
-  const { list } = useSelector((state) => state.userSlice);
+  const { loginedUser } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  console.log(list);
+  console.log(loginedUser);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    dispatch(userDelete({ userNo: list.userNo }));
-    sessionStorage.clear();
+    dispatch(userDelete({ userId: loginedUser.userId }));
     navigate('/');
   };
 
