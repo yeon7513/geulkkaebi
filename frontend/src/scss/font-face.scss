@@ -1,32 +1,72 @@
-// title & menus
+// title
 @font-face {
-  font-family: 'SchoolSafeMonggleMonggle';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimMonggeulmonggeulR.woff2')
-    format('woff2');
+  font-family: 'CookieRun';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff')
+    format('woff');
   font-weight: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'NEXONLv2Gothic';
+  font-family: 'CookieRun';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Bold00.woff')
+    format('woff');
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'CookieRun';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/CookieRunOTF-Black00.woff')
+    format('woff');
+  font-weight: 900;
+  font-display: swap;
+}
+
+// text
+// @font-face {
+//   font-family: 'NEXONLv2Gothic';
+//   font-weight: 300;
+//   src: url('../fonts/NEXONLv2Gothic/NEXON\ Lv2\ Gothic\ Light.ttf')
+//     format('truetype');
+// }
+// @font-face {
+//   font-family: 'NEXONLv2Gothic';
+//   font-weight: 400;
+//   src: url('../fonts/NEXONLv2Gothic/NEXON\ Lv2\ Gothic.ttf') format('truetype');
+// }
+// @font-face {
+//   font-family: 'NEXONLv2Gothic';
+//   font-weight: 500;
+//   src: url('../fonts/NEXONLv2Gothic/NEXON\ Lv2\ Gothic\ Medium.ttf')
+//     format('truetype');
+// }
+// @font-face {
+//   font-family: 'NEXONLv2Gothic';
+//   font-weight: 600;
+//   src: url('../fonts/NEXONLv2Gothic/NEXON\ Lv2\ Gothic\ Bold.ttf')
+//     format('truetype');
+// }
+@font-face {
+  font-family: 'NexonLv2Gothic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic Light.woff')
+    format('woff');
   font-weight: 300;
-  src: url('../fonts/NEXONLv2Gothic/NEXON\ Lv2\ Gothic\ Light.ttf')
-    format('truetype');
+  font-display: swap;
 }
+
 @font-face {
-  font-family: 'NEXONLv2Gothic';
+  font-family: 'NexonLv2Gothic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic.woff')
+    format('woff');
   font-weight: 400;
-  src: url('../fonts/NEXONLv2Gothic/NEXON\ Lv2\ Gothic.ttf') format('truetype');
+  font-display: swap;
 }
+
 @font-face {
-  font-family: 'NEXONLv2Gothic';
+  font-family: 'NexonLv2Gothic';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv2 Gothic Bold.woff')
+    format('woff');
   font-weight: 500;
-  src: url('../fonts/NEXONLv2Gothic/NEXON\ Lv2\ Gothic\ Medium.ttf')
-    format('truetype');
-}
-@font-face {
-  font-family: 'NEXONLv2Gothic';
-  font-weight: 600;
-  src: url('../fonts/NEXONLv2Gothic/NEXON\ Lv2\ Gothic\ Bold.ttf')
-    format('truetype');
+  font-display: swap;
 }

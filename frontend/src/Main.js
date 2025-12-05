@@ -22,15 +22,15 @@ import Member from './pages/member/Member';
 import MemberInformation from './pages/member/member-information/MemberInformation';
 import UpdateInfo from './pages/member/update-info/UpdateInfo';
 import NotFound404 from './pages/not-found/NotFound404';
-import Proverb from './pages/quiz/proverb/Proverb';
 import Quiz from './pages/quiz/Quiz';
 import QuizIntro from './pages/quiz/quiz-intro/QuizIntro';
-import Word from './pages/quiz/word/Word';
+import QuizPlay from './pages/quiz/quiz-play/QuizPlay';
 import FindIdPw from './pages/sign/find-id-pw/FindIdPw';
 import Join from './pages/sign/join/Join';
 import Login from './pages/sign/login/Login';
 import Sign from './pages/sign/Sign';
 import Contact from './pages/support/contact/Contact';
+import Event from './pages/support/event/Event';
 import Faq from './pages/support/faq/Faq';
 import Notice from './pages/support/notice/Notice';
 import Support from './pages/support/Support';
@@ -52,8 +52,8 @@ function Main() {
             {/* 퀴즈 */}
             <Route path="/quiz" element={<Quiz />}>
               <Route index element={<QuizIntro />} />
-              <Route path="word" element={<Word />} />
-              <Route path="proverb" element={<Proverb />} />
+              <Route path="word" element={<QuizPlay quizType="word" />} />
+              <Route path="proverb" element={<QuizPlay quizType="proverb" />} />
             </Route>
             {/* 게시판 */}
             <Route path="/board" element={<Board />}>
@@ -68,6 +68,7 @@ function Main() {
             <Route path="/support" element={<Support />}>
               <Route index element={<Navigate to="notice" replace />} />
               <Route path="notice" element={<Notice />} />
+              <Route path="event" element={<Event />} />
               <Route path="faq" element={<Faq />} />
               <Route path="contact" element={<Contact />} />
               <Route path=":boardType/:postNo" element={<PostListItem />} />
@@ -94,7 +95,7 @@ function Main() {
             <Route path="find" element={<FindIdPw />} />
           </Route>
           {/* 공통 에디터 - 글쓰기 / 수정 페이지 */}
-          <Route path="/write/:boardType" element={<PostWrite />} />
+          <Route path="/write" element={<PostWrite />} />
           <Route path="/edit/:boardType/:postNo" element={<PostWrite />} />
           {/* 404페이지 */}
           <Route path="*" element={<NotFound404 />} />

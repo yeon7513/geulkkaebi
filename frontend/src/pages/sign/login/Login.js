@@ -35,7 +35,7 @@ function Login() {
           <label htmlFor="userId" className={styles.icon}>
             <FaUser />
           </label>
-          <TextInput id="userId" name="userId" placeholder="아이디" />
+          <TextInput id="userId" name="userId" placeholder="아이디" autoFocus />
         </div>
         <div className={styles.pw}>
           <label htmlFor="userPw" className={styles.icon}>
@@ -52,6 +52,14 @@ function Login() {
       <div className={styles.submit}>
         <Button variant="pushable" type="submit">
           로그인
+        </Button>
+        <Button
+          variant="pushable"
+          colors="gray"
+          type="button"
+          onClick={() => navigate('/sign/join')}
+        >
+          회원가입
         </Button>
         <div className={styles.find}>
           <Link to="/find">아이디/비밀번호 찾기</Link>

@@ -1,10 +1,24 @@
 import cn from 'classnames';
 import styles from './CheckBox.module.scss';
 
-function CheckBox({ className, label, id = '', name = '' }) {
+function CheckBox({
+  className,
+  label,
+  id = '',
+  name = '',
+  onChange = null,
+  checked,
+}) {
   return (
     <div className={cn(styles.wrapper, className)}>
-      <input type="checkbox" id={id} name={name} className={styles.chkBox} />
+      <input
+        type="checkbox"
+        id={id}
+        name={name}
+        checked={checked}
+        onChange={onChange}
+        className={styles.chkBox}
+      />
       <label htmlFor={id} className={styles.label}>
         <span>
           <svg viewBox="0 0 12 10" height="10px" width="12px">

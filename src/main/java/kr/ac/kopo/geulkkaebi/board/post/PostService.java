@@ -5,16 +5,14 @@ import java.util.Map;
 
 public interface PostService {
 
-  Map<String, Object> selectList(Long postNo, String boardType, String writer, boolean isReport,
-      int page, int size);
+  Map<String, Object> selectList(String boardType, int page, int size);
 
   void increaseHitcount(Long postNo);
-
-  void addLikeToPost(Long postNo, String userId);
 
   List<Posts> selectPopularPosts();
 
   int insert(Posts posts);
 
+  Map<String, Object> getPostDetail(String userId, Long postNo, String boardType);
 
 }

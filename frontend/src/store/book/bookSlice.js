@@ -6,13 +6,24 @@ const initialState = {
   bookList: [],
   total: 0,
   bookItem: null,
+  savedKeyword: '',
   ...commonState,
 };
 
 const bookSlice = createSlice({
   name: 'book',
   initialState,
-  reducers: {},
+  reducers: {
+    setKeyword: (state, action) => {
+      state.savedKeyword = action.payload;
+    },
+    clearBookList: (state) => {
+      state.bookList = [];
+      state.total = 0;
+      state.bookItem = null;
+      state.savedKeyword = '';
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(searchBookList.pending, (state) => {
       state.status = STATUS.LOADING;
@@ -24,12 +35,15 @@ const bookSlice = createSlice({
         // 리스트 데이터일 경우
         state.bookList = action.payload.data;
         state.total = action.payload.total;
+        state.bookItem = null;
       } else if (
         action.payload.data &&
         typeof action.payload.data === 'object'
       ) {
         // 상세 데이터일 경우
         state.bookItem = action.payload.data;
+        state.bookList = [];
+        state.total = 0;
       }
     });
     builder.addCase(searchBookList.rejected, (state, action) => {
@@ -49,8 +63,6 @@ export const searchBookList = createAsyncThunk(
       const data = res.data.rss.channel.item;
       const total = res.data.rss.channel.total;
 
-      console.log(data);
-
       return { data, total };
     } catch (error) {
       console.error(error);
@@ -59,4 +71,5 @@ export const searchBookList = createAsyncThunk(
   }
 );
 
+export const { setKeyword, clearBookList } = bookSlice.actions;
 export default bookSlice.reducer;

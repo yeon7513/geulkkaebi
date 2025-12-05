@@ -5,27 +5,48 @@
 @import '/src/scss/mixin.scss';
 
 .postList {
-  display: grid;
-  grid-template-columns: 5% // 글 번호
-    10% // 카테고리 (텍스트 아이콘)
-    1fr // 글 제목(타이틀+댓글수+좋아요수)
-    10% // 작성자
-    13% // 날짜
-    10%; // 조회수
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  width: 100%;
-  background: #fff;
+  > td {
+    &:nth-child(1) {
+      width: 8%;
+    }
 
-  .center {
-    text-align: center;
+    &:nth-child(2) {
+      width: 13%;
+    }
+
+    &:nth-child(3) {
+      width: 45%;
+    }
+
+    &:nth-child(4) {
+      width: 13%;
+
+      .writer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+
+        span {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+
+    &:nth-child(5) {
+      width: 13%;
+    }
+
+    &:nth-child(6) {
+      width: 8%;
+    }
   }
 }
 
 .notice {
   td {
-    background: $grayscale-200;
+    background-color: rgba($color: $grayscale-200, $alpha: 0.6);
   }
 }
 
@@ -36,22 +57,25 @@
   text-align: left;
 
   a {
+    @include textLine(1);
+    margin-right: 16px;
+
     &:hover {
       text-decoration: underline;
     }
   }
 
-  .icon {
+  .icons {
     display: flex;
     align-items: center;
-    gap: 4px;
-    font-size: 14px;
+    gap: 8px;
 
-    &.comment {
-      color: blue;
-    }
-    &.like {
-      color: red;
+    .icon {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      color: $grayscale-400;
     }
   }
 }

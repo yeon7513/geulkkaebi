@@ -6,21 +6,12 @@ import org.apache.ibatis.type.Alias;
 public class Quiz {
 
   // quiz
-  private int quizNo;
   private String quizType;
   private String creator;
   private String createdAt;
   private String modifier;
   private String modifiedDate;
   private String status;
-
-  public int getQuizNo() {
-    return quizNo;
-  }
-
-  public void setQuizNo(int quizNo) {
-    this.quizNo = quizNo;
-  }
 
   public String getQuizType() {
     return quizType;

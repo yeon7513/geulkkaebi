@@ -1,6 +1,6 @@
 import Post from '../../../components/post/Post';
+import { formatLineBreaks } from '../../../utils/formatter';
 import { randomText } from '../../../utils/randomText';
-import { formatLineBreaks } from './../../../utils/formatLineBreaks';
 
 function Article() {
   const articleIntroText = [
@@ -16,6 +16,7 @@ function Article() {
       <Post
         title={formatLineBreaks(randomText(articleIntroText))}
         boardType="article"
+        themeColor="orange"
       />
     </>
   );

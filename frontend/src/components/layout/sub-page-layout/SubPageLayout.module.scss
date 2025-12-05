@@ -1,6 +1,9 @@
 @charset 'utf-8';
 
 .wrap {
+  height: fit-content;
+  min-height: calc(100vh - 122px);
+
   .pageNav {
     display: flex;
     justify-content: center;
@@ -11,5 +14,6 @@
 
   .container {
     padding-bottom: 80px;
+    height: fit-content;
   }
 }

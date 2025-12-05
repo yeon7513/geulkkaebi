@@ -1,0 +1,30 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  img {
+    width: 56px;
+    height: 56px;
+    border: 1px solid $grayscale-300;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .member {
+    .userInfo {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .id {
+      font-size: 14px;
+      color: $grayscale-400;
+    }
+  }
+}

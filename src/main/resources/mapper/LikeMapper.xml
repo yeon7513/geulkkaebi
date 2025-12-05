@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="like">
+
+	<!-- 게시글 좋아요 추가 -->
+	<insert id="insertPostLike">
+		INSERT INTO post_likes
+		VALUES(#{postNo, jdbcType=NUMERIC}, #{userId, jdbcType=VARCHAR},
+		SYSDATE)
+	</insert>
+
+	<!-- 게시글 좋아요 삭제 -->
+	<delete id="deletePostLike">
+		DELETE FROM post_likes
+		WHERE postno = #{postNo, jdbcType=NUMERIC} AND
+		userid = #{userId, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 게시글의 갱신된 좋아요 개수 확인 -->
+	<select id="countLikesPost" resultType="int">
+		SELECT count(*)
+		FROM
+		post_likes
+		WHERE postno = #{postNo, jdbcType=NUMERIC}
+	</select>
+
+	<!-- 댓글 좋아요 추가 -->
+	<insert id="insertCmtLike">
+		INSERT INTO comment_likes
+		VALUES(#{cmtNo, jdbcType=NUMERIC}, #{userId, jdbcType=VARCHAR},
+		SYSDATE)
+	</insert>
+
+	<!-- 댓글 좋아요 삭제 -->
+	<delete id="deleteCmtLike">
+		DELETE FROM comment_likes
+		WHERE cmtNo = #{cmtNo, jdbcType=NUMERIC} AND
+		userid = #{userId, jdbcType=VARCHAR}
+	</delete>
+
+	<!-- 게시글 좋아요 여부 검사 -->
+	<select id="isPostLiked" resultType="int">
+		SELECT count(*)
+		FROM
+		post_likes
+		WHERE postno = #{postNo, jdbcType=NUMERIC} AND userid = #{userId, jdbcType=VARCHAR}
+	</select>
+
+	<!-- 댓글 좋아요 여부 검사 -->
+	<select id="isCmtLiked" resultType="int">
+		SELECT count(*)
+		FROM
+		comment_likes
+		WHERE cmtNo = #{cmtNo, jdbcType=NUMERIC} AND userid = #{userId, jdbcType=VARCHAR}
+	</select>
+
+	<!-- 댓글의 갱신된 좋아요 개수 확인 -->
+	<select id="countLikesCmt" resultType="int">
+		SELECT count(*)
+		FROM
+		comment_likes
+		WHERE cmtno = #{cmtNo, jdbcType=NUMERIC}
+	</select>
+
+</mapper>

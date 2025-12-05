@@ -1,0 +1,94 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.loading {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid $grayscale-200;
+
+  p {
+    margin-top: 32px;
+    text-align: center;
+  }
+}
+
+.wrap {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid $grayscale-200;
+}
+
+.mine {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 4px 8px;
+  font-size: 14px;
+
+  &.green {
+    border: 1px solid $green-500;
+    color: $green-600;
+  }
+
+  &.mint {
+    border: 1px solid $mint-500;
+    color: $mint-600;
+  }
+
+  &.purple {
+    border: 1px solid $purple-500;
+    color: $purple-600;
+  }
+
+  &.yellow {
+    border: 1px solid $yellow-500;
+    color: $yellow-600;
+  }
+
+  &.orange {
+    border: 1px solid $orange-500;
+    color: $orange-600;
+  }
+
+  &.gray {
+    border: 1px solid $grayscale-300;
+    color: $grayscale-400;
+  }
+}
+
+.commentForm {
+  display: flex;
+  gap: 16px;
+
+  .writeComment {
+    flex: 1;
+    padding: 16px;
+    resize: none;
+    font-size: 18px;
+
+    &:disabled {
+      background-color: rgba($color: $grayscale-200, $alpha: 0.4);
+    }
+  }
+
+  .submitBtn {
+    padding: 16px 32px;
+  }
+}
+
+.comments {
+  margin-top: 32px;
+
+  .noComment {
+    text-align: center;
+  }
+
+  .commentItem {
+    padding: 48px;
+
+    .container {
+      flex: 1;
+      outline: 1px dotted red;
+    }
+  }
+}

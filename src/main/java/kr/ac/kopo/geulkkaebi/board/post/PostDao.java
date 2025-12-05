@@ -11,14 +11,17 @@ public interface PostDao {
 
   void increaseHitcount(Long postNo);
 
-  void addLikeToPost(Map<String, Object> params);
-
   List<Posts> selectPopularPosts();
 
   int insert(Posts posts);
 
   int countNormalPosts(String boardType);
 
+  Posts selectPostDetail(Long postNo);
+
+  Posts selectPrevPost(Map<String, Object> params);
+
+  Posts selectNextPost(Map<String, Object> params);
 
 
 }

@@ -36,12 +36,15 @@ button {
   border: none;
   background: transparent;
   cursor: pointer;
+  color: inherit;
 }
 
-input {
+input,
+textarea {
   display: block;
   border: none;
   outline: none;
+  color: inherit;
 }
 
 h1,
@@ -55,7 +58,13 @@ h6 {
 }
 
 p {
+  min-height: 1rem;
   line-height: 1.4;
+  white-space: pre-line; // 줄바꿈
+}
+
+strong {
+  font-weight: bold;
 }
 
 .tiptap.ProseMirror {

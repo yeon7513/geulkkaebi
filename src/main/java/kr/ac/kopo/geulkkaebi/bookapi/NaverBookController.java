@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import kr.ac.kopo.geulkkaebi.global.constants.BaseUrl;
 
 @RestController
 @RequestMapping("/naverBook")
@@ -27,7 +28,7 @@ public class NaverBookController {
   public ResponseEntity<?> search(@RequestParam(required = false) String title,
       @RequestParam(required = false, defaultValue = "8") int display,
       @RequestParam(required = false) String isbn) throws Exception {
-    String baseUrl = "https://openapi.naver.com/v1/search/book_adv.xml?";
+    String baseUrl = BaseUrl.getNaverBookApiUrl();
 
     StringBuilder url = new StringBuilder(baseUrl);
 

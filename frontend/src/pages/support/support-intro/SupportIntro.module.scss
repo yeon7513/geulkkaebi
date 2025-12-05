@@ -19,46 +19,17 @@
         justify-content: space-between;
         align-items: center;
         padding-bottom: 16px;
-        margin-bottom: 24px;
         border-bottom: 1px solid $grayscale-300;
+
+        h3 {
+          font-size: 24px;
+        }
 
         .more {
           padding: 8px 16px;
           font-size: 14px;
         }
       }
-
-      > ul {
-        li {
-          > a {
-            display: block;
-            padding: 8px 0;
-
-            &:hover {
-              color: $grayscale-600;
-
-              p {
-                text-decoration: underline;
-              }
-            }
-          }
-        }
-      }
     }
-  }
-}
-
-.contents {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  p {
-    font-weight: 500;
-  }
-
-  .date {
-    font-size: 16px;
-    color: $grayscale-500;
   }
 }

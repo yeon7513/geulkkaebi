@@ -3,25 +3,38 @@ import axios from 'axios';
 import { commonState, STATUS } from '../common/commoms';
 
 const initialState = {
-  comment: [],
+  commentList: [],
   ...commonState,
 };
 
 const commentSlice = createSlice({
   name: 'comment',
   initialState,
-  reducers: {},
+  reducers: {
+    updateCommentLike: (state, action) => {
+      const { cmtNo, liked, countLikes } = action.payload;
+      const target = state.commentList.find((c) => c.cmtNo === cmtNo);
+      if (target) {
+        target.liked = liked;
+        target.countLikes = countLikes;
+      }
+    },
+    clearCommentList: (state) => {
+      state.commentList = [];
+      state.status = STATUS.WAITING;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getCommentByPost.pending, (state) => {
       state.status = STATUS.LOADING;
     });
     builder.addCase(getCommentByPost.fulfilled, (state, action) => {
       state.status = STATUS.SUCCESS;
-      state.comment = action.payload;
+      state.commentList = action.payload;
     });
     builder.addCase(getCommentByPost.rejected, (state, action) => {
       state.status = STATUS.FAIL;
-      state.comment = [];
+      state.commentList = [];
       state.error = action.payload;
     });
   },
@@ -43,4 +56,5 @@ export const getCommentByPost = createAsyncThunk(
   }
 );
 
+export const { updateCommentLike, clearCommentList } = commentSlice.actions;
 export default commentSlice.reducer;

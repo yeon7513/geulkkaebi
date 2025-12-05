@@ -20,9 +20,15 @@
     padding: 24px;
     height: fit-content;
     break-inside: avoid;
+    transition: 0.3s;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
 
     .title {
       h4 {
+        @include textLine(2);
         margin-top: 8px;
         font-family: $text-font;
         font-weight: 600;
@@ -43,7 +49,11 @@
         gap: 8px;
 
         img {
-          width: 50px;
+          width: 56px;
+          height: 56px;
+          object-fit: cover;
+          border-radius: 50%;
+          border: 1px solid $grayscale-300;
         }
 
         .user {
@@ -58,6 +68,7 @@
 
         .date {
           display: flex;
+          justify-content: end;
           align-items: center;
           gap: 4px;
           margin-bottom: 4px;
@@ -95,13 +106,41 @@
         }
       }
     }
+  }
+}
 
-    .text {
-      padding-top: 16px;
-      border-top: 1px dashed $grayscale-300;
-      font-size: 20px;
-      word-break: keep-all;
-    }
+.textWrap {
+  span {
+    display: block;
+    text-align: right;
+    font-size: 16px;
+    color: $grayscale-400;
+  }
+}
+
+.text {
+  padding-top: 16px;
+  border-top: 1px dashed $grayscale-300;
+  font-size: 20px;
+  word-break: keep-all;
+
+  @include textLine(15);
+
+  img {
+    display: none;
+    width: 100%;
+    max-width: fit-content;
+    object-fit: contain;
+  }
+
+  ul {
+    padding-left: 40px;
+    list-style-type: disc;
+  }
+
+  ol {
+    padding-left: 40px;
+    list-style-type: decimal;
   }
 }
 

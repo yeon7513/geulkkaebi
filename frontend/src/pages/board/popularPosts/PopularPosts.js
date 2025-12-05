@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import { useEffect } from 'react';
-import Button from '../../../components/button/Button';
 import Card from '../../../components/card/Card';
 import styles from './PopularPosts.module.scss';
 
@@ -8,14 +7,15 @@ import { FaCalendarAlt, FaEye, FaHeart } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import TextIcon from '../../../components/text-icon/TextIcon';
 import { fetchPopularPosts } from '../../../store/board/postSlice';
-import { formatCreatedAt } from '../../../utils/formatCreatedAt';
 
 import { useNavigate } from 'react-router-dom';
 import placeholder from '../../../assets/img/no_images.png';
-import { formatGrade } from '../../../utils/formatGrade';
+import ProfileCard from '../../../components/profile-card/ProfileCard';
+import { boardColors, boardNames } from '../../../lib/textIconLabel';
+import { formatCreatedAt } from '../../../utils/formatter';
 
 function PopularPosts() {
-  const { post } = useSelector((state) => state.postSlice);
+  const { popularPosts } = useSelector((state) => state.postSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,19 +24,7 @@ function PopularPosts() {
     dispatch(fetchPopularPosts());
   }, [dispatch]);
 
-  const boardNames = {
-    debate: '토론마당',
-    article: '도서 기자단',
-    story: '스토리+',
-  };
-
-  const boardColors = {
-    debate: 'green',
-    article: 'orange',
-    story: 'purple',
-  };
-
-  if (!post) {
+  if (!popularPosts) {
     return <div>게시글을 불러오는 중이에요!</div>;
   }
 
@@ -44,7 +32,7 @@ function PopularPosts() {
     <div className={styles.popular}>
       <h3>오늘 친구들이 많이 본 이야기</h3>
       <div className={styles.post}>
-        {post.map((item) => (
+        {popularPosts.map((item) => (
           <Card
             key={item.postNo}
             className={cn(styles.item, styles[item.boardType])}
@@ -60,13 +48,12 @@ function PopularPosts() {
               </div>
               <div className={styles.info}>
                 {/* 등록 정보 */}
-                <div className={styles.writer}>
-                  <img src={item.profileImg || placeholder} alt="" />
-                  <div className={styles.user}>
-                    <span>{formatGrade(item.grade)}</span>
-                    <span>{item.nickname}</span>
-                  </div>
-                </div>
+                <ProfileCard
+                  image={item.profileImg || placeholder}
+                  userId={item.writer}
+                  nickname={item.nickname}
+                  grade={item.grade}
+                />
                 <div className={styles.reg}>
                   <div className={styles.date}>
                     <FaCalendarAlt />
@@ -85,17 +72,16 @@ function PopularPosts() {
                 </div>
               </div>
               {/* 본문 */}
-              <p className={styles.text}>{item.text}</p>
+              <div className={styles.textWrap}>
+                <p
+                  className={styles.text}
+                  dangerouslySetInnerHTML={{ __html: item.text }}
+                />
+                {item.text.length >= 500 && <span>더보기</span>}
+              </div>
             </div>
           </Card>
         ))}
-      </div>
-
-      {/* 더보기 버튼 */}
-      <div className={styles.moreBtn}>
-        <Button isRound={true} variant="pushable" colors="yellow">
-          함께 이야기 하기
-        </Button>
       </div>
     </div>
   );

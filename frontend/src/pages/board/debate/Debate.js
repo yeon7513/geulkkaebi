@@ -1,5 +1,5 @@
 import Post from '../../../components/post/Post';
-import { formatLineBreaks } from '../../../utils/formatLineBreaks';
+import { formatLineBreaks } from '../../../utils/formatter';
 import { randomText } from '../../../utils/randomText';
 
 function Debate() {
@@ -16,6 +16,7 @@ function Debate() {
       <Post
         title={formatLineBreaks(randomText(debateIntroText))}
         boardType="debate"
+        themeColor="green"
       />
     </>
   );

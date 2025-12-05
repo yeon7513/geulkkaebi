@@ -12,11 +12,12 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+    width: 100%;
 
     .id,
     .pw {
+      flex: 1;
       display: flex;
-      justify-content: center;
       align-items: center;
       gap: 16px;
 
@@ -27,12 +28,18 @@
           fill: $grayscale-400;
         }
       }
+
+      input {
+        flex: 1;
+      }
     }
   }
 
   .submit {
     width: 100%;
+
     button {
+      margin-bottom: 16px;
       width: 100%;
     }
 

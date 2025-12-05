@@ -3,10 +3,18 @@
 @use '/src/scss/variables.scss' as *;
 
 .wrap {
-  display: flex;
+  .container {
+    display: flex;
+  }
 
   .sideNav {
     flex: 1;
+    outline: 1px dotted red;
+
+    button {
+      font-size: 18px;
+      color: #333;
+    }
   }
 
   .container {

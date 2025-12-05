@@ -1,0 +1,97 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.wrap {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  transition: 100ms;
+
+  &:hover {
+    .checkMark {
+      transform: scale(1.1);
+    }
+
+    .label {
+      transition: 0.3s;
+      color: $grayscale-300;
+    }
+  }
+
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+
+    &:checked ~ .checkMark {
+      animation: like_effect 400ms ease;
+
+      path {
+        fill: $like-color;
+        stroke-width: 0;
+      }
+
+      & ~ .checkLike {
+        color: $like-color;
+      }
+    }
+  }
+
+  .checkMark {
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    transition: 100ms;
+    animation: dislike_effect 400ms ease;
+  }
+
+  span {
+    margin-right: 8px;
+    color: $grayscale-400;
+
+    &.count {
+      color: $grayscale-800;
+    }
+  }
+}
+
+@keyframes like_effect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dislike_effect {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

@@ -110,6 +110,11 @@ export const support = [
     color: 'green',
   },
   {
+    label: '이벤트',
+    path: '/support/event',
+    color: 'yellow',
+  },
+  {
     label: '자주 묻는 질문',
     path: '/support/faq',
     color: 'orange',

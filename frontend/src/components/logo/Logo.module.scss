@@ -8,12 +8,11 @@
   > a {
     display: flex;
     flex-direction: column;
-    gap: 4px;
   }
 
   .logoImg {
     margin-left: 4px;
-    height: 40px;
+    height: 36px;
   }
 
   .decoText {
@@ -28,7 +27,7 @@
 
   .logoText {
     font-family: $title-font;
-    font-size: 48px;
+    font-size: 40px;
     color: $green-500;
   }
 }

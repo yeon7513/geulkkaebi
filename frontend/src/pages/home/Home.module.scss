@@ -9,7 +9,9 @@
 
   > section {
     &.visual {
+      display: flex;
       padding: 0;
+      background-color: #fff;
     }
 
     &.board {
@@ -28,7 +30,25 @@
   }
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 50%);
+.member {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+  &.login {
+    h2 {
+      font-size: 24px;
+      color: $green-500;
+    }
+
+    > form {
+      display: flex;
+      flex-direction: column;
+      padding: 0 56px;
+      width: 100%;
+    }
+  }
 }

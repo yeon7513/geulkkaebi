@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface CommentService {
 
-  List<Comments> getCommentByPost(Long postNo);
+  List<Comments> getCommentByPost(String userId, Long postNo);
 
   int addComment(Comments comment);
 

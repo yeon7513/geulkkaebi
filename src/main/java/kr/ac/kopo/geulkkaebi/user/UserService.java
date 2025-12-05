@@ -9,9 +9,9 @@ public interface UserService {
 
   User selectOne(String userId);
 
-  int insert(User user, MultipartFile file);
+  User insert(User user, MultipartFile file);
 
-  int update(User user, MultipartFile flie);
+  User update(User user, MultipartFile flie);
 
   int delete(String userId);
 

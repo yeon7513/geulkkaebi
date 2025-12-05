@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import kr.ac.kopo.geulkkaebi.user.User;
 
 @RestController
@@ -22,35 +22,44 @@ public class PostController {
   @Autowired
   private PostService postService;
 
-  // 전체 or 게시글 번호별 or 카테고리별 or 아이디별 or 신고된 글 조회
+  // 전체 or 카테고리별 조회
   @GetMapping("/list")
-  public Map<String, Object> displayPostList(
-      @RequestParam(name = "postno", required = false) Long postNo,
-      @RequestParam(required = false) String boardType,
-      @RequestParam(required = false) String writer,
-      @RequestParam(required = false, defaultValue = "false") boolean isReport,
+  public Map<String, Object> displayPostList(@RequestParam(required = false) String boardType,
       @RequestParam(defaultValue = "1") int page,
       @RequestParam(required = false, defaultValue = "10") int size) {
 
-    return postService.selectList(postNo, boardType, writer, isReport, page, size);
+    return postService.selectList(boardType, page, size);
+  }
+
+  // 단일 게시글 상세 조회
+  @GetMapping("/list/{postNo}")
+  public Map<String, Object> displayPostDetail(@PathVariable Long postNo,
+      @RequestParam(required = false, defaultValue = "all") String boardType,
+      @SessionAttribute(name = "loginUser", required = false) User loginUser) {
+
+    String userId;
+
+    if (loginUser != null) {
+      userId = loginUser.getUserId();
+    } else {
+      userId = null;
+    }
+
+    return postService.getPostDetail(userId, postNo, boardType);
   }
 
   // 오늘의 인기글 조회
   @GetMapping("/popular")
   public List<Posts> displayPopularPosts() {
-    // BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    // String encodedPw = encoder.encode("admin01");
-    // System.out.println("암호화: " + encodedPw);
-
     return postService.selectPopularPosts();
   }
 
   @PostMapping("/add")
-  public ResponseEntity<?> addPost(@RequestBody Posts posts, HttpSession session) {
-    // 세션에서 로그인한 회원의 정보 가져오기
-    User loginUser = (User) session.getAttribute("loginUser");
+  public ResponseEntity<?> addPost(@RequestBody Posts posts,
+      @SessionAttribute("loginUser") User loginUser) {
 
     String writerId = loginUser.getUserId();
+
     // 작성자 아이디 저장
     posts.setWriter(writerId);
 
@@ -82,13 +91,5 @@ public class PostController {
     postService.increaseHitcount(postNo);
     return ResponseEntity.ok().build();
   }
-
-  // 좋아요 추가
-  @PostMapping("/like/{postNo}")
-  public ResponseEntity<Void> likePost(@PathVariable Long postNo, @RequestParam String userId) {
-    postService.addLikeToPost(postNo, userId);
-    return ResponseEntity.ok().build();
-  }
-
 
 }

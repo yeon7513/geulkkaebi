@@ -17,14 +17,6 @@
     width: 65vw;
     height: calc(100% - 200px);
     overflow-y: auto;
-
-    .title {
-      padding: 16px 0;
-      width: 100%;
-      font-size: 32px;
-      border-bottom: 1px solid $grayscale-200;
-      color: $grayscale-800;
-    }
   }
 
   .submit {
@@ -37,6 +29,18 @@
     > button {
       font-size: 16px;
     }
+  }
+}
+
+.titleWarp {
+  width: 100%;
+
+  .title {
+    padding: 16px 0;
+    width: 100%;
+    font-size: 32px;
+    border-bottom: 1px solid $grayscale-200;
+    color: $grayscale-800;
   }
 }
 

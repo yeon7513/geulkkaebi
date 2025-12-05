@@ -1,39 +1,22 @@
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useBoardFetch } from '../../../hooks/useBoardFetch';
 import CommonEditor from './common-editor/CommonEditor';
 
 function PostWrite() {
-  const { loginedUser } = useSelector((state) => state.userSlice);
   const navigate = useNavigate();
   const { boardType, postNo } = useParams();
 
   // 글 번호가 있으면 수정모드
   const isEdit = !!postNo;
-  console.log(isEdit);
-
-  console.log(loginedUser.userId);
 
   // 수정할 글 불러오기
   const { post } = useBoardFetch(boardType, postNo);
 
   const initTitle = post?.title || '';
   const initText = post?.text || '';
-  const isNotice = post?.noticeYn || 0;
 
-  console.log(boardType);
-  console.log(postNo);
-
-  const handleSubmit = async ({ title, text, isNotice }) => {
-    const postData = {
-      boardType,
-      title,
-      text,
-      noticeYn: isNotice ? 1 : 0,
-      writer: loginedUser.userId,
-    };
-
+  const handleSubmit = async (postData) => {
     console.log(postData);
 
     try {
@@ -41,7 +24,10 @@ function PostWrite() {
 
       if (isEdit) {
         // 수정 모드
-        res = await axios.post(`/posts/${boardType}/${postNo}`, postData);
+        res = await axios.post(
+          `/posts/${postData.boardType}/${postData.postNo}`,
+          postData
+        );
       } else {
         // 글 쓰기 모드
         res = await axios.post('/posts/add', postData);
@@ -50,9 +36,17 @@ function PostWrite() {
       // 페이지 이동을 위해
       // isEdit = true이면 update 후 기존 글 번호 반환
       // isEdit = false이면 insert 후 새로운 글 번호 반환 받음
-      const savedPostNo = isEdit ? postNo : res.data;
+      const savedPostNo = isEdit ? postData.postNo : res.data;
 
-      navigate(`/board/${boardType}/${savedPostNo}`);
+      // 관리자 전용 카테고리 목록
+      const adminCategories = ['notice', 'event', 'faq'];
+
+      // 경로 결정
+      const basePath = adminCategories.includes(postData.boardType)
+        ? '/support'
+        : '/board';
+
+      navigate(`${basePath}/${postData.boardType}/${savedPostNo}`);
     } catch (error) {
       console.log(error);
     }

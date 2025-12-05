@@ -1,0 +1,34 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+@import '/src/scss/mixin.scss';
+
+.wrap {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+
+  li {
+    display: flex;
+    align-items: center;
+
+    &:not(:first-child):before {
+      content: '';
+      display: block;
+      margin: 0 8px;
+      width: 2px;
+      height: 2px;
+      background-color: $grayscale-300;
+    }
+
+    button {
+      font-size: 16px;
+      color: $grayscale-500;
+
+      &:hover {
+        color: $grayscale-300;
+      }
+    }
+  }
+}

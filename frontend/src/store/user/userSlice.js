@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { IMG_URL } from '../../lib/url';
 import { commonState, STATUS } from '../common/commoms';
 
 const initialState = {
   userList: [], // 관리자용 전체 회원 조회
-  loginedUser: null, // 현재 로그인한 회원의 정보
+  loginedUser: {}, // 현재 로그인한 회원의 정보
   ...commonState,
 };
 
@@ -81,21 +80,10 @@ const userSlice = createSlice({
 // 모든 회원 조회
 export const fetchAllUserData = createAsyncThunk('user/fetchAll', async () => {
   try {
-    const token = localStorage.getItem('jwtToken');
-
-    const res = await axios.get('/users/list', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const res = await axios.get('/users/list', { withCredentials: true });
     const data = res.data;
 
-    const processData = data.map((user) => ({
-      ...user,
-      profileImg: user.profileImg ? `${IMG_URL}${user.profileImg}` : null,
-    }));
-
-    return processData;
+    return data;
   } catch (error) {
     console.log(error);
     throw error;
@@ -107,11 +95,12 @@ export const loginedData = createAsyncThunk(
   'user/login',
   async ({ userId, userPw }) => {
     try {
-      const res = await axios.post('/auth/login', { userId, userPw });
-      const { token, user } = res.data;
-
-      // 토큰을 localStorage에 저장
-      localStorage.setItem('jwtToken', token);
+      const res = await axios.post(
+        '/auth/login',
+        { userId, userPw },
+        { withCredentials: true }
+      );
+      const user = res.data;
 
       return user;
     } catch (error) {
@@ -123,17 +112,14 @@ export const loginedData = createAsyncThunk(
 
 // 로그인 상태 체크
 export const loginCheck = createAsyncThunk('user/loginCheck', async () => {
-  const token = localStorage.getItem('jwtToken');
-  if (!token) return null; // 로그인 안 됨
-
   try {
-    const res = await axios.get('/auth/check', {
-      headers: { Authorization: `Bearer ${token}` },
+    const res = await axios.get('http://localhost:8090/auth/check', {
+      withCredentials: true,
     });
     return res.data;
   } catch (error) {
     console.log(error);
-    return null; // 토큰 만료 등 처리
+    return null;
   }
 });
 
@@ -141,7 +127,6 @@ export const loginCheck = createAsyncThunk('user/loginCheck', async () => {
 export const logout = createAsyncThunk('user/logout', async () => {
   try {
     await axios.post('/auth/logout');
-    localStorage.removeItem('jwtToken');
 
     return [];
   } catch (error) {
@@ -155,13 +140,10 @@ export const userInfoUpdate = createAsyncThunk(
   'user/update',
   async ({ userId, updateData }) => {
     try {
-      const token = localStorage.getItem('jwtToken');
-
-      const res = await axios.patch(`/users/update/${userId}`, updateData, {
+      const res = await axios.post(`/users/update/${userId}`, updateData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        Authorization: `Bearer ${token}`,
       });
 
       const data = res.data;
@@ -179,11 +161,7 @@ export const userDelete = createAsyncThunk(
   'user/delete',
   async ({ userId }) => {
     try {
-      const token = localStorage.getItem('jwtToken');
-
-      await axios.delete(`/users/delete/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(`/users/delete/${userId}`, { withCredentials: true });
 
       sessionStorage.clear();
     } catch (error) {

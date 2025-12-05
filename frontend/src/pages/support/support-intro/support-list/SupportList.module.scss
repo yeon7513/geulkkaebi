@@ -1,0 +1,39 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.list {
+  li {
+    border-bottom: 1px dashed $grayscale-200;
+
+    > a {
+      display: block;
+      padding: 12px 0;
+
+      &:hover {
+        color: $grayscale-600;
+
+        p {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.contents {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .date {
+    font-size: 16px;
+    color: $grayscale-500;
+  }
+}

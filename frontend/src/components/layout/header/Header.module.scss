@@ -3,6 +3,8 @@
 @use '/src/scss/variables.scss' as *;
 
 .header {
+  position: relative;
+  z-index: 5;
   padding: 20px 0;
   width: 100%;
   box-shadow: $box-shadow;
@@ -32,7 +34,8 @@
     gap: 8px;
 
     > li {
-      a {
+      a,
+      button {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -53,7 +56,6 @@
     position: relative;
     display: block;
     padding: 8px 0;
-    font-weight: 500;
     font-size: 20px;
     transition: 0.3s;
     color: $grayscale-700;

@@ -1,25 +1,44 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllPostData } from '../store/board/postSlice';
+import {
+  fetchAllPostData,
+  fetchPostDetail,
+  incrementHitcount,
+} from '../store/board/postSlice';
 
 export const useBoardFetch = (
-  boardType = 'all',
   postNo = null,
-  writer = null,
-  isReport = false,
-  page,
-  size
+  boardType = 'all',
+  page = 0,
+  size = 0
 ) => {
-  const { post, totalPages, totalPosts, status } = useSelector(
-    (state) => state.postSlice
-  );
+  const {
+    postList,
+    postItem,
+    prevPost,
+    nextPost,
+    totalPages,
+    totalPosts,
+    status,
+  } = useSelector((state) => state.postSlice);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(
-      fetchAllPostData({ postNo, boardType, writer, isReport, page, size })
-    );
-  }, [dispatch, postNo, boardType, writer, isReport, page, size]);
+    if (postNo) {
+      dispatch(fetchPostDetail({ postNo, boardType }));
+      dispatch(incrementHitcount(Number(postNo)));
+    } else {
+      dispatch(fetchAllPostData({ boardType, page, size }));
+    }
+  }, [dispatch, postNo, boardType, page, size]);
 
-  return { post, totalPages, totalPosts, status };
+  return {
+    postList,
+    postItem,
+    prevPost,
+    nextPost,
+    totalPages,
+    totalPosts,
+    status,
+  };
 };

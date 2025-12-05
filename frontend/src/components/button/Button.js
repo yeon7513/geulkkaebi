@@ -8,6 +8,7 @@ function Button({
   variant = 'fill',
   isRound = false,
   onClick,
+  disabled = false,
   children,
 }) {
   const btnColors = {
@@ -32,9 +33,11 @@ function Button({
         isRound && styles.round,
         btnStyles[variant],
         className,
-        btnColors[colors]
+        btnColors[colors],
+        disabled && styles.disabled
       )}
       type={type}
+      disabled={disabled}
       onClick={onClick}
     >
       {variant === 'pushable' ? (

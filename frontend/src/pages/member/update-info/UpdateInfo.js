@@ -23,7 +23,7 @@ function UpdateInfo() {
     nickname: loginedUser?.nickname || '',
     phone: loginedUser?.phone || '',
     email: loginedUser?.email || '',
-    profileImg: loginedUser?.profileImg || '',
+    profileImg: IMG_URL + loginedUser?.profileImg || '',
   });
 
   const handleChange = (e) => {
@@ -48,14 +48,13 @@ function UpdateInfo() {
     const data = e.target;
 
     const updateData = {
+      ...loginedUser,
       userId: values.userId,
-      userPw: data.userPw.value,
+      userPw: data.userPw.value || undefined,
       nickname: data.nickname.value,
       phone: data.phone.value,
       email: data.email.value,
     };
-
-    console.log(updateData);
 
     const formData = new FormData();
 
@@ -87,7 +86,7 @@ function UpdateInfo() {
         nickname: loginedUser.nickname,
         phone: loginedUser.phone,
         email: loginedUser.email,
-        profileImg: loginedUser.profileImg,
+        profileImg: IMG_URL + loginedUser.profileImg,
       });
     }
   }, [loginedUser]);

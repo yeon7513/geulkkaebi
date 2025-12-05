@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import kr.ac.kopo.geulkkaebi.global.likes.LikesService;
 import kr.ac.kopo.geulkkaebi.user.UserService;
 
 @Service
@@ -17,18 +18,18 @@ public class PostServiceImpl implements PostService {
   @Autowired
   UserService userService;
 
+  @Autowired
+  LikesService likeService;
+
+  // 전체 게시글 조회
   @Override
-  public Map<String, Object> selectList(Long postNo, String boardType, String writer,
-      boolean isReport, int page, int size) {
+  public Map<String, Object> selectList(String boardType, int page, int size) {
     // 페이지네이션 수식
     int offset = (page - 1) * size;
 
     Map<String, Object> params = new HashMap<>();
 
-    params.put("postNo", postNo);
     params.put("boardType", boardType);
-    params.put("writer", writer);
-    params.put("isReport", isReport);
     params.put("offset", offset);
     params.put("limit", offset + size);
 
@@ -47,12 +48,44 @@ public class PostServiceImpl implements PostService {
     int totalPages = (int) Math.ceil((double) totalPosts / size);
 
     Map<String, Object> response = new HashMap<>();
-    response.put("posts", result);
+    response.put("postList", result);
     response.put("totalPosts", totalPosts);
     response.put("totalPages", totalPages);
 
     return response;
 
+  }
+
+  // 단일 게시글 조회
+  @Override
+  public Map<String, Object> getPostDetail(String userId, Long postNo, String boardType) {
+    Map<String, Object> result = new HashMap<>();
+
+    // 단일 게시글 조회
+    Posts postItem = postDao.selectPostDetail(postNo);
+
+    // 좋아요 여부 검사
+    boolean isLiked = userId == null ? false : likeService.isPostLiked(postNo, userId) > 0;
+    postItem.setLiked(isLiked);
+
+    // 이전, 다음글 조회를 위한 파라미터를 하나로 합침
+    // SqlSession에는 하나의 전달값만 필요함.
+    Map<String, Object> params = new HashMap<>();
+    params.put("postNo", postNo);
+    params.put("boardType", boardType);
+
+    // 이전 게시글 정보 조회
+    Posts prevPost = postDao.selectPrevPost(params);
+
+    // 다음 게시글 정보 조회
+    Posts nextPost = postDao.selectNextPost(params);
+
+    // 전체 추가 후 반환
+    result.put("postItem", postItem);
+    result.put("prevPost", prevPost);
+    result.put("nextPost", nextPost);
+
+    return result;
   }
 
   // 오늘의 인기글 조회
@@ -65,17 +98,6 @@ public class PostServiceImpl implements PostService {
   @Override
   public void increaseHitcount(Long postNo) {
     postDao.increaseHitcount(postNo);
-  }
-
-  // 좋아요 증가
-  @Override
-  public void addLikeToPost(Long postNo, String userId) {
-    Map<String, Object> params = new HashMap<>();
-    params.put("table_name", "post_likes");
-    params.put("identifier_number", postNo);
-    params.put("user_id", userId);
-
-    postDao.addLikeToPost(params);
   }
 
   // 게시글 등록
@@ -96,7 +118,5 @@ public class PostServiceImpl implements PostService {
       return 0;
     }
   }
-
-
 
 }

@@ -13,10 +13,53 @@
   margin-top: 24px;
   width: 100%;
   border-collapse: collapse;
+  background-color: #fff;
+
+  thead {
+    tr {
+      border-bottom: 1px solid #fff;
+    }
+  }
+
+  tr {
+    border-bottom: 1px solid $grayscale-200;
+
+    &.green {
+      th {
+        border-left: 1px solid #fff;
+        border-right: 1px solid #fff;
+        background-color: $green-200;
+      }
+    }
+
+    &.yellow {
+      th {
+        border-left: 1px solid #fff;
+        border-right: 1px solid #fff;
+        background-color: $yellow-200;
+      }
+    }
+
+    &.orange {
+      th {
+        border-left: 1px solid #fff;
+        border-right: 1px solid #fff;
+        background-color: $orange-200;
+      }
+    }
+
+    &.purple {
+      th {
+        border-left: 1px solid #fff;
+        border-right: 1px solid #fff;
+        background-color: $purple-200;
+      }
+    }
+  }
 
   th,
   td {
-    padding: 8px;
+    padding: 12px;
     text-align: center;
   }
 
@@ -51,7 +94,23 @@
       }
 
       .active {
-        background-color: $yellow-400;
+        color: #fff;
+
+        &.green {
+          background-color: $green-400;
+        }
+
+        &.yellow {
+          background-color: $yellow-400;
+        }
+
+        &.orange {
+          background-color: $orange-400;
+        }
+
+        &.purple {
+          background-color: $purple-400;
+        }
       }
     }
   }

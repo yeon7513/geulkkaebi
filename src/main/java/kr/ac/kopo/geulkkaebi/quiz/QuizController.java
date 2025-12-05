@@ -18,7 +18,7 @@ public class QuizController {
   @Autowired
   QuizService quizService;
 
-  // 모든 퀴즈 목록 조회
+  // 퀴즈 카테고리 조회
   @GetMapping("/list")
   public List<Quiz> displayAllQuizList() {
     return quizService.selectAllQuizList();

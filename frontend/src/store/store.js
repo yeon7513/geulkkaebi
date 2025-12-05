@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import commentSlice from './board/commentSlice';
 import postSlice from './board/postSlice';
 import bookSlice from './book/bookSlice';
+import quizSlice from './quiz/quizSlice';
 import userSlice from './user/userSlice';
 
 export const store = configureStore({
@@ -10,7 +11,7 @@ export const store = configureStore({
     postSlice,
     commentSlice,
     bookSlice,
-    // quizSlice,
+    quizSlice,
     // userReportSlice,
     // quizErrorSlice,
   },

@@ -2,8 +2,58 @@
 
 @use '/src/scss/variables.scss' as *;
 
-.postItem {
-  outline: 1px dotted red;
+@import '/src/scss/mixin.scss';
+
+.loading {
+  padding: 80px 0;
+  display: block;
+
+  > div {
+    height: fit-content;
+  }
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  button,
+  p {
+    font-size: 16px;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 30%;
+
+    svg {
+      flex: none;
+    }
+
+    span {
+      @include textLine(1);
+    }
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  p {
+    color: $grayscale-400;
+  }
+}
+
+.container {
+  padding: 48px;
+  background-color: #fff;
+  height: fit-content;
+  box-shadow: $box-shadow;
+  border-radius: 16px;
 }
 
 .header {
@@ -12,22 +62,46 @@
     font-size: 24px;
     font-weight: 600;
   }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
 }
 
 .writer {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
+}
 
-  .profile {
-    width: 50px;
-    border: 1px solid #000;
-    border-radius: 50%;
+.postInfo {
+  font-size: 14px;
+
+  li {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 4px;
+    color: $grayscale-400;
+
+    &:not(:last-child) {
+      margin-bottom: 4px;
+    }
+
+    span {
+      color: $grayscale-500;
+      font-weight: 500;
+    }
   }
 }
 
 .text {
-  background-color: #ddd;
+  margin: 24px 0;
+  padding: 24px 0;
+  border-top: 1px dashed $grayscale-200;
 
   ul {
     padding-left: 40px;
@@ -38,4 +112,11 @@
     padding-left: 40px;
     list-style-type: decimal;
   }
+}
+
+.likeBtn {
+  margin-top: 24px;
+  padding-top: 48px;
+  border-top: 1px dashed $grayscale-200;
+  justify-content: center;
 }

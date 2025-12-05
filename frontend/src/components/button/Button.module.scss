@@ -50,7 +50,7 @@
     transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
   }
 
-  &:hover {
+  &:hover:not(.disabled) {
     filter: brightness(110%);
 
     .front {
@@ -64,12 +64,12 @@
     }
   }
 
-  &:active {
+  &:active:not(.disabled) {
     .front {
       transform: translateY(-2px);
       transition: transform 34ms;
     }
-    .shadow {
+    .shadow:not(.disabled) {
       transform: translateY(1px);
       transition: transform 34ms;
     }
@@ -86,16 +86,6 @@
 
     .front {
       background: $green-500;
-    }
-  }
-
-  &.gray {
-    .edge {
-      background: $grayscale-500;
-    }
-
-    .front {
-      background: $grayscale-400;
     }
   }
 
@@ -138,6 +128,17 @@
       background: $orange-500;
     }
   }
+
+  &.gray,
+  &.disabled {
+    .edge {
+      background: $grayscale-500;
+    }
+
+    .front {
+      background: $grayscale-400;
+    }
+  }
 }
 
 .fill {
@@ -147,34 +148,26 @@
   transition: all 0.3s ease 0s;
   color: #fff;
 
-  &:hover {
+  &:hover:not(.disabled) {
     transform: translateY(-4px);
   }
 
-  &:active {
+  &:active:not(.disabled) {
     transform: translateY(-1px);
   }
 
   &.green {
     background-color: $green-500;
 
-    &:hover {
+    &:hover:not(.disabled) {
       background-color: $green-600;
       box-shadow: 0px 4px 8px $green-200;
     }
   }
 
-  &.gray {
-    background-color: $grayscale-300;
-    &:hover {
-      background-color: $grayscale-400;
-      box-shadow: 0px 4px 8px $grayscale-200;
-    }
-  }
-
   &.mint {
     background-color: $mint-500;
-    &:hover {
+    &:hover:not(.disabled) {
       background-color: $mint-600;
       box-shadow: 0px 4px 8px $mint-200;
     }
@@ -182,7 +175,7 @@
 
   &.purple {
     background-color: $purple-500;
-    &:hover {
+    &:hover:not(.disabled) {
       background-color: $purple-600;
       box-shadow: 0px 4px 8px $purple-200;
     }
@@ -190,7 +183,7 @@
 
   &.yellow {
     background-color: $yellow-500;
-    &:hover {
+    &:hover:not(.disabled) {
       background-color: $yellow-600;
       box-shadow: 0px 4px 8px $yellow-300;
     }
@@ -198,9 +191,18 @@
 
   &.orange {
     background-color: $orange-500;
-    &:hover {
+    &:hover:not(.disabled) {
       background-color: $orange-600;
       box-shadow: 0px 4px 8px $orange-200;
+    }
+  }
+
+  &.gray,
+  &.disabled {
+    background-color: $grayscale-300;
+    &:hover:not(.disabled) {
+      background-color: $grayscale-400;
+      box-shadow: 0px 4px 8px $grayscale-200;
     }
   }
 }
@@ -224,7 +226,7 @@
     transition: linear 250ms;
   }
 
-  &:is(:hover, :focus) {
+  &:is(:hover:not(.disabled), :focus) {
     color: #fff !important;
 
     &::after {
@@ -233,7 +235,7 @@
   }
 
   &.green {
-    border: solid 1px $green-500;
+    border: 1px solid $green-500;
     color: $green-600;
 
     &::after {
@@ -241,17 +243,8 @@
     }
   }
 
-  &.gray {
-    border: solid 1px $grayscale-300;
-    color: $grayscale-400;
-
-    &::after {
-      background-color: $grayscale-300;
-    }
-  }
-
   &.mint {
-    border: solid 1px $mint-500;
+    border: 1px solid $mint-500;
     color: $mint-600;
 
     &::after {
@@ -260,7 +253,7 @@
   }
 
   &.purple {
-    border: solid 1px $purple-500;
+    border: 1px solid $purple-500;
     color: $purple-600;
 
     &::after {
@@ -269,7 +262,7 @@
   }
 
   &.yellow {
-    border: solid 1px $yellow-500;
+    border: 1px solid $yellow-500;
     color: $yellow-600;
 
     &::after {
@@ -278,11 +271,21 @@
   }
 
   &.orange {
-    border: solid 1px $orange-500;
+    border: 1px solid $orange-500;
     color: $orange-600;
 
     &::after {
       background-color: $orange-500;
+    }
+  }
+
+  &.gray,
+  &.disabled {
+    border: 1px solid $grayscale-300;
+    color: $grayscale-400;
+
+    &::after {
+      background-color: $grayscale-300;
     }
   }
 }

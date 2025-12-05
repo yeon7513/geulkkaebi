@@ -1,6 +1,7 @@
 package kr.ac.kopo.geulkkaebi.board.comment;
 
 import org.apache.ibatis.type.Alias;
+import kr.ac.kopo.geulkkaebi.global.constants.BaseUrl;
 
 @Alias("commentsDto")
 public class Comments {
@@ -17,6 +18,16 @@ public class Comments {
   private int grade;
   private int countLikes;
 
+  // 좋아요 추가 및 삭제 확인용 필드
+  private boolean isLiked;
+
+  public boolean isLiked() {
+    return isLiked;
+  }
+
+  public void setLiked(boolean isLiked) {
+    this.isLiked = isLiked;
+  }
 
   public Long getCmtNo() {
     return cmtNo;
@@ -75,7 +86,10 @@ public class Comments {
   }
 
   public String getProfileImg() {
-    return profileImg;
+    if (profileImg == null || profileImg.isEmpty()) {
+      return null;
+    }
+    return BaseUrl.getImgUrl() + profileImg;
   }
 
   public void setProfileImg(String profileImg) {

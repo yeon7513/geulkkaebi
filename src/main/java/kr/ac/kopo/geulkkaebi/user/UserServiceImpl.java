@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import kr.ac.kopo.geulkkaebi.grobal.image.ImageService;
+import kr.ac.kopo.geulkkaebi.global.image.ImageService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -16,18 +16,21 @@ public class UserServiceImpl implements UserService {
   @Autowired
   UserDao userDao;
 
+  // 회원 전체 조회
   @Override
   public List<User> selectList() {
     return userDao.selectList();
   }
 
+  // 한 명의 회원 조회 (로그인한 회원)
   @Override
   public User selectOne(String userId) {
     return userDao.selectOne(userId);
   }
 
+  // 회원 등록 (회원가입)
   @Override
-  public int insert(User user, MultipartFile flie) {
+  public User insert(User user, MultipartFile flie) {
     String filePath;
 
     try {
@@ -44,27 +47,48 @@ public class UserServiceImpl implements UserService {
       // 파일 객체를 경로로 변환해 저장
       user.setProfileImg(filePath);
 
-      return userDao.insert(user);
+      // DB에 저장
+      int result = userDao.insert(user);
+      if (result == 0) {
+        System.out.println("회원 가입 실패");
+      }
+
+      // DB에서 저장된 사용자 조회
+      User savedUser = userDao.selectOne(user.getUserId());
+
+      return savedUser;
     } catch (Exception e) {
-      return 0;
+      return null;
     }
   }
 
+  // 회원 정보 변경
   @Override
-  public int update(User user, MultipartFile flie) {
+  public User update(User user, MultipartFile flie) {
     try {
+      // 이미지 업로드 처리
       if (flie != null && !flie.isEmpty()) {
         String filePath = imageService.uploadImage(flie, "profile");
         user.setProfileImg(filePath);
       }
 
-      return userDao.update(user);
+      // DB 업데이트
+      int result = userDao.update(user);
+      if (result == 0) {
+        System.out.println("정보 변경 실패");
+      }
+
+      // DB에서 변경된 데이터 조회
+      User updatedUser = userDao.selectOne(user.getUserId());
+
+      return updatedUser;
     } catch (Exception e) {
       System.out.println(e);
-      return 0;
+      return null;
     }
   }
 
+  // 회원 탈퇴
   @Override
   public int delete(String userId) {
     return userDao.delete(userId);
@@ -75,7 +99,5 @@ public class UserServiceImpl implements UserService {
   public void updateUserGrade(String writerId) {
     userDao.updateUserGrade(writerId);
   }
-
-
 
 }
