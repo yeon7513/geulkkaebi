@@ -55,9 +55,9 @@
 		ORDER BY notice_yn DESC, p.created_at DESC
 		) inner_query
 		WHERE ROWNUM
-		&lt;= #{limit}
+		&lt;= #{offset} + #{limit}
 		)
-		WHERE rnum &gt; #{offset}
+		WHERE rnum BETWEEN #{offset} + 1 AND #{offset} + #{limit}
 	</select>
 
 	<!-- 공지사항으로 설정된 게시글만 조회 -->

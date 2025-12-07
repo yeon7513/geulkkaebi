@@ -10,4 +10,6 @@ public interface CommentDao {
 
   int deleteComment(Long cmtNo);
 
+  Comments selectCommentByCmtNo(Long cmtNo);
+
 }

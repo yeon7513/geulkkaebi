@@ -9,7 +9,8 @@
 	<select id="selectCommentsByPost" parameterType="long"
 		resultType="commentsDto">
 		SELECT c.*, u.nickname, u.profile_img, u.grade,
-		NVL(l.count_likes, 0) AS countLikes
+		NVL(l.count_likes, 0)
+		AS countLikes
 		FROM comments c
 		LEFT JOIN users u ON c.writer = u.userid
 		<!-- 좋아요 갯수 -->
@@ -20,7 +21,23 @@
 		) l
 		ON c.cmtno = l.cmtno
 		WHERE c.postno = #{postNo}
-		ORDER BY c.created_at
+		ORDER
+		BY c.created_at desc
+	</select>
+
+	<!-- 새로 등록된 댓글만 조회 -->
+	<select id="selectCommentByCmtNo" parameterType="long"
+		resultType="commentsDto">
+		SELECT c.*, u.nickname, u.profile_img, u.grade,
+		NVL(l.count_likes, 0) AS countLikes
+		FROM comments c
+		LEFT JOIN users u ON c.writer = u.userid
+		LEFT JOIN (
+		SELECT cmtno, COUNT(*) AS count_likes
+		FROM comment_likes
+		GROUP BY cmtno
+		) l ON c.cmtno = l.cmtno
+		WHERE c.cmtno = #{cmtNo}
 	</select>
 
 	<!-- 댓글 등록 -->
@@ -37,7 +54,8 @@
 		#{postNo, jdbcType=NUMERIC},
 		#{writer, jdbcType=VARCHAR},
 		#{text, jdbcType=VARCHAR},
-		SYSDATE, NULL, 0)
+		SYSDATE, NULL,
+		0)
 	</insert>
 
 	<!-- 댓글 수정 -->
@@ -45,7 +63,8 @@
 	<!-- 댓글 삭제 -->
 	<delete id="delete" parameterType="long">
 		DELETE FROM comments
-		WHERE cmtno = #{cmtNo}
+		WHERE
+		cmtno = #{cmtNo}
 	</delete>
 
 </mapper>

@@ -11,4 +11,6 @@ public interface QuizService {
 
   void registerQuiz(Map<String, Object> quizData);
 
+  List<?> getRandomQuizList(String quizType);
+
 }

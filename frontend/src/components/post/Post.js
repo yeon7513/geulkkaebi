@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useBoardFetch } from '../../hooks/useBoardFetch';
 import PostList from './post-list/PostList';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import Button from '../button/Button';
 import { usePostNumbering } from './../../hooks/usePostNumbering';
@@ -13,7 +13,7 @@ import { boardColors } from '../../lib/textIconLabel';
 import Loader from '../loader/Loader';
 
 function Post({ title, boardType }) {
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
   const [page, setPage] = useState(1);
   const size = 10;
 
@@ -34,6 +34,15 @@ function Post({ title, boardType }) {
   const { loginedUser } = useSelector((state) => state.userSlice);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!state?.boardType) return;
+
+    // 초기화는 비동기로 다음 렌더에 수행 (fetch 방해 X)
+    setTimeout(() => {
+      navigate(pathname, { replace: true, state: null });
+    }, 0);
+  }, [state, pathname, navigate]);
 
   if (status === 'loading' || status === 'waiting') {
     return <Loader title={title} text="게시판의 정보를 불러오고 있어요!" />;

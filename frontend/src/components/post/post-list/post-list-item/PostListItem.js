@@ -151,7 +151,9 @@ function PostListItem() {
         )}
       </div>
       {/* 댓글 리스트 */}
-      <Comment postNo={post.postNo} boardType={boardType} />
+      {post.noticeYn === 0 && (
+        <Comment postNo={post.postNo} boardType={boardType} />
+      )}
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Button from '../../../components/button/Button';
 import { STATUS } from '../../../store/common/commoms';
 import {
   clearQuizList,
-  fetchAllQuizDataByType,
+  fetchRandomQuizList,
 } from '../../../store/quiz/quizSlice';
 import Question from '../question/Question';
 import QuizRanking from '../quiz-ranking/QuizRanking';
@@ -75,7 +75,7 @@ function QuizPlay({ quizType }) {
   };
 
   useEffect(() => {
-    dispatch(fetchAllQuizDataByType(quizType));
+    dispatch(fetchRandomQuizList(quizType));
 
     return () => {
       dispatch(clearQuizList());

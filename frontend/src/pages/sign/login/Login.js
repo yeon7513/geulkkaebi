@@ -11,20 +11,25 @@ function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const userId = e.target.userId.value;
     const userPw = e.target.userPw.value;
 
     try {
-      const result = dispatch(loginedData({ userId, userPw }));
+      const result = await dispatch(loginedData({ userId, userPw })).unwrap();
 
       if (result) {
+        // 로그인 성공 시 메인페이지로 이동
         navigate('/');
+      } else {
+        // 로그인 실패 시 패스워드 input 초기화
+        e.target.userPw.value = '';
+        e.target.userPw.focus();
       }
     } catch (error) {
-      alert('로그인 실패');
+      console.log('login err: ', error);
     }
   };
 

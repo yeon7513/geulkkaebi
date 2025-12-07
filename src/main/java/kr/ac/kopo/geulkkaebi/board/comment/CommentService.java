@@ -10,4 +10,6 @@ public interface CommentService {
 
   int removeComment(Long cmtNo);
 
+  Comments getCommentByCmtNo(String userId, Long cmtNo);
+
 }

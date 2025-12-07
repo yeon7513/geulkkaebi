@@ -17,6 +17,11 @@ public class CommentDaoImpl implements CommentDao {
   }
 
   @Override
+  public Comments selectCommentByCmtNo(Long cmtNo) {
+    return sql.selectOne("comments.selectCommentByCmtNo", cmtNo);
+  }
+
+  @Override
   public int insertComment(Comments comment) {
     return sql.insert("comments.insert", comment);
   }
@@ -25,5 +30,7 @@ public class CommentDaoImpl implements CommentDao {
   public int deleteComment(Long cmtNo) {
     return sql.delete("comments.delete", cmtNo);
   }
+
+
 
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="quizResult">
+
+	<!-- 퀴즈 결과 조회 -->
+	<select id="selectAllResultsByUser">
+		SELECT *
+		FROM quiz_result
+		WHERE userid = #{userId}
+	</select>
+
+	<!-- 퀴즈 결과 저장 -->
+	<insert id="insertResult" parameterType="quizResultDto"
+		useGeneratedKeys="true" keyProperty="qrNo">
+		<selectKey keyProperty="qrNo" resultType="long"
+			order="BEFORE">
+			SELECT quiz_result_seq.nextval FROM dual
+		</selectKey>
+		
+		INSERT INTO quiz_result
+		VALUES(#{qrNo}, #{userId}, #{quizType},
+		#{quizNo}, #{isCorrect}, SYSDATE);
+	</insert>
+
+</mapper>

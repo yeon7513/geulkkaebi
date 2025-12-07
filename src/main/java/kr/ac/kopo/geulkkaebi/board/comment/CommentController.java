@@ -35,7 +35,7 @@ public class CommentController {
   }
 
   @PostMapping("/add/{postNo}")
-  public ResponseEntity<Long> addComment(@PathVariable Long postNo, @RequestBody Comments comment,
+  public ResponseEntity<?> addComment(@PathVariable Long postNo, @RequestBody Comments comment,
       @SessionAttribute("loginUser") User loginUser) {
     // 댓글 작성 회원 정보 가져오기
     String writer = loginUser.getUserId();
@@ -46,7 +46,13 @@ public class CommentController {
     comment.setWriter(writer);
 
     int result = commentService.addComment(comment);
-    return result > 0 ? ResponseEntity.ok(comment.getCmtNo()) : ResponseEntity.badRequest().build();
+    if (result > 0) {
+      // 새로 INSERT된 댓글 객체를 다시 조회해서 반환
+      Comments saved = commentService.getCommentByCmtNo(writer, comment.getCmtNo());
+      return ResponseEntity.ok(saved);
+    } else {
+      return ResponseEntity.badRequest().build();
+    }
   }
 
   @DeleteMapping("/delete/{cmtNo}")

@@ -2,6 +2,10 @@
 
 @use '/src/scss/variables.scss' as *;
 
+.dummy {
+  width: 150px;
+}
+
 .editorForm {
   display: flex;
   flex-direction: column;
@@ -16,6 +20,7 @@
     padding: 24px 0;
     width: 65vw;
     height: calc(100% - 200px);
+    overflow-x: hidden;
     overflow-y: auto;
   }
 
@@ -32,7 +37,16 @@
   }
 }
 
+.selectCategory {
+  position: relative;
+
+  select {
+    padding: 8px 16px;
+  }
+}
+
 .titleWarp {
+  position: relative;
   width: 100%;
 
   .title {
@@ -45,7 +59,6 @@
 }
 
 .editor {
-  margin-top: 48px;
   ul {
     padding-left: 40px;
     list-style-type: disc;

@@ -11,6 +11,16 @@ const commentSlice = createSlice({
   name: 'comment',
   initialState,
   reducers: {
+    addComment: (state, action) => {
+      // 중복 안전 장치 추가
+      const exists = state.commentList.some(
+        (c) => c.cmtNo === action.payload.cmtNo
+      );
+
+      if (!exists) {
+        state.commentList = [action.payload, ...state.commentList];
+      }
+    },
     updateCommentLike: (state, action) => {
       const { cmtNo, liked, countLikes } = action.payload;
       const target = state.commentList.find((c) => c.cmtNo === cmtNo);
@@ -56,5 +66,6 @@ export const getCommentByPost = createAsyncThunk(
   }
 );
 
-export const { updateCommentLike, clearCommentList } = commentSlice.actions;
+export const { addComment, updateCommentLike, clearCommentList } =
+  commentSlice.actions;
 export default commentSlice.reducer;

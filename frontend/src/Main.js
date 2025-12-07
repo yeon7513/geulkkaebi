@@ -57,11 +57,11 @@ function Main() {
             </Route>
             {/* 게시판 */}
             <Route path="/board" element={<Board />}>
-              <Route index element={<Navigate to="all" replace />} />
               <Route path="all" element={<AllPost />} />
               <Route path="debate" element={<Debate />} />
               <Route path="story" element={<Story />} />
               <Route path="article" element={<Article />} />
+              {/* 게시글 상세 조회 */}
               <Route path=":boardType/:postNo" element={<PostListItem />} />
             </Route>
             {/* 고객센터 */}

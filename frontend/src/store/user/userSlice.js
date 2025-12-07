@@ -35,7 +35,7 @@ const userSlice = createSlice({
     });
     builder.addCase(loginedData.rejected, (state, action) => {
       state.status = STATUS.FAIL;
-      state.error = action.error.message;
+      // state.error = action.error.message;
     });
     // 로그인 체크
     builder.addCase(loginCheck.fulfilled, (state, action) => {
@@ -104,8 +104,8 @@ export const loginedData = createAsyncThunk(
 
       return user;
     } catch (error) {
-      console.log(error);
-      throw error;
+      const msg = '아이디 또는 비밀번호가 일치하지 않습니다.';
+      alert(msg);
     }
   }
 );

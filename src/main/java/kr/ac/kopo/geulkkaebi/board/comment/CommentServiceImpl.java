@@ -14,6 +14,7 @@ public class CommentServiceImpl implements CommentService {
   @Autowired
   LikesService likeService;
 
+  // 댓글 전체 조회
   @Override
   public List<Comments> getCommentByPost(String userId, Long postNo) {
 
@@ -27,6 +28,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     return commentList;
+  }
+
+  // 새로 등록한 하나의 댓글 조회
+  public Comments getCommentByCmtNo(String userId, Long cmtNo) {
+    Comments comment = commentDao.selectCommentByCmtNo(cmtNo);
+
+    if (userId != null) {
+      boolean liked = likeService.isCmtLiked(cmtNo, userId) > 0;
+      comment.setLiked(liked);
+    }
+
+    return comment;
   }
 
   @Override

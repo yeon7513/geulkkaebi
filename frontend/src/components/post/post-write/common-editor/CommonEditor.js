@@ -31,6 +31,8 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
   const [title, setTitle] = useState(initTitle || '');
   const [noticeYn, setNoticeYn] = useState(0);
 
+  console.log('Editor Render');
+
   const isAdmin = loginedUser.adminYn === 1;
 
   // 카테고리 선택
@@ -46,6 +48,9 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
     requireValue: null,
     msg: '',
   });
+
+  // 서브밋 버튼이 눌렸는지 체크
+  const [submitClicked, setSubmitClicked] = useState(false);
 
   const navigate = useNavigate();
 
@@ -70,7 +75,13 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
         resize: true,
       }),
     ],
-    content: initText || '<p>게시글을 작성하세요.</p>',
+    content: initText || '',
+    onUpdate({ editor }) {
+      if (editor.getText().trim() !== '') {
+        // 내용이 생기면 다시 숨김
+        setSubmitClicked(false);
+      }
+    },
   });
 
   // 수정 모드
@@ -83,6 +94,8 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
   // 서버 전송
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    setSubmitClicked(true);
 
     if (!editor) {
       return;
@@ -139,13 +152,6 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
       <div className={styles.container}>
         <Container>
           <div className={styles.header}>
-            <Tooltip
-              text={alert.requireValue === 'boardType' ? alert.msg : ''}
-              position="right"
-              show={!boardType}
-            >
-              <div />
-            </Tooltip>
             <div className={styles.selectCategory}>
               <select
                 name="boardType"
@@ -164,6 +170,17 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
                     </option>
                   ))}
               </select>
+              <Tooltip
+                text={
+                  alert.requireValue === 'boardType'
+                    ? ''
+                    : '카테고리를 선택해주세요.'
+                }
+                position="right"
+                show={!boardType}
+              >
+                <div />
+              </Tooltip>
             </div>
             {isAdmin && (
               <div>
@@ -178,13 +195,6 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
             )}
           </div>
           <div className={styles.titleWarp}>
-            <Tooltip
-              text={alert.requireValue === 'title' ? alert.msg : ''}
-              position="top"
-              show={!title.trim()}
-            >
-              <div />
-            </Tooltip>
             <input
               className={styles.title}
               id="title"
@@ -194,19 +204,27 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
               placeholder="제목을 입력하세요."
               onChange={(e) => setTitle(e.target.value)}
             />
+            <Tooltip
+              text={alert.requireValue === 'title' ? alert.msg : ''}
+              position="bottom"
+              show={submitClicked && !title.trim()}
+            >
+              <div className={styles.dummy} />
+            </Tooltip>
           </div>
           <div className={styles.editorWrap}>
             <Tooltip
               text={alert.requireValue === 'text' ? alert.msg : ''}
               position="top"
-              show={editor.getText().trim() === ''}
+              show={submitClicked && editor.getText().trim() === ''}
             >
-              <div />
+              <div className={styles.dummy} />
             </Tooltip>
             <EditorContent
               className={styles.editor}
               editor={editor}
               ref={textRef}
+              placeholder="부적절한 내용의 게시글은 사전 통보없이 삭제될 수 있습니다."
             />
           </div>
         </Container>
@@ -219,7 +237,7 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
           type="button"
           colors="gray"
           isRound={true}
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/board')}
         >
           취소
         </Button>

@@ -15,4 +15,8 @@ public interface QuizDao {
 
   void insertQuiz(Map<String, Object> quizData);
 
+  List<QuizWord> selectRandomWordQuiz();
+
+  List<QuizProverb> selectRandomProverbQuiz();
+
 }

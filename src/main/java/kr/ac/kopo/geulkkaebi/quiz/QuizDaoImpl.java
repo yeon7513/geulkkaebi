@@ -14,6 +14,18 @@ public class QuizDaoImpl implements QuizDao {
   @Autowired
   SqlSession sql;
 
+  // 단어 퀴즈 랜덤 조회
+  @Override
+  public List<QuizWord> selectRandomWordQuiz() {
+    return sql.selectList("quiz.selectRandomWordQuiz");
+  }
+
+  // 속담 퀴즈 랜덤 조회
+  @Override
+  public List<QuizProverb> selectRandomProverbQuiz() {
+    return sql.selectList("quiz.selectRandomProverbQuiz");
+  }
+
   @Override
   public List<Quiz> selectAllQuizList() {
     return sql.selectList("quiz.selectAllQuizList");
@@ -34,6 +46,5 @@ public class QuizDaoImpl implements QuizDao {
   public void insertQuiz(Map<String, Object> quizData) {
     sql.insert("quiz.insertQuiz", quizData);
   }
-
 
 }

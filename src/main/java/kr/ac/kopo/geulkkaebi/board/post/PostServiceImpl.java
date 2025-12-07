@@ -31,7 +31,7 @@ public class PostServiceImpl implements PostService {
 
     params.put("boardType", boardType);
     params.put("offset", offset);
-    params.put("limit", offset + size);
+    params.put("limit", size);
 
     // 공지글 먼저 조회
     List<Posts> noticePosts = postDao.selectNoticeList(boardType);
@@ -45,7 +45,11 @@ public class PostServiceImpl implements PostService {
     result.addAll(normalPosts);
 
     int totalPosts = postDao.countNormalPosts(boardType);
-    int totalPages = (int) Math.ceil((double) totalPosts / size);
+
+    int totalPages = 0;
+    if (size > 0) {
+      totalPages = (int) Math.ceil((double) totalPosts / size);
+    }
 
     Map<String, Object> response = new HashMap<>();
     response.put("postList", result);

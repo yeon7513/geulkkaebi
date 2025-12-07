@@ -6,6 +6,7 @@ import { BeatLoader } from 'react-spinners';
 import placeholder from '../../assets/img/no_images.png';
 import { boardColors } from '../../lib/textIconLabel';
 import {
+  addComment,
   clearCommentList,
   getCommentByPost,
   updateCommentLike,
@@ -37,7 +38,7 @@ function Comment({ postNo, boardType }) {
     dispatch(updateCommentLike({ cmtNo, liked, countLikes }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const commentData = {
@@ -47,10 +48,12 @@ function Comment({ postNo, boardType }) {
     };
 
     try {
-      axios.post(`/comments/add/${postNo}`, commentData);
-      // 댓글 리스트 갱신
-      dispatch(getCommentByPost({ postNo }));
-      // textarea 초기화
+      const res = await axios.post(`/comments/add/${postNo}`, commentData);
+
+      // 새로 생성된 댓글 데이터 추가
+      // 전체 갱신 대신 추가만 하도록 변경
+      dispatch(addComment(res.data));
+
       e.target.reset();
     } catch (error) {
       console.log(error);
@@ -59,7 +62,7 @@ function Comment({ postNo, boardType }) {
 
   useEffect(() => {
     // 첫 마운트 시 이전 리덕스에 남아있는 댓글 리스트를 비움.
-    dispatch(clearCommentList());
+    // dispatch(clearCommentList());
     dispatch(getCommentByPost({ postNo }));
   }, [dispatch, postNo]);
 
@@ -71,7 +74,12 @@ function Comment({ postNo, boardType }) {
     };
   }, [dispatch]);
 
-  if (status === STATUS.LOADING || status === STATUS.WAITING) {
+  // 초기 렌더링용
+  const isFirstLoading =
+    (status === STATUS.LOADING || status === STATUS.WAITING) &&
+    commentList.length === 0;
+
+  if (isFirstLoading) {
     return (
       <div className={styles.loading}>
         <form className={styles.commentForm}>

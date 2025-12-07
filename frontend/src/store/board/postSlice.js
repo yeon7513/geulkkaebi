@@ -21,7 +21,7 @@ const postSlice = createSlice({
     // 전체 or 카테고리별 조회
     builder.addCase(fetchAllPostData.pending, (state) => {
       state.status = STATUS.LOADING;
-      state.postList = [];
+      // state.postList = [];
     });
     builder.addCase(fetchAllPostData.fulfilled, (state, action) => {
       state.status = STATUS.SUCCESS;

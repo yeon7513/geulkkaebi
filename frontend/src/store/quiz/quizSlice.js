@@ -21,6 +21,25 @@ const quizSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // 랜덤 퀴즈 리스트 조회
+    builder.addCase(fetchRandomQuizList.pending, (state) => {
+      state.status = STATUS.LOADING;
+    });
+    builder.addCase(fetchRandomQuizList.fulfilled, (state, action) => {
+      state.status = STATUS.SUCCESS;
+      const quizType = action.meta.arg;
+
+      if (quizType === 'word') {
+        state.wordList = action.payload;
+      } else if (quizType === 'proverb') {
+        state.proverbList = action.payload;
+      }
+    });
+    builder.addCase(fetchRandomQuizList.rejected, (state, action) => {
+      state.status = STATUS.FAIL;
+      state.error = action.error.message;
+    });
+
     // 퀴즈 카테고리 조회
     builder.addCase(fetchQuizCategory.pending, (state) => {
       state.status = STATUS.LOADING;
@@ -33,6 +52,7 @@ const quizSlice = createSlice({
       state.status = STATUS.FAIL;
       state.error = action.error.message;
     });
+
     // 카테고리별 전체 퀴즈 리스트 조회
     builder.addCase(fetchAllQuizDataByType.pending, (state) => {
       state.status = STATUS.LOADING;
@@ -53,6 +73,24 @@ const quizSlice = createSlice({
     });
   },
 });
+
+// 퀴즈 풀이용 랜덤 퀴즈 조회
+export const fetchRandomQuizList = createAsyncThunk(
+  'quiz/fetchRandomQuizList',
+  async (quizType) => {
+    try {
+      const res = await axios.get(`/quiz/solving/${quizType}`, {
+        withCredentials: true,
+      });
+      const data = res.data;
+
+      return data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
 
 // 퀴즈 카테고리 조회 (관리자용)
 // 지금은 당장 쓰지 않을듯함.

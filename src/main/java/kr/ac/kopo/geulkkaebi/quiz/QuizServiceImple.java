@@ -12,6 +12,22 @@ public class QuizServiceImple implements QuizService {
   @Autowired
   QuizDao quizDao;
 
+  // 퀴즈 리스트 랜덤 불러오기
+  @Override
+  public List<?> getRandomQuizList(String quizType) {
+
+    if (quizType.equals("word")) {
+      // 단어 퀴즈
+      return quizDao.selectRandomWordQuiz();
+    } else if (quizType.equals("proverb")) {
+      // 속담 퀴즈
+      return quizDao.selectRandomProverbQuiz();
+    } else {
+      // 컬렉션 비우기
+      return Collections.emptyList();
+    }
+  }
+
   @Override
   public List<Quiz> selectAllQuizList() {
     // 모든 퀴즈 목록 조회
