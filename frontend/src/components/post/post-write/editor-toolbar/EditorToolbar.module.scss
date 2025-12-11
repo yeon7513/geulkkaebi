@@ -5,6 +5,7 @@
 .wrap {
   padding: 24px;
   background-color: $grayscale-100;
+  box-shadow: $box-shadow;
 }
 
 .editorToolbar {
@@ -28,7 +29,9 @@
   .palette {
     position: absolute;
     top: 100%;
-    z-index: 5;
+    z-index: 10;
     background-color: #fff;
+    box-shadow: $box-shadow;
+    border-radius: 8px;
   }
 }

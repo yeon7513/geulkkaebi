@@ -1,0 +1,117 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.board {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+
+    thead {
+      tr {
+        border-bottom: 1px solid #fff;
+        th {
+          border-left: 1px solid #fff;
+          border-right: 1px solid #fff;
+          background-color: $orange-200;
+        }
+      }
+    }
+
+    tr {
+      border-bottom: 1px solid $grayscale-200;
+      th,
+      td {
+        padding: 12px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.buttons {
+  display: flex;
+  justify-content: end;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+.user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+
+  .profileImg {
+    img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+    }
+  }
+
+  .userInfo {
+    text-align: left;
+
+    .nickname {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+
+      span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    > span {
+      font-size: 16px;
+      color: $grayscale-400;
+    }
+  }
+}
+
+.myRank {
+  font-size: 16px;
+  p {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    a {
+      font-weight: 500;
+      color: $orange-400;
+
+      &:hover {
+        color: $orange-300;
+      }
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+
+  > button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .pageNum {
+    display: flex;
+    gap: 8px;
+
+    button {
+      font-size: 14px;
+    }
+  }
+}

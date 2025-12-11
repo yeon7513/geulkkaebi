@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import jakarta.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/users")
@@ -99,11 +100,13 @@ public class UserController {
   }
 
   @DeleteMapping("/delete/{userId}")
-  public ResponseEntity<String> deleteUser(@PathVariable String userId) {
+  public ResponseEntity<String> deleteUser(@PathVariable String userId, HttpSession session) {
     try {
       int result = userService.delete(userId);
 
       if (result > 0) {
+        // 세션 비우기
+        session.invalidate();
         return ResponseEntity.ok("success");
       } else {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("delete failed");

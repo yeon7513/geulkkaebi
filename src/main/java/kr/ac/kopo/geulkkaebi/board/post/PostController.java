@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -90,6 +91,41 @@ public class PostController {
   public ResponseEntity<Void> viewPost(@PathVariable Long postNo) {
     postService.increaseHitcount(postNo);
     return ResponseEntity.ok().build();
+  }
+
+  // 게시글 수정
+  @PostMapping("/update/{boardType}/{postNo}")
+  public ResponseEntity<?> updatePost(@PathVariable Long postNo, @RequestBody Posts posts,
+      @SessionAttribute("loginUser") User loginUser) {
+
+    String userId = loginUser.getUserId();
+    String writer = posts.getWriter();
+
+    // 본문 작성자 본인인지 확인 (수정 권한 체크)
+    if (!userId.equals(writer)) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("수정 권한이 없습니다");
+    }
+
+    int result = postService.updatePost(posts);
+
+    Map<String, Object> updatePost =
+        postService.getPostDetail(userId, postNo, posts.getBoardType());
+
+    Posts resultPost = (Posts) updatePost.get("postItem");
+
+    return result > 0 ? ResponseEntity.ok(resultPost)
+        : ResponseEntity.status(HttpStatus.BAD_REQUEST).body("update failed");
+
+  }
+
+
+  // 게시글 삭제
+  @DeleteMapping("/delete/{postNo}")
+  public ResponseEntity<Long> deletePost(@PathVariable Long postNo,
+      @SessionAttribute("loginUser") User loginUser) {
+
+    int result = postService.removePost(postNo);
+    return result > 0 ? ResponseEntity.ok(postNo) : ResponseEntity.notFound().build();
   }
 
 }

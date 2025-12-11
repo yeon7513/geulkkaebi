@@ -35,6 +35,7 @@ const commentSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // 해당 게시글의 댓글들을 조회
     builder.addCase(getCommentByPost.pending, (state) => {
       state.status = STATUS.LOADING;
     });
@@ -47,16 +48,84 @@ const commentSlice = createSlice({
       state.commentList = [];
       state.error = action.payload;
     });
+
+    // 댓글 수정
+    builder.addCase(updateComment.pending, (state) => {
+      state.status = STATUS.LOADING;
+    });
+    builder.addCase(updateComment.fulfilled, (state, action) => {
+      state.status = STATUS.SUCCESS;
+      const updateComment = action.payload;
+      state.commentList = state.commentList.map((comment) =>
+        comment.cmtNo === updateComment.cmtNo ? updateComment : comment
+      );
+
+      console.log(updateComment);
+    });
+    builder.addCase(updateComment.rejected, (state, action) => {
+      state.status = STATUS.FAIL;
+      state.error = action.error.message;
+    });
+
+    // 댓글 삭제
+    builder.addCase(deleteComment.pending, (state) => {
+      state.status = STATUS.LOADING;
+    });
+    builder.addCase(deleteComment.fulfilled, (state, action) => {
+      state.status = STATUS.SUCCESS;
+      state.commentList = state.commentList.filter(
+        (comment) => comment.cmtNo !== action.payload
+      );
+    });
+    builder.addCase(deleteComment.rejected, (state, action) => {
+      state.status = STATUS.FAIL;
+      state.error = action.error.message;
+    });
   },
 });
 
+// 게시글당 댓글 조회
 export const getCommentByPost = createAsyncThunk(
-  '/comment/getCommentByPost',
+  'comment/getCommentByPost',
   async ({ postNo }) => {
     try {
       const res = await axios.get(`/comments/list/${postNo}`, {
         withCredentials: true,
       });
+
+      console.log(res.data);
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
+// 댓글 수정
+export const updateComment = createAsyncThunk(
+  'comment/updateComment',
+  async ({ cmtNo, updateData }) => {
+    try {
+      const res = await axios.post(`/comments/update/${cmtNo}`, updateData, {
+        withCredentials: true,
+      });
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
+// 댓글 삭제
+export const deleteComment = createAsyncThunk(
+  'comment/deleteComment',
+  async (cmtNo) => {
+    try {
+      const res = await axios.delete(`/comments/delete/${cmtNo}`);
 
       return res.data;
     } catch (error) {

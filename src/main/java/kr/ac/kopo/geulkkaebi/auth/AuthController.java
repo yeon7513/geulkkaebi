@@ -1,5 +1,7 @@
 package kr.ac.kopo.geulkkaebi.auth;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,12 +53,23 @@ public class AuthController {
   @GetMapping("/check")
   public ResponseEntity<?> checkLogin(
       @SessionAttribute(name = "loginUser", required = false) User loginUser) {
+
     if (loginUser != null) {
-      // 로그인한 유저에 대해 반환
-      return ResponseEntity.ok(loginUser);
+      boolean isAdmin = loginUser.getAdminYn() == 0 ? false : true;
+
+      Map<String, Object> result = new HashMap<>();
+      result.put("isLogin", true);
+      result.put("isAdmin", isAdmin);
+      result.put("userInfo", loginUser);
+
+      return ResponseEntity.ok(result);
     } else {
-      return null;
+      Map<String, Object> result = new HashMap<>();
+      result.put("isLogin", false);
+
+      return ResponseEntity.ok(result);
     }
+
   }
 
 }

@@ -12,4 +12,6 @@ public interface CommentDao {
 
   Comments selectCommentByCmtNo(Long cmtNo);
 
+  int updateComment(Comments comment);
+
 }

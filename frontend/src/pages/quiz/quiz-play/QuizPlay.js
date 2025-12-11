@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../components/button/Button';
@@ -12,9 +13,16 @@ import QuizRanking from '../quiz-ranking/QuizRanking';
 import QuizResult from './../quiz-result/QuizResult';
 import styles from './QuizPlay.module.scss';
 
+import { IoArrowBackOutline } from 'react-icons/io5';
+
 const title = {
   word: '단어 탐험대',
   proverb: '속담 마법사',
+};
+
+const quizTypeColor = {
+  word: 'green',
+  proverb: 'purple',
 };
 
 function QuizPlay({ quizType }) {
@@ -24,6 +32,8 @@ function QuizPlay({ quizType }) {
   const { wordList, proverbList, status } = useSelector(
     (state) => state.quizSlice
   );
+
+  const { loginedUser } = useSelector((state) => state.userSlice);
 
   const quizList = (quizType === 'word' ? wordList : proverbList).map(
     (item) => ({
@@ -49,16 +59,20 @@ function QuizPlay({ quizType }) {
   const [showResult, setShowResult] = useState(false);
   // 문제 풀이 완료 확인용 state
   const [isFinish, setIsFinish] = useState(false);
-  // 비회원 전용 state
-  // 회원은 DB에 바로 저장(insert)이 되지만,
-  // 비회원은 저장을 할 수 없기 때문에 state로 관리함.
-  const [results, setResults] = useState(null);
+  // 문제 풀이 누적 결과
+  // -> 회원은 이 데이터를 바로 insert
+  // -> 비회원은 화면에 보여주기만! insert X
+  const [results, setResults] = useState();
 
-  const handleSubmitAnswer = (result) => {
+  const [saveResult, setSaveResult] = useState([]);
+
+  const handleSaveResult = (result) => {
     if (result.isCorrect) {
       setScore((prev) => prev + 1);
     }
+
     setResults(result);
+    setSaveResult((prev) => [...prev, result]);
     setShowResult(true);
   };
 
@@ -74,6 +88,26 @@ function QuizPlay({ quizType }) {
     setShowResult(false);
   };
 
+  // 퀴즈 결과 전송
+  const sendResultsToServer = useCallback(async () => {
+    // 비회원이면 전송 X
+    if (!loginedUser) return;
+
+    // 서버용 데이터 변환
+    const processData = saveResult.map((item) => ({
+      ...item,
+      isCorrect: item.isCorrect ? 1 : 0,
+    }));
+
+    try {
+      await axios.post('/quizResult/save', processData, {
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [loginedUser, saveResult]);
+
   useEffect(() => {
     dispatch(fetchRandomQuizList(quizType));
 
@@ -81,6 +115,12 @@ function QuizPlay({ quizType }) {
       dispatch(clearQuizList());
     };
   }, [dispatch, quizType]);
+
+  useEffect(() => {
+    if (isFinish) {
+      sendResultsToServer();
+    }
+  }, [isFinish, sendResultsToServer]);
 
   if (status === STATUS.WAITING || status === STATUS.LOADING) {
     return (
@@ -96,12 +136,21 @@ function QuizPlay({ quizType }) {
 
   return (
     <div className={styles.quizPlay}>
-      <h2>{title[quizType]}</h2>
-      <Button onClick={() => navigate('/quiz')}>처음으로</Button>
-      <div>
+      <div className={styles.title}>
+        <Button
+          className={styles.backBtn}
+          colors={quizTypeColor[quizType]}
+          onClick={() => navigate('/quiz')}
+        >
+          <IoArrowBackOutline />
+        </Button>
+        <h2>{title[quizType]}</h2>
+      </div>
+      <div className={styles.display}>
         {showResult ? (
           <QuizResult
             results={results}
+            themeColor={quizTypeColor[quizType]}
             isLast={currentIdx === quizList.length - 1}
             onNext={handleNextQuiz}
           />
@@ -109,7 +158,8 @@ function QuizPlay({ quizType }) {
           <Question
             quiz={quizList[currentIdx]}
             quizNum={currentIdx + 1}
-            onSubmit={handleSubmitAnswer}
+            themeColor={quizTypeColor[quizType]}
+            onSubmit={handleSaveResult}
           />
         )}
       </div>

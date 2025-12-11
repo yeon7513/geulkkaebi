@@ -1,6 +1,7 @@
 package kr.ac.kopo.geulkkaebi.user;
 
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,7 +40,13 @@ public class UserDaoImpl implements UserDao {
   @Override
   public void updateUserGrade(String writerId) {
     sql.update("users.updateUserGrade", writerId);
-
   }
+
+  // 회원 점수 갱신
+  @Override
+  public void updateUserScore(Map<String, Object> params) {
+    sql.update("users.updateUserScore", params);
+  }
+
 
 }

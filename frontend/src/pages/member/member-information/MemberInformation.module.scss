@@ -2,18 +2,33 @@
 
 @use '/src/scss/variables.scss' as *;
 
+.myInfo {
+  display: flex;
+
+  &.memberInfo {
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  > h2 {
+    flex: none;
+    width: 100%;
+  }
+}
+
 .contents {
-  width: 100%;
   text-align: center;
 
-  h2 {
+  > h2 {
+    margin-bottom: 16px;
     font-size: 24px;
     text-align: center;
+    word-break: keep-all;
   }
 }
 
 .profileImg {
-  margin: 16px 0;
+  margin-bottom: 16px;
   width: 240px;
   height: 240px;
   object-fit: cover;
@@ -21,7 +36,7 @@
   border: 1px solid $grayscale-200;
 }
 
-.info {
+.card {
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -55,5 +70,41 @@
   button {
     font-size: 16px;
     padding: 8px 16px;
+  }
+}
+
+.detail {
+  flex: 1;
+
+  ul {
+    margin-bottom: 16px;
+
+    &:not(:last-child) {
+      padding-bottom: 4px;
+      border-bottom: 1px dashed $grayscale-300;
+    }
+  }
+
+  li {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 8px;
+
+    > span:first-of-type {
+      display: inline-block;
+      width: 100px;
+      color: $grayscale-600;
+    }
+
+    .desc {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 16px;
+
+      > span {
+        font-size: 18px;
+      }
+    }
   }
 }

@@ -6,24 +6,81 @@
 
 <mapper namespace="quizResult">
 
-	<!-- 퀴즈 결과 조회 -->
-	<select id="selectAllResultsByUser">
+	<!-- 퀴즈 결과 조회 (오답 포함) + 페이징 -->
+	<select id="selectQuizResults" resultType="quizResultDto"
+		parameterType="map">
 		SELECT *
-		FROM quiz_result
+		FROM (
+		SELECT qr.*,
+		ROW_NUMBER() OVER (ORDER BY attempted_at DESC) rn
+		FROM quiz_result qr
 		WHERE userid = #{userId}
+		<if test="filter == 'correct'">
+			AND is_correct = 1
+		</if>
+		<if test="filter == 'wrong'">
+			AND is_correct = 0
+		</if>
+		)
+		WHERE rn BETWEEN #{startRow} AND #{endRow}
+		ORDER BY rn
 	</select>
 
+	<!-- 총 개수 조회 (페이지 계산용) -->
+	<select id="selectQuizResultsCount" resultType="int"
+		parameterType="map">
+		SELECT COUNT(*)
+		FROM quiz_result
+		WHERE userid = #{userId}
+		<if test="filter == 'correct'">
+			AND is_correct = 1
+		</if>
+		<if test="filter == 'wrong'">
+			AND is_correct = 0
+		</if>
+	</select>
+
+	<!-- 오답인 문제를 맞추면 업데이트 -->
+	<update id="updateCorrectAnswer">
+		UPDATE quiz_result
+		SET is_correct = 1,
+		attempted_at = SYSDATE
+		WHERE qrNo = #{qrNo}
+	</update>
+
 	<!-- 퀴즈 결과 저장 -->
-	<insert id="insertResult" parameterType="quizResultDto"
-		useGeneratedKeys="true" keyProperty="qrNo">
-		<selectKey keyProperty="qrNo" resultType="long"
-			order="BEFORE">
-			SELECT quiz_result_seq.nextval FROM dual
-		</selectKey>
-		
-		INSERT INTO quiz_result
-		VALUES(#{qrNo}, #{userId}, #{quizType},
-		#{quizNo}, #{isCorrect}, SYSDATE);
+	<insert id="insertQuizResults" parameterType="list">
+		INSERT INTO quiz_result (qrno, userid, quiz_type, quizno, is_correct,
+		attempted_at)
+		SELECT quiz_result_seq.nextval, t.*
+		FROM (
+		<foreach collection="list" item="item" separator="union all">
+			SELECT
+			#{item.userId, jdbcType=VARCHAR},
+			#{item.quizType, jdbcType=VARCHAR},
+			#{item.quizNo, jdbcType=NUMERIC},
+			#{item.isCorrect, jdbcType=NUMERIC},
+			SYSDATE FROM dual
+		</foreach>
+		) t
 	</insert>
+
+	<!-- 오답 노트 관리 - 모든 퀴즈용 -->
+	<select id="">
+		SELECT qr.*,
+		CASE WHEN qw.quiz_no IS NOT NULL THEN
+		qw.question ELSE NULL END AS
+		question,
+		qw.option1, qw.option2,
+		qw.option3, qw.option4, qw.answer, qw.difficulty
+		FROM quiz_result qr
+		LEFT JOIN quiz_word qw
+		ON qr.quizNo = qw.qwdno AND qr.quizType = 'WORD'
+		LEFT JOIN quiz_proverb qp
+		ON qr.quizNo = qp.qpvno AND qr.quizType =
+		'PROVERB'
+		WHERE qr.userId = #{userId}
+		AND qr.isCorrect = 0
+	</select>
 
 </mapper>

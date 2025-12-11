@@ -6,7 +6,7 @@ import styles from './Quiz.module.scss';
 function Quiz() {
   return (
     <div className={styles.wrap}>
-      <Container>
+      <Container className={styles.container}>
         <Outlet />
       </Container>
     </div>

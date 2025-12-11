@@ -1,7 +1,13 @@
 import styles from './ControlButton.module.scss';
 
-function ControlButton({ isLogin, isWriter, onUpdate, onDelete }) {
-  if (!isLogin) {
+function ControlButton({
+  isEdit = false,
+  isLogin,
+  isWriter,
+  onEdit,
+  onDelete,
+}) {
+  if ((!isLogin && !isWriter) || isEdit) {
     return;
   }
 
@@ -10,16 +16,18 @@ function ControlButton({ isLogin, isWriter, onUpdate, onDelete }) {
       {isWriter ? (
         <>
           <li>
-            <button>수정</button>
+            <button onClick={onEdit}>수정</button>
           </li>
           <li>
-            <button>삭제</button>
+            <button onClick={onDelete}>삭제</button>
           </li>
         </>
       ) : (
-        <li>
-          <button>신고</button>
-        </li>
+        (isLogin || !isWriter) && (
+          <li>
+            <button>신고</button>
+          </li>
+        )
       )}
     </ul>
   );

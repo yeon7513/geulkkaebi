@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="quizRanking">
+
+	<!-- 전체 랭킹 조회 -->
+	<select id="selectQuizRanking" parameterType="map"
+		resultType="quizRankingDto">
+		SELECT *
+		FROM (
+		SELECT
+		userid,
+		nickname,
+		profile_img,
+		grade,
+		score,
+		ROW_NUMBER() OVER (ORDER BY score DESC) AS rank
+		FROM users
+		WHERE
+		admin_yn = 0
+		)
+		WHERE rank BETWEEN #{startRank} AND #{endRank}
+		AND rank <![CDATA[ <= ]]>
+		50
+	</select>
+
+	<!-- 단어 퀴즈 랭킹 -->
+	<select id="selectWordQuizRanking" parameterType="map"
+		resultType="quizRankingDto">
+		SELECT *
+		FROM (
+		SELECT
+		u.userid,
+		u.nickname,
+		u.profile_img,
+		u.grade,
+		u.score,
+		ROW_NUMBER() OVER (ORDER BY u.score DESC) AS rank
+		FROM users u
+		WHERE u.admin_yn = 0
+		AND EXISTS (
+		SELECT 1 FROM quiz_result qr
+		WHERE
+		qr.userid = u.userid
+		AND qr.quiz_type = 'word'
+		)
+		)
+		WHERE rank BETWEEN
+		#{startRank} AND #{endRank}
+		AND rank <![CDATA[ <= ]]>
+		50
+
+	</select>
+
+	<!-- 속담 퀴즈 랭킹 -->
+	<select id="selectProverbQuizRanking" parameterType="map"
+		resultType="quizRankingDto">
+		SELECT *
+		FROM (
+		SELECT
+		u.userid,
+		u.nickname,
+		u.profile_img,
+		u.grade,
+		u.score,
+		ROW_NUMBER() OVER (ORDER BY u.score DESC) AS rank
+		FROM users u
+		WHERE u.admin_yn = 0
+		AND EXISTS (
+		SELECT 1 FROM quiz_result qr
+		WHERE
+		qr.userid = u.userid
+		AND qr.quiz_type = 'proverb'
+		)
+		)
+		WHERE rank BETWEEN
+		#{startRank} AND #{endRank} AND rank <![CDATA[ <= ]]>
+		50
+	</select>
+
+	<!-- 랭킹 순위 계산 -->
+	<select id="selectRankByUser" resultType="int"
+		parameterType="map">
+		SELECT rank
+		FROM (
+		SELECT
+		u.userid,
+		ROW_NUMBER() OVER (ORDER BY u.score DESC) AS rank
+		FROM users u
+		WHERE u.admin_yn = 0
+		<if test="quizType != null and quizType != 'all'">
+			AND EXISTS (
+			SELECT 1 FROM quiz_result qr
+			WHERE qr.userid = u.userid
+			AND qr.quiz_type = #{quizType}
+			)
+		</if>
+		)
+		WHERE userid = #{userId}
+	</select>
+
+	<!-- 회원 기본 정보 조회 -->
+	<select id="selectUserInfo" resultType="quizRankingDto">
+		SELECT
+		USERID AS userId,
+		NICKNAME AS nickname,
+		PROFILE_IMG AS profileImg,
+		GRADE AS grade,
+		SCORE AS
+		score
+		FROM users
+		WHERE USERID = #{userId}
+	</select>
+
+	<!-- 참여 횟수 조회 -->
+	<select id="selectAttemptCount" resultType="int">
+    SELECT COUNT(*)
+    FROM quiz_result
+    WHERE USERID = #{userId}
+    <choose>
+        <when test="quizType != null and quizType != 'all'">
+            AND QUIZ_TYPE = #{quizType}
+        </when>
+        <otherwise>
+        </otherwise>
+    </choose>
+	</select>
+
+	<!-- 최근 참여일 조회 -->
+	<select id="selectLastAttemptedAt" resultType="string">
+		    SELECT MAX(ATTEMPTED_AT)
+    FROM quiz_result
+    WHERE USERID = #{userId}
+    <choose>
+        <when test="quizType != null and quizType != 'all'">
+            AND QUIZ_TYPE = #{quizType}
+        </when>
+        <otherwise>
+        </otherwise>
+    </choose>
+	</select>
+
+</mapper>

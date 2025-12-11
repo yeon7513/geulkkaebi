@@ -11,35 +11,6 @@ public class QuizResult {
   private int isCorrect; // 정답 여부 (1이면 정답, 0이면 오답)
   private String attemptedAt; // 퀴즈를 푼 날짜
 
-  // 랭킹 조회용 필드
-  private String rankerId; // 랭커 아이디
-  private String nickname; // 회원 닉네임
-  private int score; // 회원 점수
-
-  public String getRankerId() {
-    return rankerId;
-  }
-
-  public void setRankerId(String rankerId) {
-    this.rankerId = rankerId;
-  }
-
-  public String getNickname() {
-    return nickname;
-  }
-
-  public void setNickname(String nickname) {
-    this.nickname = nickname;
-  }
-
-  public int getScore() {
-    return score;
-  }
-
-  public void setScore(int score) {
-    this.score = score;
-  }
-
   public Long getQrNo() {
     return qrNo;
   }

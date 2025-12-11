@@ -1,32 +1,28 @@
 import axios from 'axios';
-import cn from 'classnames';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BeatLoader } from 'react-spinners';
-import placeholder from '../../assets/img/no_images.png';
 import { boardColors } from '../../lib/textIconLabel';
 import {
   addComment,
   clearCommentList,
+  deleteComment,
   getCommentByPost,
+  updateComment,
   updateCommentLike,
 } from '../../store/board/commentSlice';
 import { STATUS } from '../../store/common/commoms';
 import { toggleLike } from '../../utils/toggleLike';
 import Button from '../button/Button';
-import ControlButton from '../control-button/ControlButton';
-import LikeButton from '../like-button/LikeButton';
-import ProfileCard from '../profile-card/ProfileCard';
-import Card from './../card/Card';
 import styles from './Comment.module.scss';
+import CommentItem from './comment-item/CommentItem';
 
 function Comment({ postNo, boardType }) {
   const { commentList, status } = useSelector((state) => state.commentSlice);
   const { loginedUser } = useSelector((state) => state.userSlice);
   const dispatch = useDispatch();
 
-  console.log(commentList);
-
+  // 좋아요 토글 핸들러
   const handleClickLike = async (cmtNo, isLiked) => {
     if (!loginedUser) {
       alert('로그인이 필요합니다.');
@@ -38,6 +34,7 @@ function Comment({ postNo, boardType }) {
     dispatch(updateCommentLike({ cmtNo, liked, countLikes }));
   };
 
+  // 댓글 등록 핸들러
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -58,6 +55,38 @@ function Comment({ postNo, boardType }) {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // 댓글 수정 핸들러
+  const handleUpdateComment = async (e, cmtNo) => {
+    e.preventDefault();
+
+    const targetComment = commentList.find((c) => c.cmtNo === cmtNo);
+
+    const updateData = {
+      ...targetComment,
+      text: e.target.text.value,
+    };
+
+    try {
+      await dispatch(updateComment({ cmtNo, updateData }));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // 댓글 삭제 핸들러
+  const handleClickDelete = (cmtNo) => {
+    if (!window.confirm('정말 삭제하시겠습니까?')) return;
+
+    dispatch(deleteComment(cmtNo))
+      .unwrap()
+      .then(() => {
+        alert('삭제되었습니다.');
+      })
+      .catch(() => {
+        alert('삭제 중 문제가 발생했습니다.');
+      });
   };
 
   useEffect(() => {
@@ -118,7 +147,6 @@ function Comment({ postNo, boardType }) {
         <textarea
           className={styles.writeComment}
           name="text"
-          id="writeComment"
           placeholder={
             !loginedUser
               ? '로그인한 회원만 작성할 수 있습니다.'
@@ -138,56 +166,20 @@ function Comment({ postNo, boardType }) {
         </Button>
       </form>
       <div className={styles.comments}>
+        <span className={styles.countComment}>댓글 {commentList.length}개</span>
         {commentList.length <= 0 ? (
           <div className={styles.noComment}>아직 작성된 댓글이 없습니다.</div>
         ) : (
           commentList.map((data) => (
-            <Card
-              key={data.cmtNo}
-              isPointer={false}
-              className={styles.commentItem}
-            >
-              {data.writer === loginedUser.userId && (
-                <div
-                  className={cn(styles.mine, styles[boardColors[boardType]])}
-                >
-                  내 댓글
-                </div>
-              )}
-              <div className={styles.header}>
-                <ProfileCard
-                  image={data?.profileImg || placeholder}
-                  userId={data.writer}
-                  nickname={data.nickname}
-                  grade={data.grade}
-                />
-                <ul>
-                  <li>
-                    <span>작성</span>
-                    {data.createdAt}
-                  </li>
-                  {data.modifiedAt !== null && (
-                    <l1>
-                      <span>수정</span>
-                      {data.modifiedAt}
-                    </l1>
-                  )}
-                </ul>
-              </div>
-              <div className={styles.contents}>
-                <p>{data.text}</p>
-                <LikeButton
-                  name="commentLike"
-                  count={data.countLikes}
-                  isLiked={data.liked}
-                  onChange={() => handleClickLike(data.cmtNo, data.liked)}
-                />
-              </div>
-              <ControlButton
-                isLogin={loginedUser}
-                isWriter={data.writer === loginedUser.userId}
-              />
-            </Card>
+            <CommentItem
+              key={`${data.cmtNo}-${data.modifiedAt}`}
+              comment={data}
+              themeColor={boardColors[boardType]}
+              loginedUser={loginedUser}
+              onEditSubmit={handleUpdateComment}
+              onDelete={(cmtNo) => handleClickDelete(cmtNo)}
+              onLike={handleClickLike}
+            />
           ))
         )}
       </div>

@@ -12,4 +12,6 @@ public interface CommentService {
 
   Comments getCommentByCmtNo(String userId, Long cmtNo);
 
+  int updateComment(Comments comment);
+
 }

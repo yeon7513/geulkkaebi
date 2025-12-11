@@ -4,12 +4,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import kr.ac.kopo.geulkkaebi.global.likes.LikesService;
+import kr.ac.kopo.geulkkaebi.user.UserService;
 
 @Service
 public class CommentServiceImpl implements CommentService {
 
   @Autowired
   CommentDao commentDao;
+
+  @Autowired
+  UserService userService;
 
   @Autowired
   LikesService likeService;
@@ -42,14 +46,32 @@ public class CommentServiceImpl implements CommentService {
     return comment;
   }
 
+  // 댓글 등록
   @Override
   public int addComment(Comments comment) {
-    return commentDao.insertComment(comment);
+    int result = commentDao.insertComment(comment);
+
+    if (result > 0) {
+      String writerId = comment.getWriter();
+
+      userService.updateUserGrade(writerId);
+    }
+
+    return result;
   }
 
+  // 댓글 수정
+  @Override
+  public int updateComment(Comments comment) {
+    return commentDao.updateComment(comment);
+  }
+
+  // 댓글 삭제
   @Override
   public int removeComment(Long cmtNo) {
     return commentDao.deleteComment(cmtNo);
   }
+
+
 
 }

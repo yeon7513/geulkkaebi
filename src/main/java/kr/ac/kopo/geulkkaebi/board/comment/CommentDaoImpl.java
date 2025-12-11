@@ -23,12 +23,17 @@ public class CommentDaoImpl implements CommentDao {
 
   @Override
   public int insertComment(Comments comment) {
-    return sql.insert("comments.insert", comment);
+    return sql.insert("comments.insertComment", comment);
+  }
+
+  @Override
+  public int updateComment(Comments comment) {
+    return sql.update("comments.updateComment", comment);
   }
 
   @Override
   public int deleteComment(Long cmtNo) {
-    return sql.delete("comments.delete", cmtNo);
+    return sql.delete("comments.deleteComment", cmtNo);
   }
 
 

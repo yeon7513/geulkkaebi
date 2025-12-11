@@ -15,4 +15,8 @@ public interface PostService {
 
   Map<String, Object> getPostDetail(String userId, Long postNo, String boardType);
 
+  int removePost(Long postNo);
+
+  int updatePost(Posts posts);
+
 }

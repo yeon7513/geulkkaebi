@@ -1,0 +1,40 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+@import '/src/scss/mixin.scss';
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+
+  button,
+  p {
+    font-size: 16px;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 30%;
+
+    svg {
+      flex: none;
+    }
+
+    span {
+      @include textLine(1);
+    }
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  p {
+    color: $grayscale-400;
+  }
+}

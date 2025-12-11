@@ -19,43 +19,6 @@
   border-top: 1px solid $grayscale-200;
 }
 
-.mine {
-  display: inline-block;
-  margin-bottom: 8px;
-  padding: 4px 8px;
-  font-size: 14px;
-
-  &.green {
-    border: 1px solid $green-500;
-    color: $green-600;
-  }
-
-  &.mint {
-    border: 1px solid $mint-500;
-    color: $mint-600;
-  }
-
-  &.purple {
-    border: 1px solid $purple-500;
-    color: $purple-600;
-  }
-
-  &.yellow {
-    border: 1px solid $yellow-500;
-    color: $yellow-600;
-  }
-
-  &.orange {
-    border: 1px solid $orange-500;
-    color: $orange-600;
-  }
-
-  &.gray {
-    border: 1px solid $grayscale-300;
-    color: $grayscale-400;
-  }
-}
-
 .commentForm {
   display: flex;
   gap: 16px;
@@ -78,6 +41,12 @@
 
 .comments {
   margin-top: 32px;
+
+  .countComment {
+    display: block;
+    margin-bottom: 16px;
+    font-size: 16px;
+  }
 
   .noComment {
     text-align: center;

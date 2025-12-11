@@ -1,7 +1,6 @@
 package kr.ac.kopo.geulkkaebi.board.comment;
 
 import org.apache.ibatis.type.Alias;
-import kr.ac.kopo.geulkkaebi.global.constants.BaseUrl;
 
 @Alias("commentsDto")
 public class Comments {
@@ -86,10 +85,7 @@ public class Comments {
   }
 
   public String getProfileImg() {
-    if (profileImg == null || profileImg.isEmpty()) {
-      return null;
-    }
-    return BaseUrl.getImgUrl() + profileImg;
+    return profileImg;
   }
 
   public void setProfileImg(String profileImg) {

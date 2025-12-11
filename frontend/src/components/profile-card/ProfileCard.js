@@ -1,15 +1,29 @@
 import cn from 'classnames';
 import { formatGrade } from '../../utils/formatter';
+import { IMG_URL } from './../../lib/url';
 import styles from './ProfileCard.module.scss';
 
-function ProfileCard({ className, image, userId, nickname, grade }) {
+function ProfileCard({
+  className,
+  themeColorClass,
+  image,
+  userId,
+  nickname,
+  grade,
+  isMine = false,
+}) {
+  console.log('ProfileCard userId: ', userId);
+
   return (
     <div className={cn(className, styles.profile)}>
-      <img src={image} alt={`${nickname} 프로필 사진`} />
+      <img src={IMG_URL + image} alt={`${nickname} 프로필 사진`} />
       <div className={styles.member}>
         <div className={styles.userInfo}>
           <span className={styles.grade}>{formatGrade(grade)}</span>
-          <span className={styles.nickname}>{nickname}</span>
+          <span className={styles.nickname}>
+            {nickname}
+            {isMine && <div className={themeColorClass}>내 댓글</div>}
+          </span>
         </div>
         <span className={styles.id}>{userId}</span>
       </div>

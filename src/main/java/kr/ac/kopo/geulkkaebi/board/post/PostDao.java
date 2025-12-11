@@ -23,5 +23,9 @@ public interface PostDao {
 
   Posts selectNextPost(Map<String, Object> params);
 
+  int deletePost(Long postNo);
+
+  int updatePost(Posts posts);
+
 
 }

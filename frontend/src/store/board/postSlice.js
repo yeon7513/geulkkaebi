@@ -16,7 +16,11 @@ const initialState = {
 const postSlice = createSlice({
   name: 'post',
   initialState,
-  reducers: {},
+  reducers: {
+    clearPostItem: (state) => {
+      state.postItem = null;
+    },
+  },
   extraReducers: (builder) => {
     // 전체 or 카테고리별 조회
     builder.addCase(fetchAllPostData.pending, (state) => {
@@ -36,6 +40,7 @@ const postSlice = createSlice({
       state.totalPosts = 0;
       state.error = action.error.message;
     });
+
     // 단일 게시글 조회
     builder.addCase(fetchPostDetail.pending, (state) => {
       state.status = STATUS.LOADING;
@@ -50,6 +55,7 @@ const postSlice = createSlice({
       state.status = STATUS.FAIL;
       state.error = action.payload;
     });
+
     // 인기글 불러오기
     builder.addCase(fetchPopularPosts.pending, (state) => {
       state.status = STATUS.LOADING;
@@ -70,6 +76,7 @@ const postSlice = createSlice({
       state.totalPosts = 0;
       state.error = action.error.message;
     });
+
     // 조회수 증가
     builder.addCase(incrementHitcount.fulfilled, (state, action) => {
       const postNo = action.payload;
@@ -78,6 +85,22 @@ const postSlice = createSlice({
       if (target) {
         target.hitcount += 1;
       }
+    });
+
+    // 게시글 삭제
+    builder.addCase(deletePost.pending, (state) => {
+      state.status = STATUS.LOADING;
+    });
+    builder.addCase(deletePost.fulfilled, (state, action) => {
+      state.status = STATUS.SUCCESS;
+      state.postList = state.postList.filter(
+        (p) => p.postNo !== action.payload
+      );
+      state.postItem = null;
+    });
+    builder.addCase(deletePost.rejected, (state, action) => {
+      state.status = STATUS.FAIL;
+      state.error = action.error.message;
     });
   },
 });
@@ -154,4 +177,20 @@ export const incrementHitcount = createAsyncThunk(
   }
 );
 
+// 게시글 삭제
+export const deletePost = createAsyncThunk(
+  'post/deletePost',
+  async (postNo) => {
+    try {
+      const res = await axios.delete(`/posts/delete/${postNo}`);
+
+      return res.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
+);
+
+export const { clearPostItem } = postSlice.actions;
 export default postSlice.reducer;

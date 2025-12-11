@@ -1,7 +1,6 @@
 package kr.ac.kopo.geulkkaebi.board.post;
 
 import org.apache.ibatis.type.Alias;
-import kr.ac.kopo.geulkkaebi.global.constants.BaseUrl;
 
 @Alias("postsDto")
 public class Posts {
@@ -43,10 +42,7 @@ public class Posts {
   }
 
   public String getProfileImg() {
-    if (profileImg == null || profileImg.isEmpty()) {
-      return null;
-    }
-    return BaseUrl.getImgUrl() + profileImg;
+    return profileImg;
   }
 
   public void setProfileImg(String profileImg) {

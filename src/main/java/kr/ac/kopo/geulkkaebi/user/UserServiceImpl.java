@@ -1,6 +1,8 @@
 package kr.ac.kopo.geulkkaebi.user;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -88,6 +90,18 @@ public class UserServiceImpl implements UserService {
     }
   }
 
+  // 회원 퀴즈 점수 갱신
+  @Override
+  public void updateUserScore(String userId, int score) {
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("userId", userId);
+    params.put("score", score);
+
+    userDao.updateUserScore(params);
+
+  }
+
   // 회원 탈퇴
   @Override
   public int delete(String userId) {
@@ -99,5 +113,7 @@ public class UserServiceImpl implements UserService {
   public void updateUserGrade(String writerId) {
     userDao.updateUserGrade(writerId);
   }
+
+
 
 }

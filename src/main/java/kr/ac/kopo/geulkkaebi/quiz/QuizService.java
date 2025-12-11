@@ -13,4 +13,6 @@ public interface QuizService {
 
   List<?> getRandomQuizList(String quizType);
 
+  double getDifficulty(String quizType, Long quizNo);
+
 }

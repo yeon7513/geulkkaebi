@@ -5,21 +5,21 @@ import { useBoardFetch } from '../../../../hooks/useBoardFetch';
 import Comment from '../../../comment/Comment';
 
 import { useEffect, useState } from 'react';
-import { BiSolidChevronLeft, BiSolidChevronRight } from 'react-icons/bi';
-import { useSelector } from 'react-redux';
-import { boardColors, boardNames } from '../../../../lib/textIconLabel';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleLike } from '../../../../utils/toggleLike';
 import LikeButton from '../../../like-button/LikeButton';
 import Loader from '../../../loader/Loader';
-import ProfileCard from '../../../profile-card/ProfileCard';
-import TextIcon from '../../../text-icon/TextIcon';
 
-import placeholder from '../../../../assets/img/no_images.png';
+import { deletePost } from '../../../../store/board/postSlice';
 import ControlButton from '../../../control-button/ControlButton';
+import PostContent from './post-content/PostContent';
+import PostHeader from './post-header/PostHeader';
+import PostNavigation from './post-navigation/PostNavigation';
 
 // 각 게시글 내용을 볼 수 있는 컴포넌트
 function PostListItem() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { boardType, postNo } = useParams();
 
   const { loginedUser } = useSelector((state) => state.userSlice);
@@ -32,6 +32,7 @@ function PostListItem() {
 
   const [post, setPost] = useState(null);
 
+  // 좋아요 토글 핸들러
   const handleClickLike = async () => {
     if (!loginedUser) {
       alert('로그인이 필요합니다.');
@@ -51,6 +52,21 @@ function PostListItem() {
     }));
   };
 
+  // 게시글 삭제 핸들러
+  const handleClickDelete = () => {
+    if (!window.confirm('정말 삭제하시겠습니까?')) return;
+
+    dispatch(deletePost(postNo))
+      .unwrap()
+      .then(() => {
+        alert('삭제되었습니다.');
+        navigate(`/board/${boardType}`);
+      })
+      .catch(() => {
+        alert('삭제 중 문제가 발생했습니다.');
+      });
+  };
+
   useEffect(() => {
     // postItem이 null이면 아무것도 하지 않음
     if (!postItem) return;
@@ -64,28 +80,11 @@ function PostListItem() {
   return (
     <div className={styles.postItem}>
       {/* 이전 및 다음글 네비게이션 */}
-      <div className={styles.nav}>
-        {prevPost ? (
-          <button
-            onClick={() => navigate(`/board/${boardType}/${prevPost.postNo}`)}
-          >
-            <BiSolidChevronLeft />
-            <span>{prevPost.title}</span>
-          </button>
-        ) : (
-          <p>이전 글이 없습니다.</p>
-        )}
-        {nextPost ? (
-          <button
-            onClick={() => navigate(`/board/${boardType}/${nextPost.postNo}`)}
-          >
-            <span>{nextPost.title}</span>
-            <BiSolidChevronRight />
-          </button>
-        ) : (
-          <p>다음 글이 없습니다.</p>
-        )}
-      </div>
+      <PostNavigation
+        boardType={boardType}
+        prevPost={prevPost}
+        nextPost={nextPost}
+      />
       <div className={styles.container}>
         {status === 'loading' || status === 'waiting' ? (
           <Loader
@@ -94,51 +93,18 @@ function PostListItem() {
           />
         ) : (
           <>
-            <div className={styles.header}>
-              {/* 게시글 제목 */}
-              <div className={styles.title}>
-                <TextIcon colors={boardColors[post.boardType]}>
-                  {boardNames[post.boardType]}
-                </TextIcon>
-                <h3>{post.title}</h3>
-              </div>
-              <div className={styles.writer}>
-                {/* 작성자 정보 */}
-                <ProfileCard
-                  image={post?.profileImg || placeholder}
-                  userId={post.writer}
-                  nickname={post.nickname}
-                  grade={post.grade}
-                />
-                <ul className={styles.postInfo}>
-                  {/* 작성일 */}
-                  <li>
-                    <span>작성</span>
-                    {post.createdAt}
-                  </li>
-                  {post.modifiedAt !== null && (
-                    <li>
-                      <span>수정</span>
-                      {post.modifiedAt}
-                    </li>
-                  )}
-                  {/* 조회수 */}
-                  <li>
-                    <span>조회수</span>
-                    {post.hitcount}
-                  </li>
-                </ul>
-              </div>
-            </div>
+            {/* 제목 */}
+            <PostHeader post={post} />
             {/* 본문 */}
-            <div
-              className={styles.text}
-              dangerouslySetInnerHTML={{ __html: post.text }}
-            />
+            <PostContent text={post.text} />
+            {/* 수정, 삭제, 신고 버튼 */}
             <ControlButton
               isLogin={loginedUser}
               isWriter={post?.writer === loginedUser?.userId}
+              onEdit={() => navigate(`/edit/${boardType}/${postNo}`)}
+              onDelete={handleClickDelete}
             />
+            {/* 좋아요 버튼 */}
             <LikeButton
               name="postLike"
               className={styles.likeBtn}

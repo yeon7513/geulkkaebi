@@ -123,4 +123,16 @@ public class PostServiceImpl implements PostService {
     }
   }
 
+  // 게시글 수정
+  @Override
+  public int updatePost(Posts posts) {
+    return postDao.updatePost(posts);
+  }
+
+  // 게시글 삭제
+  @Override
+  public int removePost(Long postNo) {
+    return postDao.deletePost(postNo);
+  }
+
 }

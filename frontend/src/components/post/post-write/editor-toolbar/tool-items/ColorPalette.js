@@ -29,6 +29,7 @@ function ColorPalette({ colors, type = 'text', onSet, onUnset }) {
       <div className={styles.wrap}>
         <button
           className={cn(styles.icon, styles.thumb)}
+          type="button"
           onClick={() => onUnset()}
         >
           <FaArrowRotateLeft />

@@ -1,0 +1,63 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+.contents {
+  padding: 48px;
+  background-color: #fff;
+  box-shadow: $box-shadow;
+
+  form {
+    margin-top: 24px;
+
+    .selectAnswer {
+      display: flex;
+      align-items: start;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 24px;
+
+      .option {
+        padding: 8px 8px 8px 0;
+
+        &:hover {
+          span {
+            color: $grayscale-400;
+          }
+        }
+
+        > span {
+          margin-left: 8px;
+        }
+      }
+    }
+  }
+}
+
+.inputAnswer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    color: $grayscale-300;
+  }
+
+  input {
+    padding: 8px;
+    border: 1px solid $grayscale-300;
+    border-radius: 4px;
+    font-size: 18px;
+  }
+}
+
+.submit {
+  display: flex;
+  justify-content: end;
+  margin-top: 24px;
+  font-weight: 400;
+}

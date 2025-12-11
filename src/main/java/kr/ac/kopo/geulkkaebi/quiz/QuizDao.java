@@ -19,4 +19,8 @@ public interface QuizDao {
 
   List<QuizProverb> selectRandomProverbQuiz();
 
+  double selectWordDifficulty(Long quizNo);
+
+  double selectProverbDifficulty(Long quizNo);
+
 }

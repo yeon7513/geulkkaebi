@@ -1,4 +1,5 @@
 import Image from '@tiptap/extension-image';
+import Placeholder from '@tiptap/extension-placeholder';
 import TextAlign from '@tiptap/extension-text-align';
 import {
   BackgroundColor,
@@ -9,9 +10,8 @@ import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../../button/Button';
-import Container from '../../../layout/container/Container';
 import Tooltip from '../../../tooltip/Tooltip';
 import EditorToolbar from '../editor-toolbar/EditorToolbar';
 import CheckBox from './../../../input/check-box/CheckBox';
@@ -26,19 +26,15 @@ const categories = [
   { value: 'article', label: '도서 기자단' },
 ];
 
-function CommonEditor({ initTitle, initText, onSubmit }) {
+function CommonEditor({ initBoardType, initTitle, initText, onSubmit }) {
   const { loginedUser } = useSelector((state) => state.userSlice);
   const [title, setTitle] = useState(initTitle || '');
   const [noticeYn, setNoticeYn] = useState(0);
 
-  console.log('Editor Render');
-
-  const isAdmin = loginedUser.adminYn === 1;
+  const isAdmin = loginedUser?.adminYn === 1 || false;
 
   // 카테고리 선택
-  const location = useLocation();
-  const defaultType = location.state?.boardType || '';
-  const [boardType, setBoardType] = useState(defaultType);
+  const [newBardType, setNewBoardType] = useState(initBoardType || '');
 
   // 필수 입력 값 경고
   const titleRef = useRef();
@@ -71,6 +67,10 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
           keepMarks: true,
         },
       }),
+      Placeholder.configure({
+        placeholder:
+          '부적절한 내용의 게시글은 사전 통보없이 삭제될 수 있습니다.',
+      }),
       Image.configure({
         resize: true,
       }),
@@ -83,6 +83,14 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
       }
     },
   });
+
+  useEffect(() => {
+    setTitle(initTitle || '');
+  }, [initTitle]);
+
+  useEffect(() => {
+    setNewBoardType(initBoardType || '');
+  }, [initBoardType]);
 
   // 수정 모드
   useEffect(() => {
@@ -114,12 +122,12 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
       return;
     }
 
-    if (!boardType) {
+    if (!newBardType) {
       setAlert({
         requireValue: 'boardType',
         msg: '카테고리를 선택해주세요.',
       });
-      boardType.current?.focus();
+      newBardType.current?.focus();
       return;
     }
 
@@ -138,7 +146,7 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
     const postData = {
       title,
       text: editor.getHTML(), // 서버 전송용 html 코드
-      boardType,
+      boardType: newBardType,
       noticeYn: isAdmin ? noticeYn : 0,
     };
 
@@ -146,88 +154,92 @@ function CommonEditor({ initTitle, initText, onSubmit }) {
     onSubmit(postData);
   };
 
+  useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(''); // 에디터 초기화
+    }
+  }, [editor]);
+
   return (
     <form className={styles.editorForm} onSubmit={handleSubmit}>
       <EditorToolbar editor={editor} />
       <div className={styles.container}>
-        <Container>
-          <div className={styles.header}>
-            <div className={styles.selectCategory}>
-              <select
-                name="boardType"
-                id="boardType"
-                ref={boardTypeRef}
-                value={boardType}
-                onChange={(e) => setBoardType(e.target.value)}
-              >
-                <option value="">카테고리 선택</option>
-                {categories
-                  // 일반회원이면 adminOnly 카테고리 제거
-                  .filter((cat) => !(cat.adminOnly && !isAdmin))
-                  .map((cat) => (
-                    <option key={cat.value} value={cat.value}>
-                      {cat.label}
-                    </option>
-                  ))}
-              </select>
-              <Tooltip
-                text={
-                  alert.requireValue === 'boardType'
-                    ? ''
-                    : '카테고리를 선택해주세요.'
-                }
-                position="right"
-                show={!boardType}
-              >
-                <div />
-              </Tooltip>
+        <div className={styles.header}>
+          <div className={styles.selectCategory}>
+            <select
+              name="boardType"
+              id="boardType"
+              ref={boardTypeRef}
+              value={newBardType}
+              onChange={(e) => setNewBoardType(e.target.value)}
+            >
+              <option value="">카테고리 선택</option>
+              {categories
+                // 일반회원이면 adminOnly 카테고리 제거
+                .filter((cat) => !(cat.adminOnly && !isAdmin))
+                .map((cat) => (
+                  <option key={cat.value} value={cat.value}>
+                    {cat.label}
+                  </option>
+                ))}
+            </select>
+            <Tooltip
+              text={
+                alert.requireValue === 'boardType'
+                  ? ''
+                  : '카테고리를 선택해주세요.'
+              }
+              position="right"
+              show={!newBardType}
+            >
+              <div />
+            </Tooltip>
+          </div>
+          {isAdmin && (
+            <div>
+              <CheckBox
+                label="공지로 등록"
+                id="noticeYn"
+                name="noticeYn"
+                checked={noticeYn}
+                onChange={(e) => setNoticeYn(e.target.checked ? 1 : 0)}
+              />
             </div>
-            {isAdmin && (
-              <div>
-                <CheckBox
-                  label="공지로 등록"
-                  id="noticeYn"
-                  name="noticeYn"
-                  checked={noticeYn}
-                  onChange={(e) => setNoticeYn(e.target.checked ? 1 : 0)}
-                />
-              </div>
-            )}
-          </div>
-          <div className={styles.titleWarp}>
-            <input
-              className={styles.title}
-              id="title"
-              name="title"
-              type="text"
-              ref={titleRef}
-              placeholder="제목을 입력하세요."
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <Tooltip
-              text={alert.requireValue === 'title' ? alert.msg : ''}
-              position="bottom"
-              show={submitClicked && !title.trim()}
-            >
-              <div className={styles.dummy} />
-            </Tooltip>
-          </div>
-          <div className={styles.editorWrap}>
-            <Tooltip
-              text={alert.requireValue === 'text' ? alert.msg : ''}
-              position="top"
-              show={submitClicked && editor.getText().trim() === ''}
-            >
-              <div className={styles.dummy} />
-            </Tooltip>
-            <EditorContent
-              className={styles.editor}
-              editor={editor}
-              ref={textRef}
-              placeholder="부적절한 내용의 게시글은 사전 통보없이 삭제될 수 있습니다."
-            />
-          </div>
-        </Container>
+          )}
+        </div>
+        <div className={styles.titleWarp}>
+          <input
+            className={styles.title}
+            id="title"
+            name="title"
+            type="text"
+            ref={titleRef}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="제목을 입력하세요."
+          />
+          <Tooltip
+            text={alert.requireValue === 'title' ? alert.msg : ''}
+            position="bottom"
+            show={submitClicked && !title.trim()}
+          >
+            <div className={styles.dummy} />
+          </Tooltip>
+        </div>
+        <div className={styles.editorWrap}>
+          <Tooltip
+            text={alert.requireValue === 'text' ? alert.msg : ''}
+            position="top"
+            show={submitClicked && editor.getText().trim() === ''}
+          >
+            <div className={styles.dummy} />
+          </Tooltip>
+          <EditorContent
+            className={styles.editor}
+            editor={editor}
+            ref={textRef}
+          />
+        </div>
       </div>
       <div className={styles.submit}>
         <Button type="submit" isRound={true}>

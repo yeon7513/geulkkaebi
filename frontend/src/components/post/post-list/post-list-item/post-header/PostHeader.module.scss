@@ -1,0 +1,47 @@
+@charset 'utf-8';
+
+@use '/src/scss/variables.scss' as *;
+
+@import '/src/scss/mixin.scss';
+
+.header {
+  h3 {
+    font-family: $text-font;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .writer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .postInfo {
+    font-size: 14px;
+
+    li {
+      display: flex;
+      justify-content: end;
+      align-items: center;
+      gap: 4px;
+      color: $grayscale-400;
+
+      &:not(:last-child) {
+        margin-bottom: 4px;
+      }
+
+      span {
+        color: $grayscale-500;
+        font-weight: 500;
+      }
+    }
+  }
+}

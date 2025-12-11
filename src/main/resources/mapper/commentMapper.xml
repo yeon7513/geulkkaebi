@@ -5,6 +5,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="comments">
+
 	<!-- 각 게시글의 댓글 조회 -->
 	<select id="selectCommentsByPost" parameterType="long"
 		resultType="commentsDto">
@@ -41,7 +42,7 @@
 	</select>
 
 	<!-- 댓글 등록 -->
-	<insert id="insert" parameterType="commentsDto"
+	<insert id="insertComment" parameterType="commentsDto"
 		useGeneratedKeys="true" keyProperty="cmtNo">
 		<selectKey keyProperty="cmtNo" resultType="long"
 			order="BEFORE">
@@ -59,9 +60,14 @@
 	</insert>
 
 	<!-- 댓글 수정 -->
+	<update id="updateComment">
+		UPDATE comments
+		SET text = #{text}, modified_at = SYSDATE
+		WHERE cmtno = #{cmtNo}
+	</update>
 
 	<!-- 댓글 삭제 -->
-	<delete id="delete" parameterType="long">
+	<delete id="deleteComment" parameterType="long">
 		DELETE FROM comments
 		WHERE
 		cmtno = #{cmtNo}

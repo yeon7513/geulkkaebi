@@ -17,4 +17,6 @@ public interface UserService {
 
   void updateUserGrade(String writerId);
 
+  void updateUserScore(String userId, int score);
+
 }

@@ -63,7 +63,21 @@ public class PostDaoImpl implements PostDao {
   // 게시글 등록
   @Override
   public int insert(Posts posts) {
-    return sql.insert("posts.insert", posts);
+    return sql.insert("posts.insertPost", posts);
   }
+
+  // 게시글 수정
+  @Override
+  public int updatePost(Posts posts) {
+    return sql.update("posts.updatePost", posts);
+  }
+
+  // 게시글 삭제
+  @Override
+  public int deletePost(Long postNo) {
+    return sql.delete("posts.deletePost", postNo);
+  }
+
+
 
 }

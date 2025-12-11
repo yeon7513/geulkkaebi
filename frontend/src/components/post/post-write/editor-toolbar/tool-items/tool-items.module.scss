@@ -15,15 +15,21 @@
   display: flex;
   align-items: center;
 }
-
 // 컬러 팔레트
 .palette {
+  padding: 16px;
+
+  .title {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+
   .wrap {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 4px;
     width: fit-content;
-    // background-color: #ccc;
 
     .thumb {
       width: fit-content;

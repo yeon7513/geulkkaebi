@@ -57,14 +57,16 @@
 		WHERE ROWNUM
 		&lt;= #{offset} + #{limit}
 		)
-		WHERE rnum BETWEEN #{offset} + 1 AND #{offset} + #{limit}
+		WHERE rnum BETWEEN #{offset} + 1 AND
+		#{offset} + #{limit}
 	</select>
 
 	<!-- 공지사항으로 설정된 게시글만 조회 -->
 	<select id="selectNoticeList" resultType="postsDto">
 		SELECT p.*, u.nickname, u.profile_img, u.grade
 		FROM POSTS p
-		LEFT JOIN USERS u ON
+		LEFT JOIN
+		USERS u ON
 		p.writer = u.userid
 		<where>
 			<if
@@ -142,39 +144,40 @@
 
 	<!-- 인기글 조회 -->
 	<select id="selectPopularPosts" resultType="postsDto">
-	  SELECT *
-	  FROM (
-	    SELECT
-	      p.postno,
-	      p.board_type,
-	      p.title,
-	      p.text,
-	      p.writer,
-	      u.nickname,
-	      u.profile_img,
-	      u.grade,
-	      p.hitcount,
-	      <!-- 좋아요 수가 없어도 카운트에 포함 -->
-	      NVL(l.count_likes, 0) AS count_likes,
-	      p.created_at
-	    FROM posts p
-	    LEFT JOIN (
-	      SELECT postno,
-	             count(userid) AS count_likes
-	      FROM post_likes
-	      GROUP BY postno
-	    ) l
-	    ON p.postno = l.postno
-	    JOIN users u
-	    ON p.writer = u.userid
-	    WHERE p.board_type != 'notice' and p.board_type != 'event' and p.notice_yn = 0
-	    ORDER BY (p.hitcount + NVL(l.count_likes,0)) DESC
-	  )
-	  WHERE ROWNUM &lt;= 6
+		SELECT *
+		FROM (
+		SELECT
+		p.postno,
+		p.board_type,
+		p.title,
+		p.text,
+		p.writer,
+		u.nickname,
+		u.profile_img,
+		u.grade,
+		p.hitcount,
+		<!-- 좋아요 수가 없어도 카운트에 포함 -->
+		NVL(l.count_likes, 0) AS count_likes,
+		p.created_at
+		FROM posts p
+		LEFT JOIN (
+		SELECT postno,
+		count(userid) AS count_likes
+		FROM post_likes
+		GROUP BY postno
+		) l
+		ON p.postno = l.postno
+		JOIN users u
+		ON p.writer = u.userid
+		WHERE p.board_type != 'notice' and p.board_type != 'event' and p.notice_yn
+		= 0
+		ORDER BY (p.hitcount + NVL(l.count_likes,0)) DESC
+		)
+		WHERE ROWNUM &lt;= 6
 	</select>
 
 	<!-- 새로운 글 등록 -->
-	<insert id="insert" parameterType="postsDto"
+	<insert id="insertPost" parameterType="postsDto"
 		useGeneratedKeys="true" keyProperty="postNo">
 		<!-- 데이터 타입 불일치로 인해 추가 -->
 		<selectKey keyProperty="postNo" resultType="long"
@@ -212,5 +215,22 @@
 		#{user_id, mode=IN, jdbcType=VARCHAR}
 		)
 	</insert>
+
+	<!-- 게시글 수정 -->
+	<update id="updatePost" parameterType="postsDto">
+		UPDATE posts
+		SET board_type = #{boardType},
+		title = #{title},
+		text = #{text},
+		notice_yn = #{noticeYn},
+		modified_at = SYSDATE
+		WHERE postno = #{postNo} AND writer = #{writer}
+	</update>
+
+	<!-- 게시글 삭제 -->
+	<delete id="deletePost">
+		DELETE FROM posts
+		WHERE postno = #{postNo}
+	</delete>
 
 </mapper>

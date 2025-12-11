@@ -73,4 +73,22 @@ public class QuizServiceImple implements QuizService {
     quizDao.insertQuiz(quizData);
   }
 
+  // 점수 계산을 위해 난이도 조회
+  @Override
+  public double getDifficulty(String quizType, Long quizNo) {
+
+    if (quizType.equals("word")) {
+      // 단어 퀴즈
+      return quizDao.selectWordDifficulty(quizNo);
+    } else if (quizType.equals("proverb")) {
+      // 속담 퀴즈
+      return quizDao.selectProverbDifficulty(quizNo);
+    }
+
+    return 0;
+
+  }
+
+
+
 }

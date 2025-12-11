@@ -162,6 +162,10 @@ export const member = [
     label: '정보 수정',
   },
   {
+    path: '/mypage/quiz-result',
+    label: '퀴즈 결과',
+  },
+  {
     path: '/mypage/cancel',
     label: '회원 탈퇴',
   },

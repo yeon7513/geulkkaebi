@@ -1,6 +1,7 @@
 package kr.ac.kopo.geulkkaebi.user;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserDao {
 
@@ -15,5 +16,8 @@ public interface UserDao {
   int delete(String userId);
 
   void updateUserGrade(String writerId);
+
+  void updateUserScore(Map<String, Object> params);
+
 
 }

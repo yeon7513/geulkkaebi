@@ -4,7 +4,9 @@ import { commonState, STATUS } from '../common/commoms';
 
 const initialState = {
   userList: [], // 관리자용 전체 회원 조회
-  loginedUser: {}, // 현재 로그인한 회원의 정보
+  loginedUser: null, // 현재 로그인한 회원의 정보
+  isLogin: false, // 로그인 여부
+  isAdmin: false,
   ...commonState,
 };
 
@@ -38,9 +40,14 @@ const userSlice = createSlice({
       // state.error = action.error.message;
     });
     // 로그인 체크
+    builder.addCase(loginCheck.pending, (state) => {
+      state.status = STATUS.LOADING;
+    });
     builder.addCase(loginCheck.fulfilled, (state, action) => {
       state.status = STATUS.SUCCESS;
-      state.loginedUser = action.payload;
+      state.isLogin = action.payload.isLogin;
+      state.isAdmin = action.payload.isAdmin;
+      state.loginedUser = action.payload.userInfo;
     });
     builder.addCase(loginCheck.rejected, (state, action) => {
       state.status = STATUS.FAIL;
@@ -51,6 +58,8 @@ const userSlice = createSlice({
       state.status = STATUS.SUCCESS;
       state.loginedUser = null;
       state.userList = [];
+      state.isLogin = false;
+      state.isAdmin = false;
     });
     builder.addCase(logout.rejected, (state, action) => {
       state.status = STATUS.FAIL;
@@ -69,6 +78,7 @@ const userSlice = createSlice({
     builder.addCase(userDelete.fulfilled, (state) => {
       state.status = STATUS.SUCCESS;
       state.loginedUser = null;
+      state.isLogin = false;
     });
     builder.addCase(userDelete.rejected, (state, action) => {
       state.status = STATUS.FAIL;

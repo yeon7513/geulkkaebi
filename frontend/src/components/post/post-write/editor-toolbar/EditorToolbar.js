@@ -12,7 +12,7 @@ import {
 } from './tool-items/toolbarItemsData';
 
 function EditorToolbar({ editor }) {
-  const [isPaletteShow, setIsPaletteShow] = useState(true);
+  const [isPaletteShow, setIsPaletteShow] = useState(false);
   const paletteRef = useRef(null);
 
   const handleTogglePalette = () => {

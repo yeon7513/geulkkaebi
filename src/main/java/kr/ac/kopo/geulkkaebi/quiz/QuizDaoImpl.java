@@ -47,4 +47,15 @@ public class QuizDaoImpl implements QuizDao {
     sql.insert("quiz.insertQuiz", quizData);
   }
 
+  // 난이도 조회
+  @Override
+  public double selectWordDifficulty(Long quizNo) {
+    return sql.selectOne("quiz.selectWordDifficulty", quizNo);
+  }
+
+  @Override
+  public double selectProverbDifficulty(Long quizNo) {
+    return sql.selectOne("quiz.selectProverbDifficulty", quizNo);
+  }
+
 }
